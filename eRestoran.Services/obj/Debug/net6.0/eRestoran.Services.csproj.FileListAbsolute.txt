@@ -1,0 +1,17 @@
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\bin\Debug\net6.0\eRestoran.Services.deps.json
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\bin\Debug\net6.0\eRestoran.Services.runtimeconfig.json
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\bin\Debug\net6.0\eRestoran.Services.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\bin\Debug\net6.0\eRestoran.Services.pdb
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\obj\Debug\net6.0\eRestoran.Services.csproj.AssemblyReference.cache
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\obj\Debug\net6.0\eRestoran.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\obj\Debug\net6.0\eRestoran.Services.AssemblyInfoInputs.cache
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\obj\Debug\net6.0\eRestoran.Services.AssemblyInfo.cs
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\obj\Debug\net6.0\eRestoran.Services.csproj.CoreCompileInputs.cache
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\obj\Debug\net6.0\eRestoran.Services.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\obj\Debug\net6.0\refint\eRestoran.Services.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\obj\Debug\net6.0\eRestoran.Services.pdb
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\obj\Debug\net6.0\eRestoran.Services.genruntimeconfig.cache
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\obj\Debug\net6.0\ref\eRestoran.Services.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\bin\Debug\net6.0\eRestoran.Model.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\bin\Debug\net6.0\eRestoran.Model.pdb
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Services\obj\Debug\net6.0\eRestoran.Services.csproj.CopyComplete

@@ -1,0 +1,14 @@
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\bin\Debug\net6.0\eRestoran.Model.deps.json
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\bin\Debug\net6.0\eRestoran.Model.runtimeconfig.json
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\bin\Debug\net6.0\eRestoran.Model.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\bin\Debug\net6.0\eRestoran.Model.pdb
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\eRestoran.Model.csproj.AssemblyReference.cache
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\eRestoran.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\eRestoran.Model.AssemblyInfoInputs.cache
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\eRestoran.Model.AssemblyInfo.cs
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\eRestoran.Model.csproj.CoreCompileInputs.cache
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\eRestoran.Model.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\refint\eRestoran.Model.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\eRestoran.Model.pdb
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\eRestoran.Model.genruntimeconfig.cache
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\ref\eRestoran.Model.dll
