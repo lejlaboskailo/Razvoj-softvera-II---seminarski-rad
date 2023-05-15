@@ -14,7 +14,6 @@ C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran\obj
 C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran\obj\Debug\net6.0\eRestoran.AssemblyInfoInputs.cache
 C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran\obj\Debug\net6.0\eRestoran.AssemblyInfo.cs
 C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran\obj\Debug\net6.0\eRestoran.csproj.CoreCompileInputs.cache
-C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran\obj\Debug\net6.0\eRestoran.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran\obj\Debug\net6.0\eRestoran.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran\obj\Debug\net6.0\staticwebassets\msbuild.eRestoran.Microsoft.AspNetCore.StaticWebAssets.props
 C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran\obj\Debug\net6.0\staticwebassets\msbuild.build.eRestoran.props
