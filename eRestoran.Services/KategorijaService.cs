@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eRestoran.Model.Requests;
 using eRestoran.Services.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,18 +21,15 @@ namespace eRestoran.Services
             _mapper = mapper;
         }
 
-        public override IEnumerable<Model.Kategorija> Get(KategorijaSearchRequest request)
+        public override IQueryable<Database.Kategorija> AddFilter(IQueryable<Database.Kategorija> query, KategorijaSearchRequest? search = null)
         {
-            var query = _context.Kategorijas.AsQueryable();
+            var filteredQuery = base.AddFilter(query, search);
 
-            if (!string.IsNullOrWhiteSpace(request.Naziv))
+            if (!string.IsNullOrWhiteSpace(search?.Naziv))
             {
-                query = query.Where(x => x.Naziv.Contains(request.Naziv));
+                filteredQuery = filteredQuery.Where(x => x.Naziv == search.Naziv);
             }
-
-            var list = query.ToList();
-
-            return _mapper.Map<IEnumerable<Model.Kategorija>>(list);
+            return filteredQuery;
         }
     }
 }

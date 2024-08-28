@@ -13,22 +13,28 @@ using Drzava = eRestoran.Services.Database.Drzava;
 
 namespace eRestoran.Services
 {
-    public class DrzavaService : BaseCRUDService<Model.Drzava, Database.Drzava, DrzavaSearchObject, DrzavaUpsertRequest, DrzavaUpsertRequest>, IDrzavaService
+    public class DrzavaService : BaseService<Model.Drzava, Database.Drzava, DrzavaSearchObject>, IDrzavaService
     {
-        public DrzavaService(ERestoranContext context, IMapper mapper) : base(context, mapper)
-        {
-        }
-        public override IQueryable<Drzava> AddFilter(IQueryable<Drzava> query, DrzavaSearchObject search = null)
-        {
-            var filter = base.AddFilter(query, search);
 
+
+        public DrzavaService(ERestoranContext context, IMapper mapper)
+            : base(context, mapper)
+        {
+
+        }
+
+
+        public override IQueryable<Database.Drzava> AddFilter(IQueryable<Database.Drzava> query, DrzavaSearchObject? search = null)
+        {
             if (!string.IsNullOrWhiteSpace(search?.Naziv))
             {
-                filter = filter.Where(w => w.Naziv.Contains(search.Naziv));
+                query = query.Where(x => x.Naziv.StartsWith(search.Naziv));
             }
-
-            return filter;
+            return base.AddFilter(query, search);
         }
+
+
+
 
     }
 }

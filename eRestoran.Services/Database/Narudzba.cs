@@ -18,4 +18,5 @@ public partial class Narudzba
     public virtual Status? StatusNarudzbe { get; set; }
 
     public virtual ICollection<StavkeNarudzbe> StavkeNarudzbes { get; set; } = new List<StavkeNarudzbe>();
+    public string? StateMachine { get; set; }
 }

@@ -5,13 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace eRestoran.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("[controller]")]
     [AllowAnonymous]
     public class KategorijaController:BaseCRUDController<Model.Kategorija,KategorijaSearchRequest,KategorijaUpsertRequest,KategorijaUpsertRequest>
     {
-        public KategorijaController(IKategorijaService service) : base(service)
-        { 
+        public KategorijaController(ILogger<BaseController<Model.Kategorija, KategorijaSearchRequest>> logger, IKategorijaService service) : base(logger, service)
+        {
         }
     }
 }

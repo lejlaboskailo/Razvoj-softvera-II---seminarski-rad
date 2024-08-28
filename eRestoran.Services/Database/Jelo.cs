@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace eRestoran.Services.Database;
@@ -14,7 +15,7 @@ public partial class Jelo
     public decimal? Cijena { get; set; }
 
     public int? KategorijaId { get; set; }
-
+    
     public string? Slika { get; set; }
 
     public virtual ICollection<Dojmovi> Dojmovis { get; set; } = new List<Dojmovi>();

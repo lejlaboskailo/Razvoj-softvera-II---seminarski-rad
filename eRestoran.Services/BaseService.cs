@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using eRestoran.Model;
 using eRestoran.Model.SearchObjects;
 using eRestoran.Services.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,55 +11,57 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-        public class BaseService<T, TDb, TSearch> : IService<T, TSearch> where T : class where TDb : class where TSearch : BaseSearchObject
+    public class BaseService<T, TDb, TSearch> : IService<T, TSearch> where TDb : class where T : class where TSearch : BaseSearchObject
+    {
+        protected ERestoranContext _context;
+        protected IMapper _mapper { get; set; }
+        public BaseService(ERestoranContext context, IMapper mapper)
         {
-            public ERestoranContext _context { get; set; }
-            public IMapper _mapper { get; set; }
-            public BaseService(ERestoranContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
-            public virtual IEnumerable<T> Get(TSearch search = null)
-            {
-                var dbentity = _context.Set<TDb>().AsQueryable();
-
-                dbentity = AddFilter(dbentity, search);
-
-                dbentity = AddInclude(dbentity, search);
-
-                if (search?.Page.HasValue == true && search?.PageSize.HasValue == true)
-                {
-                    dbentity = dbentity.Take(search.PageSize.Value).Skip(search.Page.Value * search.PageSize.Value);
-                }
-
-                var list = dbentity.ToList();
-
-                return _mapper.Map<IEnumerable<T>>(list);
-
-            }
-
-            public virtual IQueryable<TDb> AddInclude(IQueryable<TDb> query, TSearch search = null)
-            {
-                return query;
-            }
-            public virtual TDb AddIncludeforGetById(TDb query)
-            {
-                return query;
-            }
-            public virtual IQueryable<TDb> AddFilter(IQueryable<TDb> query, TSearch search = null)
-            {
-                return query;
-            }
-
-            public virtual T GetById(int id)
-            {
-                var dbentity = _context.Set<TDb>();
-                var result = dbentity.Find(id);
-
-                result = AddIncludeforGetById(result);
-
-                return _mapper.Map<T>(result);
-            }
+            _context = context;
+            _mapper = mapper;
         }
+
+        public virtual async Task<PagedResult<T>> Get(TSearch? search = null)
+        {
+            var query = _context.Set<TDb>().AsQueryable();
+
+            PagedResult<T> result = new PagedResult<T>();
+
+
+            query = AddFilter(query, search);
+
+            query = AddInclude(query, search);
+
+            result.Count = await query.CountAsync();
+
+            if (search?.Page.HasValue == true && search?.PageSize.HasValue == true)
+            {
+                query = query.Take(search.PageSize.Value).Skip(search.Page.Value * search.PageSize.Value);
+            }
+
+            var list = await query.ToArrayAsync();
+
+
+            var tmp = _mapper.Map<List<T>>(list);
+            result.Result = tmp;
+            return result;
+        }
+
+        public virtual IQueryable<TDb> AddInclude(IQueryable<TDb> query, TSearch? search = null)
+        {
+            return query;
+        }
+
+        public virtual IQueryable<TDb> AddFilter(IQueryable<TDb> query, TSearch? search = null)
+        {
+            return query;
+        }
+
+        public virtual async Task<T> GetById(int id)
+        {
+            var entity = await _context.Set<TDb>().FindAsync(id);
+
+            return _mapper.Map<T>(entity);
+        }
+    }
 }

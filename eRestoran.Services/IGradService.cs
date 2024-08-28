@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public interface IGradService : ICRUDService<Model.Grad, GradSearchObject, GradUpsertRequest, GradUpsertRequest>
+    public interface IGradService : IService<Model.Grad, Model.SearchObjects.GradSearchObject>
     {
-
     }
 }

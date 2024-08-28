@@ -9,6 +9,6 @@ namespace eRestoran.Model.Requests
 {
     public class KorisnikSearchRequests : BaseSearchObject
     { 
-        public string ImePrezime { get; set; }
+        public bool IsUlogeIncluded { get; set; }
     }
 }

@@ -10,24 +10,28 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public class GradService : BaseCRUDService<Model.Grad, Database.Grad, GradSearchObject, GradUpsertRequest, GradUpsertRequest>, IGradService
+    public class GradService : BaseService<Model.Grad, Database.Grad, GradSearchObject>, IGradService
     {
-        public GradService(ERestoranContext context, IMapper mapper) : base(context, mapper)
+        
+   
+        public GradService(ERestoranContext context, IMapper mapper)
+            : base(context, mapper)
         {
+
         }
 
-        public override IQueryable<Grad> AddFilter(IQueryable<Grad> query,GradSearchObject search = null)
-        {
-            var filter = base.AddFilter(query, search);
 
+        public override IQueryable<Database.Grad> AddFilter(IQueryable<Database.Grad> query, GradSearchObject? search = null)
+        {
             if (!string.IsNullOrWhiteSpace(search?.Naziv))
             {
-                filter = filter.Where(w => w.Naziv.Contains(search.Naziv));
+                query = query.Where(x => x.Naziv.StartsWith(search.Naziv));
             }
-           
-
-            return filter;
+            return base.AddFilter(query, search);
         }
 
-    }
+
+    
+
+}
 }

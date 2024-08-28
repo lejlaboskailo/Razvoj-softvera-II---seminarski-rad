@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public interface IDrzavaService : ICRUDService<Model.Drzava, DrzavaSearchObject, DrzavaUpsertRequest,DrzavaUpsertRequest>
+    public interface IDrzavaService : IService<Model.Drzava, DrzavaSearchObject>
     {
     }
 }

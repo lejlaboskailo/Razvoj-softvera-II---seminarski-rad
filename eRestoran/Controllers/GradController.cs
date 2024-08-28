@@ -1,14 +1,15 @@
-﻿using eRestoran.Model.SearchObjects;
+﻿using eRestoran.Model;
+using eRestoran.Model.SearchObjects;
 using eRestoran.Services;
+using Microsoft.AspNetCore.Components;
 
 namespace eRestoran.Controllers
 {
+    [Route("[controller]")]
     public class GradController : BaseController<Model.Grad, GradSearchObject>
     {
-        public IGradService gradService { get; set; }
-        public GradController(IGradService service) : base(service)
+        public GradController(ILogger<BaseController<Grad, GradSearchObject>> logger, IGradService service) : base(logger, service)
         {
-            gradService = service;
         }
     }
 }

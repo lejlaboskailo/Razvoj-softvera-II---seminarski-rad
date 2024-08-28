@@ -12,3 +12,4 @@ C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Mod
 C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\eRestoran.Model.pdb
 C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\eRestoran.Model.genruntimeconfig.cache
 C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\ref\eRestoran.Model.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Model\obj\Debug\net6.0\eRestoran.Model.sourcelink.json

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eRestoran.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public interface IService<T, TSearch> where T : class where TSearch : class
+    public interface IService<T, TSearch> where TSearch : class
     {
-        IEnumerable<T> Get(TSearch search = null);
-        T GetById(int id);
+        Task<PagedResult<T>> Get(TSearch search = null);
+        Task<T> GetById(int id);
     }
 }

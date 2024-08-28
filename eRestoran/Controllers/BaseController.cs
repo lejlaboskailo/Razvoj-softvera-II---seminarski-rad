@@ -1,30 +1,33 @@
-﻿using eRestoran.Services;
+﻿using eRestoran.Model;
+using eRestoran.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eRestoran.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
-
+    //[Authorize]
     public class BaseController<T, TSearch> : ControllerBase where T : class where TSearch : class
     {
-        public IService<T, TSearch> _service { get; set; }
+        protected readonly IService<T, TSearch> _service;
+        protected readonly ILogger<BaseController<T, TSearch>> _logger;
 
-        public BaseController(IService<T, TSearch> service)
+        public BaseController(ILogger<BaseController<T, TSearch>> logger, IService<T, TSearch> service)
         {
+            _logger = logger;
             _service = service;
         }
 
-        [HttpGet]
-        public virtual IEnumerable<T> Get([FromQuery] TSearch search = null)
+        [HttpGet()]
+        public async Task<PagedResult<T>> Get([FromQuery] TSearch? search = null)
         {
-            return _service.Get(search);
+            return await _service.Get(search);
         }
+
         [HttpGet("{id}")]
-        public virtual T GetbyId(int id)
+        public async Task<T> GetById(int id)
         {
-            return _service.GetById(id);
+            return await _service.GetById(id);
         }
     }
 }
