@@ -15,5 +15,6 @@ namespace eRestoran.Model
         public string BrojTransakcije { get; set; }
         public DateTime DatumTransakcije { get; set; }
         public int KorisnikId { get; set; }
+        public string NacinPlacanja { get; set; }
     }
 }

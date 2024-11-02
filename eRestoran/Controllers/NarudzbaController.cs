@@ -10,50 +10,69 @@ using System.Text;
 namespace eRestoran.Controllers
 {
     [Route("[controller]")]
-    [AllowAnonymous]
-   
-    public class NarudzbaController:BaseCRUDController<Model.Narudzba,NarudzbaSearchObject,NarudzbaUpsertRequest,NarudzbaUpsertRequest>
+   // [AllowAnonymous]
+    public class NarudzbaController:BaseCRUDController<Model.Narudzba,NarudzbaSearchObject,NarudzbaInsertRequest,NarudzbaUpdateRequest>
     {
         protected readonly INarudzbaService _service;
         public NarudzbaController(ILogger<BaseController<Model.Narudzba, NarudzbaSearchObject>> logger, INarudzbaService service) : base(logger, service)
         {
         }
 
-      /*  [HttpGet("{id}/allowedActions")]
+        [HttpPut("{id}/activate")]
+        public virtual async Task<Narudzba> Activate(int id)
+        {
+            return await (_service as INarudzbaService).Activate(id);
+        }
+
+
+        [HttpPut("{id}/hide")]
+        public virtual async Task<Narudzba> Hide(int id)
+        {
+            return await (_service as INarudzbaService).Hide(id);
+        }
+
+        [HttpGet("{id}/allowedActions")]
         public virtual async Task<List<string>> AllowedActions(int id)
         {
-            return await _service.AllowedActions(id);
+            return await (_service as INarudzbaService).AllowedActions(id);
         }
 
-        [HttpPut("{id}/accept")]
-        public virtual async Task<Narudzba> Accept(int id)
-        {
-            return await _service.Accept(id);
-        }
 
-        [HttpPut("{id}/inProgress")]
-        public virtual async Task<Narudzba> inProgress(int id)
-        {
-            return await _service.InProgress(id);
-        }
+        /*  [HttpGet("{id}/allowedActions")]
+          public virtual async Task<List<string>> AllowedActions(int id)
+          {
+              return await _service.AllowedActions(id);
+          }
 
-        [HttpPut("{id}/finish")]
-        public virtual async Task<Narudzba> Finish(int id)
-        {
-            return await _service.Finish(id);
-        }
+          [HttpPut("{id}/accept")]
+          public virtual async Task<Narudzba> Accept(int id)
+          {
+              return await _service.Accept(id);
+          }
 
-        [HttpPut("{id}/deliver")]
-        public virtual async Task<Narudzba> Deliver(int id)
-        {
-            return await _service.Deliver(id);
-        }
+          [HttpPut("{id}/inProgress")]
+          public virtual async Task<Narudzba> inProgress(int id)
+          {
+              return await _service.InProgress(id);
+          }
 
-        [HttpPut("{id}/cancel")]
-        public virtual async Task<Narudzba> Cancel(int id)
-        {
-            return await _service.Cancel(id);
-        }*/
+          [HttpPut("{id}/finish")]
+          public virtual async Task<Narudzba> Finish(int id)
+          {
+              return await _service.Finish(id);
+          }
+
+          [HttpPut("{id}/deliver")]
+          public virtual async Task<Narudzba> Deliver(int id)
+          {
+              return await _service.Deliver(id);
+          }
+
+          [HttpPut("{id}/cancel")]
+          public virtual async Task<Narudzba> Cancel(int id)
+          {
+              return await _service.Cancel(id);
+          }*/
     }
 }
 

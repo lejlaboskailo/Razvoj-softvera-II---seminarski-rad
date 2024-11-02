@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public interface IDojmoviService : ICRUDService<Model.Dojmovi,DojmoviSearchObject,DojmoviUpsertRequest, DojmoviUpsertRequest>
+    public interface IDojmoviService : ICRUDService<Model.Dojmovi,DojmoviSearchObject,DojmoviInsertRequest, DojmoviUpsertRequest>
     {
 
     }

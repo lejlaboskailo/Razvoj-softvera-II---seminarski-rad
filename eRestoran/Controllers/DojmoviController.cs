@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace eRestoran.Controllers
 {
     [Route("[controller]")]
-    [AllowAnonymous]
-    public class DojmoviController : BaseCRUDController<Model.Dojmovi,DojmoviSearchObject, DojmoviUpsertRequest, DojmoviUpsertRequest>
+    //[AllowAnonymous]
+    public class DojmoviController : BaseCRUDController<Model.Dojmovi,DojmoviSearchObject, DojmoviInsertRequest, DojmoviUpsertRequest>
     {
         public DojmoviController(ILogger<BaseController<Model.Dojmovi, DojmoviSearchObject>> logger, IDojmoviService service) : base(logger, service)
         {

@@ -1,4 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
+/*import 'package:json_annotation/json_annotation.dart';
 
 part 'jelo.g.dart';
 
@@ -28,3 +28,28 @@ class Jelo {
 
   Map<String, dynamic> toJson() => _$JeloToJson(this);
 }
+?*/
+
+import 'dart:convert';
+ 
+import 'package:json_annotation/json_annotation.dart';
+ 
+part 'jelo.g.dart';
+ 
+@JsonSerializable()
+class Jelo{
+int? id;
+String? naziv;
+String? slika;
+double? cijena;
+String? opis;
+int? kategorijaId;
+ 
+ 
+Jelo(this.id, this.naziv, this.slika, this.cijena, this.opis, this.kategorijaId);
+ 
+factory Jelo.fromJson(Map<String,dynamic> json)=>_$JeloFromJson(json);
+ 
+Map<String,dynamic> toJson()=>_$JeloToJson(this);
+}
+ 

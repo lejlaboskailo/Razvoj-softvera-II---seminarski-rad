@@ -51,6 +51,16 @@ namespace eRestoran.Services.Migrations
                     b.HasIndex("KorisnikId");
 
                     b.ToTable("Dojmovi", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 8000,
+                            JeloId = 5000,
+                            KorisnikId = 1002,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
+                        });
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.Drzava", b =>
@@ -69,6 +79,18 @@ namespace eRestoran.Services.Migrations
                         .HasName("PK__Drzava__3214EC076CFB6820");
 
                     b.ToTable("Drzava", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2000,
+                            Naziv = "Bosna i Hercegovina"
+                        },
+                        new
+                        {
+                            Id = 2001,
+                            Naziv = "Njemacka"
+                        });
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.Grad", b =>
@@ -87,6 +109,13 @@ namespace eRestoran.Services.Migrations
                         .HasName("PK__Grad__3214EC07EA4B5287");
 
                     b.ToTable("Grad", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3000,
+                            Naziv = "Sarajevo"
+                        });
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.Jelo", b =>
@@ -111,8 +140,11 @@ namespace eRestoran.Services.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Slika")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Slika")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("SlikaThumb")
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id")
                         .HasName("PK__Jelo__3214EC0766C6F668");
@@ -120,6 +152,16 @@ namespace eRestoran.Services.Migrations
                     b.HasIndex("KategorijaId");
 
                     b.ToTable("Jelo", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 5000,
+                            Cijena = 15m,
+                            KategorijaId = 4000,
+                            Naziv = "Margarita",
+                            Opis = "top"
+                        });
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.Kategorija", b =>
@@ -142,6 +184,32 @@ namespace eRestoran.Services.Migrations
                         .HasName("PK__Kategori__3214EC070A4F4900");
 
                     b.ToTable("Kategorija", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 4000,
+                            Naziv = "Pizza",
+                            Opis = "top"
+                        },
+                        new
+                        {
+                            Id = 4001,
+                            Naziv = "Rostilj",
+                            Opis = "top"
+                        },
+                        new
+                        {
+                            Id = 4002,
+                            Naziv = "Pasta",
+                            Opis = "top"
+                        },
+                        new
+                        {
+                            Id = 4003,
+                            Naziv = "Desert",
+                            Opis = "top"
+                        });
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.Korisnici", b =>
@@ -167,12 +235,12 @@ namespace eRestoran.Services.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LozinkaHash")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("LozinkaSalt")
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Prezime")
                         .HasMaxLength(100)
@@ -186,33 +254,69 @@ namespace eRestoran.Services.Migrations
                     b.HasIndex("GradId");
 
                     b.ToTable("Korisnici", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1001,
+                            Ime = "Medzida",
+                            KorisnickoIme = "admin",
+                            LozinkaHash = "qIasZbaXQkHV6Gs14MLy37WIhrU=",
+                            LozinkaSalt = "FMsIo5+6IjlaCw4Ko3KKWA==",
+                            Prezime = "Bojcic"
+                        },
+                        new
+                        {
+                            Id = 1002,
+                            Ime = "Ena",
+                            KorisnickoIme = "mobile",
+                            LozinkaHash = "1FAKiuzbDt43bdYieXeE7ri/i4g=",
+                            LozinkaSalt = "3pYEFkl0vFcOCY3w6Fa9Eg==",
+                            Prezime = "Bojcic"
+                        });
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.KorisniciUloge", b =>
                 {
-                    b.Property<int>("KorisnikUlogaId")
+                    b.Property<int?>("KorisnikUlogaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KorisnikUlogaId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("KorisnikUlogaId"));
 
-                    b.Property<DateTime>("DatumIzmjene")
+                    b.Property<DateTime?>("DatumIzmjene")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("KorisnikId")
+                    b.Property<int?>("KorisnikId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UlogaId")
+                    b.Property<int?>("UlogaId")
                         .HasColumnType("int");
 
                     b.HasKey("KorisnikUlogaId")
-                        .HasName("PK__Korisnic__1608726E77415232");
+                        .HasName("PK__KorisniciUloge__1608726E");
 
                     b.HasIndex("KorisnikId");
 
                     b.HasIndex("UlogaId");
 
                     b.ToTable("KorisniciUloge", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            KorisnikUlogaId = 1,
+                            DatumIzmjene = new DateTime(2024, 10, 29, 12, 55, 28, 511, DateTimeKind.Local).AddTicks(5516),
+                            KorisnikId = 1001,
+                            UlogaId = 1
+                        },
+                        new
+                        {
+                            KorisnikUlogaId = 2,
+                            DatumIzmjene = new DateTime(2024, 10, 29, 12, 55, 28, 511, DateTimeKind.Local).AddTicks(5555),
+                            KorisnikId = 1002,
+                            UlogaId = 2
+                        });
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.Narudzba", b =>
@@ -243,6 +347,16 @@ namespace eRestoran.Services.Migrations
                     b.HasIndex("StatusNarudzbeId");
 
                     b.ToTable("Narudzba", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 6000,
+                            DatumNarudzbe = new DateTime(2024, 10, 29, 12, 55, 28, 511, DateTimeKind.Local).AddTicks(5623),
+                            KorisnikId = 1001,
+                            StateMachine = "poslano",
+                            StatusNarudzbeId = 8010
+                        });
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.Status", b =>
@@ -261,6 +375,13 @@ namespace eRestoran.Services.Migrations
                         .HasName("PK__Status__3214EC071A49A4A8");
 
                     b.ToTable("Status", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 8010,
+                            Naziv = "poslano"
+                        });
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.StavkeNarudzbe", b =>
@@ -291,6 +412,16 @@ namespace eRestoran.Services.Migrations
                     b.HasIndex("NarudzbaId");
 
                     b.ToTable("StavkeNarudzbe", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 7000,
+                            Cijena = 30,
+                            JeloId = 5000,
+                            Kolicina = 2,
+                            NarudzbaId = 6000
+                        });
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.Uloge", b =>
@@ -313,6 +444,20 @@ namespace eRestoran.Services.Migrations
                         .HasName("PK__Uloge__3214EC076C332449");
 
                     b.ToTable("Uloge", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Naziv = "Admin",
+                            Opis = "Upravljanje sistemom"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Naziv = "Korisnik",
+                            Opis = "Pregled podataka"
+                        });
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.Uplatum", b =>
@@ -335,6 +480,9 @@ namespace eRestoran.Services.Migrations
 
                     b.Property<int?>("KorisnikId")
                         .HasColumnType("int");
+
+                    b.Property<string>("NacinPlacanja")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id")
                         .HasName("PK__Uplata__3214EC07C865A4BE");
@@ -373,19 +521,13 @@ namespace eRestoran.Services.Migrations
 
             modelBuilder.Entity("eRestoran.Services.Database.Korisnici", b =>
                 {
-                    b.HasOne("eRestoran.Services.Database.Drzava", "Drzava")
+                    b.HasOne("eRestoran.Services.Database.Drzava", null)
                         .WithMany("Korisnicis")
-                        .HasForeignKey("DrzavaId")
-                        .HasConstraintName("FK__Korisnici__Drzav__29572725");
+                        .HasForeignKey("DrzavaId");
 
-                    b.HasOne("eRestoran.Services.Database.Grad", "Grad")
+                    b.HasOne("eRestoran.Services.Database.Grad", null)
                         .WithMany("Korisnicis")
-                        .HasForeignKey("GradId")
-                        .HasConstraintName("FK__Korisnici__GradI__286302EC");
-
-                    b.Navigation("Drzava");
-
-                    b.Navigation("Grad");
+                        .HasForeignKey("GradId");
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.KorisniciUloge", b =>
@@ -393,15 +535,11 @@ namespace eRestoran.Services.Migrations
                     b.HasOne("eRestoran.Services.Database.Korisnici", "Korisnik")
                         .WithMany("KorisniciUloges")
                         .HasForeignKey("KorisnikId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("FK__Korisnici__Koris__4316F928");
 
                     b.HasOne("eRestoran.Services.Database.Uloge", "Uloga")
                         .WithMany("KorisniciUloges")
                         .HasForeignKey("UlogaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("FK__Korisnici__Uloga__440B1D61");
 
                     b.Navigation("Korisnik");

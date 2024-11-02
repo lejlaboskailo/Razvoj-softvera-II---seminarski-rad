@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 
 namespace eRestoran.Services.Database;
@@ -40,7 +42,6 @@ public partial class ERestoranContext : DbContext
     public virtual DbSet<Uplatum> Uplata { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=localhost,1433;Initial Catalog=eRestoran; user=sa;password=test; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -113,35 +114,32 @@ public partial class ERestoranContext : DbContext
 
             entity.Property(e => e.Ime).HasMaxLength(100);
             entity.Property(e => e.KorisnickoIme).HasMaxLength(100);
-            entity.Property(e => e.LozinkaHash).HasMaxLength(50);
-            entity.Property(e => e.LozinkaSalt).HasMaxLength(1);
+            entity.Property(e => e.LozinkaHash).HasMaxLength(256);
+            entity.Property(e => e.LozinkaSalt).HasMaxLength(256);
             entity.Property(e => e.Prezime).HasMaxLength(100);
 
-            entity.HasOne(d => d.Drzava).WithMany(p => p.Korisnicis)
-                .HasForeignKey(d => d.DrzavaId)
-                .HasConstraintName("FK__Korisnici__Drzav__29572725");
-
-            entity.HasOne(d => d.Grad).WithMany(p => p.Korisnicis)
-                .HasForeignKey(d => d.GradId)
-                .HasConstraintName("FK__Korisnici__GradI__286302EC");
         });
 
         modelBuilder.Entity<KorisniciUloge>(entity =>
         {
-            entity.HasKey(e => e.KorisnikUlogaId).HasName("PK__Korisnic__1608726E77415232");
+            entity.HasKey(e => e.KorisnikUlogaId).HasName("PK__KorisniciUloge__1608726E");
 
             entity.ToTable("KorisniciUloge");
 
             entity.Property(e => e.DatumIzmjene).HasColumnType("datetime");
 
-            entity.HasOne(d => d.Korisnik).WithMany(p => p.KorisniciUloges)
+            entity.HasOne(d => d.Korisnik)
+                .WithMany(p => p.KorisniciUloges)
                 .HasForeignKey(d => d.KorisnikId)
                 .HasConstraintName("FK__Korisnici__Koris__4316F928");
 
-            entity.HasOne(d => d.Uloga).WithMany(p => p.KorisniciUloges)
+            entity.HasOne(d => d.Uloga)
+                .WithMany(p => p.KorisniciUloges)
                 .HasForeignKey(d => d.UlogaId)
                 .HasConstraintName("FK__Korisnici__Uloga__440B1D61");
         });
+
+
 
         modelBuilder.Entity<Narudzba>(entity =>
         {
@@ -206,9 +204,11 @@ public partial class ERestoranContext : DbContext
                 .HasForeignKey(d => d.KorisnikId)
                 .HasConstraintName("FK__Uplata__Korisnik__3E52440B");
         });
-
+        modelBuilder.Seed();
         OnModelCreatingPartial(modelBuilder);
     }
+   
+    
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

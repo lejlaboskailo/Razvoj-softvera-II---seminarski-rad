@@ -11,18 +11,15 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public class StavkeNarudzbeService : BaseCRUDService<Model.StavkeNarudzbe, Database.StavkeNarudzbe, StavkeNarudzbeSearchObject, StavkeNarudzbeUpsertRequest, StavkeNarudzbeUpsertRequest>, IStavkeNrudzbeService
+    public class StavkeNarudzbeService : BaseCRUDService<Model.StavkeNarudzbe, Database.StavkeNarudzbe, StavkeNarudzbeSearchObject, StavkeNarudzbeInsertRequest, StavkeNarudzbeUpdateRequest>, IStavkeNrudzbeService
     {
-        private readonly ERestoranContext _context;
-        private readonly IMapper _mapper;
-
         public StavkeNarudzbeService(ERestoranContext context, IMapper mapper) : base(context, mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        [HttpPost]
+       /* [HttpPost]
         public async Task<List<Model.StavkeNarudzbe>> InsertAsync(List<StavkeNarudzbeUpsertRequest> request)
         {
             var entities = request.Select(i => _mapper.Map<StavkeNarudzbe>(i)).ToList();
@@ -36,6 +33,6 @@ namespace eRestoran.Services
 
             var model = entities.Select(i => _mapper.Map<Model.StavkeNarudzbe>(i)).ToList();
             return model;
-        }
+        }*/
     }
 }

@@ -4,12 +4,12 @@ part 'dojmovi.g.dart';
  
 @JsonSerializable()
 class Dojmovi{
-int? Id;
-int? Ocjena;
-String? Opis;
-int? JeloId;
-int? KorisnikId;
-Dojmovi(this.Id,this.Ocjena, this.Opis, this.JeloId,this.KorisnikId);
+int? id;
+int? ocjena;
+String? opis;
+int? jeloId;
+int? korisnikId;
+Dojmovi(this.id,this.ocjena, this.opis, this.jeloId,this.korisnikId);
  
 factory Dojmovi.fromJson(Map<String,dynamic> json)=>_$DojmoviFromJson(json);
  

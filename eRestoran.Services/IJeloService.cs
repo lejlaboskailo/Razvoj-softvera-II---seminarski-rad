@@ -1,4 +1,5 @@
-﻿using eRestoran.Model.SearchObjects;
+﻿using eRestoran.Model.Requests;
+using eRestoran.Model.SearchObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace eRestoran.Services
 {
     public interface IJeloService : ICRUDService<Model.Jelo, JeloSearchObject, JeloUpsertRequest, JeloUpsertRequest>
     {
+       
     }
 }

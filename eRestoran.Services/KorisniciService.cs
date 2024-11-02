@@ -15,15 +15,36 @@ namespace eRestoran.Services
 {
     public class KorisniciService : BaseCRUDService<Model.Korisnik, Database.Korisnici, KorisnikSearchRequests, KorisnikUpsertRequest, KorisnikUpsertRequest>, IKorisniciService
     {
-        public ERestoranContext Context { get; set; }
-        protected IMapper _mapper;
-
         public KorisniciService(ERestoranContext context, IMapper mapper) : base(context, mapper)
         {
-            Context = context;
+            _context = context;
             _mapper = mapper;
         }
+        public override async Task BeforeInsert(Korisnici entity, KorisnikUpsertRequest insert)
+        {
+            entity.LozinkaSalt = GenerateSalt();
+            entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, insert.Lozinka);
+        }
+        public static string GenerateSalt()
+        {
+            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+            var byteArray = new byte[16];
+            provider.GetBytes(byteArray);
+            return Convert.ToBase64String(byteArray);
+        }
+        public static string GenerateHash(string salt, string password)
+        {
+            byte[] src = Convert.FromBase64String(salt);
+            byte[] bytes = Encoding.Unicode.GetBytes(password);
+            byte[] dst = new byte[src.Length + bytes.Length];
 
+            System.Buffer.BlockCopy(src, 0, dst, 0, src.Length);
+            System.Buffer.BlockCopy(bytes, 0, dst, src.Length, bytes.Length);
+
+            HashAlgorithm algorithm = HashAlgorithm.Create("SHA1");
+            byte[] inArray = algorithm.ComputeHash(dst);
+            return Convert.ToBase64String(inArray);
+        }
 
         public async Task<Model.Korisnik> InsertAsync(KorisnikUpsertRequest request)
         {
@@ -32,11 +53,11 @@ namespace eRestoran.Services
             entity.LozinkaSalt = PasswordHelper.GenerateSalt();
             entity.LozinkaHash = PasswordHelper.GenerateHash(entity.LozinkaSalt, request.Lozinka);
 
-            await Context.Database.BeginTransactionAsync();
+            await _context.Database.BeginTransactionAsync();
 
-            Context.Korisnicis.Add(entity);
-            await Context.SaveChangesAsync();
-            await Context.Database.CommitTransactionAsync();
+            _context.Korisnicis.Add(entity);
+            await _context.SaveChangesAsync();
+            await _context.Database.CommitTransactionAsync();
 
             return _mapper.Map<Model.Korisnik>(entity);
 
@@ -53,15 +74,14 @@ namespace eRestoran.Services
 
         public async Task<Model.Korisnik> Login(string username, string password)
         {
-            var entity = await Context.Korisnicis.Include("KorisniciUloges.Uloga").FirstOrDefaultAsync(x => x.KorisnickoIme == username);
+            var entity = await _context.Korisnicis.Include(x=>x.KorisniciUloges).ThenInclude(y=>y.Uloga).FirstOrDefaultAsync(x => x.KorisnickoIme == username);
 
             if (entity == null)
             {
-                //throw new Exception("Pogrešan username ili password");
                 return null;
             }
 
-            var hash = PasswordHelper.GenerateHash(entity.LozinkaSalt, password);
+            var hash = GenerateHash(entity.LozinkaSalt, password);
 
             if (hash != entity.LozinkaHash)
             {

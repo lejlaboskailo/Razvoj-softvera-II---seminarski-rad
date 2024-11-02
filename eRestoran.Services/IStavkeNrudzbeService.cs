@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public interface IStavkeNrudzbeService:ICRUDService<Model.StavkeNarudzbe,StavkeNarudzbeSearchObject,StavkeNarudzbeUpsertRequest,StavkeNarudzbeUpsertRequest>
+    public interface IStavkeNrudzbeService:ICRUDService<Model.StavkeNarudzbe,StavkeNarudzbeSearchObject,StavkeNarudzbeInsertRequest,StavkeNarudzbeUpdateRequest>
     {
-        Task<List<Model.StavkeNarudzbe>> InsertAsync(List<StavkeNarudzbeUpsertRequest> request);
+        //Task<List<Model.StavkeNarudzbe>> InsertAsync(List<StavkeNarudzbeUpsertRequest> request);
     }
 }

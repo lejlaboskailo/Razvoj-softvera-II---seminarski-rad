@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public interface IKategorijaService : ICRUDService<Model.Kategorija, KategorijaSearchRequest, KategorijaUpsertRequest, KategorijaUpsertRequest>
+    public interface IKategorijaService : ICRUDService<Model.Kategorija, KategorijaSearchRequest, KategorijaInsertRequest, KategorijaUpdateRequest>
     {
-
     }
 }

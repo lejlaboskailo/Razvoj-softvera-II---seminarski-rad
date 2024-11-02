@@ -10,11 +10,8 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public class KategorijaService : BaseCRUDService<Model.Kategorija, Database.Kategorija, KategorijaSearchRequest, KategorijaUpsertRequest, KategorijaUpsertRequest>,IKategorijaService
+    public class KategorijaService : BaseCRUDService<Model.Kategorija, Database.Kategorija, KategorijaSearchRequest, KategorijaInsertRequest, KategorijaUpdateRequest>,IKategorijaService
     {
-        private readonly ERestoranContext _context;
-        private readonly IMapper _mapper;
-
         public KategorijaService(ERestoranContext context, IMapper mapper) : base(context, mapper)
         {
             _context = context;

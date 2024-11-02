@@ -1,9 +1,11 @@
+import 'package:erestoran_admin/providers/dojmovi_provider.dart';
 import 'package:erestoran_admin/providers/grad_provider.dart';
 import 'package:erestoran_admin/providers/jelo_provider.dart';
 import 'package:erestoran_admin/providers/kategorija_provider.dart';
 import 'package:erestoran_admin/providers/korisnik_provider.dart';
 import 'package:erestoran_admin/providers/narudzbu_provider.dart';
 import 'package:erestoran_admin/providers/stavkeNarudzbe_provider.dart';
+import 'package:erestoran_admin/screens/home_screen.dart';
 import 'package:erestoran_admin/screens/product_list_screen.dart';
 import 'package:erestoran_admin/utils/util.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,7 @@ void main() {
     ChangeNotifierProvider(create: (_)=> KategorijaProvider()),
     ChangeNotifierProvider(create: (_)=> stavkeNarudzbeProvider()),
     ChangeNotifierProvider(create: (_)=> NarudzbaProvider()),
+    ChangeNotifierProvider(create: (_)=> DojmoviProvider()),
 
 
 
@@ -161,9 +164,10 @@ class LoginPage extends StatelessWidget {
 
                         try {
                           await korisnikProvider.get();
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => const ProductListScreen()),
-                          );
+                         Navigator.of(context).pushReplacement(
+  MaterialPageRoute(builder: (context) => HomeScreen()),
+);
+
                         } on Exception catch (e) {
                           showDialog(
                             context: context,

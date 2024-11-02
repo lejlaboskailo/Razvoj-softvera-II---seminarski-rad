@@ -1,74 +1,88 @@
+using AutoMapper;
 using eRestoran;
 using eRestoran.Model.SearchObjects;
 using eRestoran.Services;
 using eRestoran.Services.Database;
-using eRestoran.Services.OrderStateMachine;
+using eRestoran.Services.NarudzbeStateMachine;
+using eRestoran.Services.Reports;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
+using System.Data.SqlClient;
 
-var builder = WebApplication.CreateBuilder(args); 
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("basicAuth", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
-    {
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
-        Scheme = "basic"
-    });
-    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
-    {
-           {
-               new OpenApiSecurityScheme
-               {
-                   Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "basicAuth" }
-               },
-               new string[]{}
-           }
-    });
-});
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IDrzavaService, DrzavaService>();
+builder.Services.AddScoped<IDojmoviService, DojmoviService>();
 builder.Services.AddScoped<IGradService, GradService>();
 builder.Services.AddScoped<IKorisniciService, KorisniciService>();
 builder.Services.AddScoped<IUlogeService, UlogeService>();
 builder.Services.AddScoped<IKategorijaService, KategorijaService>();
 builder.Services.AddScoped<IJeloService, JeloService>();
-builder.Services.AddScoped<IDojmoviService,DojmoviService>();
-builder.Services.AddScoped<INarudzbaService,NarudzbaService>();
+builder.Services.AddScoped<INarudzbaService, NarudzbaService>();
 builder.Services.AddScoped<IStatusNarudzbeService, StatusNarudzbeService>();
 builder.Services.AddScoped<IStavkeNrudzbeService, StavkeNarudzbeService>();
 builder.Services.AddScoped<IUplataService, UplataService>();
-
-builder.Services.AddTransient<BaseState>();
-builder.Services.AddTransient<AcceptedOrderState>();
-builder.Services.AddTransient<CanceledOrderState>();
-builder.Services.AddTransient<DeliveredOrderState>();
-builder.Services.AddTransient<FinishedOrderState>();
-builder.Services.AddTransient<InitialOrderState>();
-builder.Services.AddTransient<InProgressOrderState>();
-
-builder.Services.AddControllers();
-
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped<IReportService, ReportService>();
 
 
-builder.Services.AddAuthentication("BasicAuthentication")
 
-    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+builder.Services.AddTransient<BaseNarudzbaState>();
+builder.Services.AddTransient<InitialNarudzbaState>();
+builder.Services.AddTransient<DraftNarudzbeState>();
+builder.Services.AddTransient<ActiveNarudzbaState>();
+
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+    });
+builder.Services.AddEndpointsApiExplorer();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Basic", new OpenApiSecurityScheme()
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = "basic"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference 
+                { 
+                    Type = ReferenceType.SecurityScheme, 
+                    Id = "Basic"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
+
 
 var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
-var context = builder.Services.AddDbContext<ERestoranContext>(options =>
-            options.UseSqlServer(connectionstring));
+var context = builder.Services.AddDbContext<ERestoranContext>(options => options.UseSqlServer(connectionstring));
+builder.Services.AddAutoMapper(typeof(IKorisniciService));
+builder.Services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ContractResolver = new DefaultContractResolver
+    {
+        NamingStrategy = new CamelCaseNamingStrategy()
+    };
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
 var app = builder.Build();
 
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -76,9 +90,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllers();

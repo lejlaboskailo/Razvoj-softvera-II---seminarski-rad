@@ -9,7 +9,6 @@ namespace eRestoran.Controllers
     [Route("[controller]")]
     public class StatusNarudzbeController:BaseController<Model.StatusNarudzbe,StatusNarudzbeSearchObject>
     {
-        protected readonly IStatusNarudzbeService service;
         public StatusNarudzbeController(ILogger<BaseController<StatusNarudzbe, StatusNarudzbeSearchObject>> logger, IStatusNarudzbeService service) : base(logger, service)
         {
         }

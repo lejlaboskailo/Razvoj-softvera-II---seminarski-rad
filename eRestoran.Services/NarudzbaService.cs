@@ -2,8 +2,10 @@
 using eRestoran.Model.Requests;
 using eRestoran.Model.SearchObjects;
 using eRestoran.Services.Database;
-using eRestoran.Services.OrderStateMachine;
+using eRestoran.Services.NarudzbeStateMachine;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML;
+using Microsoft.ML.Data;
 using Microsoft.VisualStudio.Services.Users;
 using System;
 using System.Collections.Generic;
@@ -14,147 +16,166 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public class NarudzbaService:BaseCRUDService<Model.Narudzba,Narudzba,NarudzbaSearchObject,NarudzbaUpsertRequest,NarudzbaUpsertRequest>, INarudzbaService
+    public class NarudzbaService:BaseCRUDService<Model.Narudzba,Narudzba,NarudzbaSearchObject,NarudzbaInsertRequest,NarudzbaUpdateRequest>, INarudzbaService
     {
-        public BaseState _baseState { get; set; }
-
-        private readonly ERestoranContext _context;
-        private readonly IMapper _mapper;
-
-        public NarudzbaService(BaseState baseState,ERestoranContext context, IMapper mapper):base(context,mapper)
+        public BaseNarudzbaState _baseState { get; set; }
+        public NarudzbaService(BaseNarudzbaState baseState,ERestoranContext context, IMapper mapper):base(context,mapper)
         {
             _context = context;
             _mapper = mapper;
             _baseState= baseState;
         }
 
-        public Task<Model.Narudzba> Insert(NarudzbaUpsertRequest insert)
+        public override Task<Model.Narudzba> Insert(NarudzbaInsertRequest insert)
         {
-            var state = _baseState.CreateState("Initial");
+            var state = _baseState.CreateState("initial");
 
             return state.Insert(insert);
+
         }
+
+        public override async Task<Model.Narudzba> Update(int id, NarudzbaUpdateRequest update)
+        {
+            var entity = await _context.Narudzbas.FindAsync(id);
+
+            var state = _baseState.CreateState(entity.StateMachine);
+
+            return await state.Update(id, update);
+        }
+
+        public async Task<Model.Narudzba> Activate(int id)
+        {
+            var entity = await _context.Narudzbas.FindAsync(id);
+
+            var state = _baseState.CreateState(entity.StateMachine);
+
+            return await state.Activate(id);
+        }
+
+        public async Task<Model.Narudzba> Hide(int id)
+        {
+            var entity = await _context.Narudzbas.FindAsync(id);
+
+            var state = _baseState.CreateState(entity.StateMachine);
+
+            return await state.Hide(id);
+        }
+
         public async Task<List<string>> AllowedActions(int id)
         {
             var entity = await _context.Narudzbas.FindAsync(id);
-            var state = _baseState.CreateState(entity?.StateMachine ?? "Initial");
+            var state = _baseState.CreateState(entity?.StateMachine ?? "initial");
             return await state.AllowedActions();
         }
 
-        public async Task<Model.Narudzba> Cancel(int id)
+        static MLContext mlContext = null;
+        static object isLocked = new object();
+        static ITransformer model = null;
+
+        /*public List<Model.Narudzba> Recommend(int id)
         {
-            var entity = await _context.Narudzbas.FindAsync(id);
-            if (entity == null)
+            lock (isLocked)
             {
-                throw new UserException($"Order {id} does not exist");
-            }
-            var state = _baseState.CreateState(entity.StateMachine);
+                if (mlContext == null)
+                {
+                    mlContext = new MLContext();
 
-            return await state.Cancel(id);
-        }
-        public async Task<Model.Narudzba> Accept(int id)
-        {
-            var entity = await _context.Narudzbas.FindAsync(id);
-            if (entity == null)
-            {
-                throw new UserException($"Order {id} does not exist");
-            }
-            var state = _baseState.CreateState(entity.StateMachine);
+                    var tmpData = _context.Narudzbas.Include("StavkeNarudzbes").ToList();
 
-            return await state.Accept(id);
-        }
-        public async Task<Model.Narudzba> InProgress(int id)
-        {
-            var entity = await _context.Narudzbas.FindAsync(id);
-            if (entity == null)
-            {
-                throw new UserException($"Order {id} does not exist");
-            }
-            var state = _baseState.CreateState(entity.StateMachine);
+                    var data = new List<ProductEntry>();
 
-            return await state.InProgress(id);
-        }
-        public async Task<Model.Narudzba> Finish(int id)
-        {
-            var entity = await _context.Narudzbas.FindAsync(id);
-            if (entity == null)
-            {
-                throw new UserException($"Order {id} does not exist");
-            }
-            var state = _baseState.CreateState(entity.StateMachine);
 
-            return await state.Finish(id);
-        }
-        public async Task<Model.Narudzba> Deliver(int id)
-        {
-            var entity = await _context.Narudzbas.FindAsync(id);
-            if (entity == null)
-            {
-                throw new UserException($"Order {id} does not exist");
-            }
-            var state = _baseState.CreateState(entity.StateMachine);
+                    foreach (var x in tmpData)
+                    {
+                        if (x.StavkeNarudzbes.Count > 1)
+                        {
+                            var distinctItemId = x.StavkeNarudzbes.Select(y => y.JeloId).ToList();
 
-            return await state.Deliver(id);
-        }
+                            distinctItemId.ForEach(y =>
+                            {
+                                var relatedItems = x.StavkeNarudzbes.Where(z => z.JeloId != y);
 
-        /*  public override Model.Narudzba GetById(int id)
-          {
-              var result=_context.Narudzbas.Include(x=>x.Korisnik)
-                                             .Include(x=>x.StatusNarudzbe)
-                                             .FirstOrDefault(x=>x.Id==id);
-              return _mapper.Map<Model.Narudzba>(result);
-          }
-        */
-        public override IQueryable<Database.Narudzba> AddFilter(IQueryable<Database.Narudzba> query, NarudzbaSearchObject? search = null)
-        {
-            var filteredQuery = base.AddFilter(query, search);
-            if (search.Id != 0)
-            {
-                query = query.Where(x => x.Id == search.Id);
-            }
-            if (!string.IsNullOrWhiteSpace(search?.DatumNarudzbe.ToString()))
-            {
-                filteredQuery = filteredQuery.Where(x => x.DatumNarudzbe == search.DatumNarudzbe);
+                                foreach (var z in relatedItems)
+                                {
+                                    data.Add(new ProductEntry()
+                                    {
+                                        ProductID = (uint)y,
+                                        CoPurchaseProductID = (uint)z.JeloId,
+                                    });
+                                }
+                            });
+                        }
+                    }
+
+
+                    var traindata = mlContext.Data.LoadFromEnumerable(data);
+
+                    //STEP 3: Your data is already encoded so all you need to do is specify options for MatrxiFactorizationTrainer with a few extra hyperparameters
+                    //        LossFunction, Alpa, Lambda and a few others like K and C as shown below and call the trainer.
+                    MatrixFactorizationTrainer.Options options = new MatrixFactorizationTrainer.Options();
+                    options.MatrixColumnIndexColumnName = nameof(ProductEntry.ProductID);
+                    options.MatrixRowIndexColumnName = nameof(ProductEntry.CoPurchaseProductID);
+                    options.LabelColumnName = "Label";
+                    options.LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass;
+                    options.Alpha = 0.01;
+                    options.Lambda = 0.025;
+                    // For better results use the following parameters
+                    options.NumberOfIterations = 100;
+                    options.C = 0.00001;
+
+                    var est = mlContext.Recommendation().Trainers.MatrixFactorization(options);
+
+                    model = est.Fit(traindata);
+
+                }
             }
 
-            return filteredQuery;
-        }
-      /*  public override List<Database.Narudzba> Get(NarudzbaSearchObject search)
-        {
-            var query = _context.Narudzbas.AsQueryable();
-            if (search.Id != 0)
+
+
+
+            //prediction
+
+            var products = _context.Proizvodis.Where(x => x.ProizvodId != id);
+
+            var predictionResult = new List<Tuple<Database.Proizvodi, float>>();
+
+            foreach (var product in products)
             {
-                query = query.Where(x => x.Id == search.Id);
-            }
-            if (search.DatumNarudzbe != null)
-            {
-                query = query.Where(x => x.DatumNarudzbe == search.DatumNarudzbe);
-            }
 
-            if (search.StatusNarudzbeId != 0)
-            {
-                query = query.Where(x => x.StatusNarudzbeId == StatusNarudzbeId);
-            }
+                var predictionengine = mlContext.Model.CreatePredictionEngine<ProductEntry, Copurchase_prediction>(model);
+                var prediction = predictionengine.Predict(
+                                         new ProductEntry()
+                                         {
+                                             ProductID = (uint)id,
+                                             CoPurchaseProductID = (uint)product.ProizvodId
+                                         });
 
-            if (search.KorisnikId != 0)
-            {
-                query = query.Where(x => x.KorisnikId == search.KorisnikId);
+
+                predictionResult.Add(new Tuple<Database.Proizvodi, float>(product, prediction.Score));
             }
 
-            var list = query.Include(x => x.Korisnik)
-                            .Include(x => x.StatusNarudzbe)
-                            .ToList();
 
-            return _mapper.Map<List<Model.Narudzba>>(list);
-        }
-      */
-        public async Task<Model.Narudzba> UpdateAsync(int id, NarudzbaUpsertRequest request)
-        {
-            var entity = _context.Narudzbas.Find(id);
-            entity.StatusNarudzbeId = request.StatusNarudzbeId;
+            var finalResult = predictionResult.OrderByDescending(x => x.Item2).Select(x => x.Item1).Take(3).ToList();
 
-            await _context.SaveChangesAsync();
-            return _mapper.Map<Model.Narudzba>(entity);
-        }
+            return _mapper.Map<List<Model.Proizvodi>>(finalResult);
+
+        }*/
+
+    }
+
+    public class Copurchase_prediction
+    {
+        public float Score { get; set; }
+    }
+
+    public class ProductEntry
+    {
+        [KeyType(count: 10)]
+        public uint ProductID { get; set; }
+
+        [KeyType(count: 10)]
+        public uint CoPurchaseProductID { get; set; }
+
+        public float Label { get; set; }
     }
 }

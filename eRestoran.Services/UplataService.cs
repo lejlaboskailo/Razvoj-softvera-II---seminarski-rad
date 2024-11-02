@@ -11,19 +11,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eRestoran.Services
 {
-    public class UplataService : BaseCRUDService<Model.Uplata, Database.Uplatum, UplataSearchObject, UplataUpsertRequest, UplataUpsertRequest>, IUplataService
+    public class UplataService : BaseCRUDService<Model.Uplata, Database.Uplatum, UplataSearchObject, UplataInsertRequest, UplateUpdateRequest>, IUplataService
     {
-        private readonly ERestoranContext _context;
-        private readonly IMapper _mapper;
-
-
-
         public UplataService(ERestoranContext context, IMapper mapper) : base(context, mapper)
         {
             _context = context;
             _mapper = mapper;
         }
-
         public override IQueryable<Database.Uplatum> AddFilter(IQueryable<Database.Uplatum> query, UplataSearchObject? search = null)
         {
             var filteredQuery = base.AddFilter(query, search);
@@ -35,14 +29,8 @@ namespace eRestoran.Services
             {
                 filteredQuery = filteredQuery.Where(x => x.KorisnikId.ToString() == korisnikIdString);
             }
-
             return filteredQuery;
         }
-
-
-
-
-
         public async Task<Model.Uplata> InsertAsync(UplataUpsertRequest request)
         {
             var uplata = new Uplatum()
@@ -53,12 +41,8 @@ namespace eRestoran.Services
                 KorisnikId = request.KorisnikId
             };
 
-
-
             await _context.Uplata.AddAsync(uplata);
             await _context.SaveChangesAsync();
-
-
 
             return _mapper.Map<Model.Uplata>(uplata);
         }

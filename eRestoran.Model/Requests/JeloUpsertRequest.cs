@@ -14,7 +14,8 @@ namespace eRestoran.Services
 
         [Range(0,double.MaxValue)]
         public decimal Cijena { get; set; }
-        public string Slika { get; set; }
+        public byte[] Slika { get; set; }
+        public byte[] SlikaThumb { get; set; }
         public int KategorijaId { get; set; }
     }
 }

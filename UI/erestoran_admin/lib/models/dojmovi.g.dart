@@ -7,17 +7,17 @@ part of 'dojmovi.dart';
 // **************************************************************************
 
 Dojmovi _$DojmoviFromJson(Map<String, dynamic> json) => Dojmovi(
-      json['Id'] as int?,
-      json['Ocjena'] as int?,
-      json['Opis'] as String?,
-      json['JeloId'] as int?,
-      json['KorisnikId'] as int?,
+      json['id'] as int?,
+      json['ocjena'] as int?,
+      json['opis'] as String?,
+      json['jeloId'] as int?,
+      json['korisnikId'] as int?,
     );
 
 Map<String, dynamic> _$DojmoviToJson(Dojmovi instance) => <String, dynamic>{
-      'Id': instance.Id,
-      'Ocjena': instance.Ocjena,
-      'Opis': instance.Opis,
-      'JeloId': instance.JeloId,
-      'KorisnikId': instance.KorisnikId,
+      'id': instance.id,
+      'ocjena': instance.ocjena,
+      'opis': instance.opis,
+      'jeloId': instance.jeloId,
+      'korisnikId': instance.korisnikId,
     };

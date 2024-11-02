@@ -12,22 +12,19 @@ namespace eRestoran.Services
 {
     public class GradService : BaseService<Model.Grad, Database.Grad, GradSearchObject>, IGradService
     {
-        
-   
         public GradService(ERestoranContext context, IMapper mapper)
             : base(context, mapper)
         {
 
         }
-
-
         public override IQueryable<Database.Grad> AddFilter(IQueryable<Database.Grad> query, GradSearchObject? search = null)
         {
+            var filteredQuery= base.AddFilter(query, search);
             if (!string.IsNullOrWhiteSpace(search?.Naziv))
             {
-                query = query.Where(x => x.Naziv.StartsWith(search.Naziv));
+                query = query.Where(x => x.Naziv.Contains(search.Naziv.ToLower()));
             }
-            return base.AddFilter(query, search);
+            return filteredQuery;
         }
 
 

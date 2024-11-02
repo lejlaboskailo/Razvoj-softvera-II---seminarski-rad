@@ -9,10 +9,10 @@ part of 'jelo.dart';
 Jelo _$JeloFromJson(Map<String, dynamic> json) => Jelo(
       json['id'] as int?,
       json['naziv'] as String?,
-      json['opis'] as String?,
-      (json['cijena'] as num?)?.toDouble(),
-      json['kategorijaId'] as int?,
       json['slika'] as String?,
+      (json['cijena'] as num?)?.toDouble(),
+      json['opis'] as String?,
+      json['kategorijaId'] as int?
     );
 
 Map<String, dynamic> _$JeloToJson(Jelo instance) => <String, dynamic>{

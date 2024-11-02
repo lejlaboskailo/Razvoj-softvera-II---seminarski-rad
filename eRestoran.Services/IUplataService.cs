@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public interface IUplataService : ICRUDService<Model.Uplata, UplataSearchObject, UplataUpsertRequest, UplataUpsertRequest>
+    public interface IUplataService : ICRUDService<Model.Uplata, UplataSearchObject, UplataInsertRequest, UplateUpdateRequest>
     {
     }
 }

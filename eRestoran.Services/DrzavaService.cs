@@ -15,26 +15,19 @@ namespace eRestoran.Services
 {
     public class DrzavaService : BaseService<Model.Drzava, Database.Drzava, DrzavaSearchObject>, IDrzavaService
     {
-
-
         public DrzavaService(ERestoranContext context, IMapper mapper)
             : base(context, mapper)
         {
 
         }
-
-
         public override IQueryable<Database.Drzava> AddFilter(IQueryable<Database.Drzava> query, DrzavaSearchObject? search = null)
         {
+            var filteredQuery= base.AddFilter(query, search);
             if (!string.IsNullOrWhiteSpace(search?.Naziv))
             {
-                query = query.Where(x => x.Naziv.StartsWith(search.Naziv));
+                query = query.Where(x => x.Naziv.Contains(search.Naziv.ToLower()));
             }
-            return base.AddFilter(query, search);
+            return filteredQuery;
         }
-
-
-
-
     }
 }

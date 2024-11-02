@@ -1,11 +1,15 @@
 import 'package:erestoran_admin/main.dart';
+import 'package:erestoran_admin/screens/dojmovi_list_screen.dart';
+import 'package:erestoran_admin/screens/home_screen.dart';
 import 'package:erestoran_admin/screens/kategorija_screen.dart';
+import 'package:erestoran_admin/screens/meni_screen.dart';
 import 'package:erestoran_admin/screens/narudzbe_list_screen.dart';
 import 'package:erestoran_admin/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:erestoran_admin/screens/product_list_screen.dart';
 import 'package:erestoran_admin/screens/grad_detail_screen.dart';
 import 'package:erestoran_admin/screens/grad_list_screen.dart';
+
 
  
 class MasterScreenWidget extends StatefulWidget {
@@ -24,6 +28,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
     return Scaffold(
       appBar: AppBar(
         title: widget.title_widget ?? Text(widget.title ?? ""),
+        
       ),
       drawer: Drawer(
         child: ListView(
@@ -31,8 +36,14 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
             ListTile(
               title: const Text("<-"),
               onTap: (){
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              title: const Text("Home screen"),
+              onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) =>  LoginPage()
+                  MaterialPageRoute(builder: (context) => HomeScreen()
                   )
                 );
               },
@@ -41,27 +52,46 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               title: const Text("Meni"),
               onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const ProductListScreen()
+                  MaterialPageRoute(builder: (context) => const MeniScreen()
                   )
                 );
               },
             ),
             ListTile(
-              title: const Text("Vrste jela"),
+              title: const Text("Evidencija narudzbi"),
               onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) =>  KategorijaListScreen()
+                  MaterialPageRoute(builder: (context) => NarudzbaListScreen()
                   )
                 );
               },
             ),
              ListTile(
-              title: const Text("Narudzbe"),
+              title: const Text("Evidencija obavjestenja"),
               onTap: (){
-                Navigator.of(context).push(
+                /*Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) =>  NarudzbaListScreen()
                   )
+                );*/
+              },
+              
+            ),
+             ListTile(
+              title: const Text("Pregled ocjena/dojmovi"),
+              onTap: (){
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) =>  DojmoiListScreen()
+                  )
                 );
+              },
+            ),
+             ListTile(
+              title: const Text("Izvjestaji"),
+              onTap: (){
+                /*Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) =>  NarudzbaListScreen()
+                  )
+                );*/
               },
             )
           ],

@@ -1,0 +1,214 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\narudzbestatemachine\\initialnarudzbastate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\narudzbestatemachine\\basenarudzbastate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\mapping\\profilemapping.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\requests\\narudzbainsertrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\narudzbaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\narudzbestatemachine\\activenarudzbastate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\basecrudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\narudzbestatemachine\\draftnarudzbastate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\inarudzbaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\controllers\\narudzbacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:controllers\\narudzbacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\narudzba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "NarudzbaInsertRequest.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\NarudzbaInsertRequest.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Requests\\NarudzbaInsertRequest.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\NarudzbaInsertRequest.cs",
+              "RelativeToolTip": "..\\eRestoran.Model\\Requests\\NarudzbaInsertRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-31T13:08:08.004Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ActiveNarudzbaState.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbeStateMachine\\ActiveNarudzbaState.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\NarudzbeStateMachine\\ActiveNarudzbaState.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbeStateMachine\\ActiveNarudzbaState.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\NarudzbeStateMachine\\ActiveNarudzbaState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-31T12:47:53.378Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAAFMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T22:25:24.992Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProfileMapping.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Mapping\\ProfileMapping.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Mapping\\ProfileMapping.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Mapping\\ProfileMapping.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Mapping\\ProfileMapping.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAjwEEAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T22:20:29.241Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "BaseCRUDService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\BaseCRUDService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\BaseCRUDService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\BaseCRUDService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\BaseCRUDService.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwBkAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T22:02:47.586Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NarudzbaService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbaService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\NarudzbaService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbaService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\NarudzbaService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T21:53:15.696Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BaseNarudzbaState.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbeStateMachine\\BaseNarudzbaState.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\NarudzbeStateMachine\\BaseNarudzbaState.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbeStateMachine\\BaseNarudzbaState.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\NarudzbeStateMachine\\BaseNarudzbaState.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAADwvw4AAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T21:42:04.492Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DraftNarudzbaState.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbeStateMachine\\DraftNarudzbaState.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\NarudzbeStateMachine\\DraftNarudzbaState.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbeStateMachine\\DraftNarudzbaState.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\NarudzbeStateMachine\\DraftNarudzbaState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T21:38:08.623Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "InitialNarudzbaState.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbeStateMachine\\InitialNarudzbaState.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\NarudzbeStateMachine\\InitialNarudzbaState.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbeStateMachine\\InitialNarudzbaState.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\NarudzbeStateMachine\\InitialNarudzbaState.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAwCQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T21:32:45.524Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "INarudzbaService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\INarudzbaService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\INarudzbaService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\INarudzbaService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\INarudzbaService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T21:31:38.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "NarudzbaController.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\NarudzbaController.cs",
+              "RelativeDocumentMoniker": "Controllers\\NarudzbaController.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\NarudzbaController.cs",
+              "RelativeToolTip": "Controllers\\NarudzbaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAxwB0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T13:57:59.03Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Narudzba.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Narudzba.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Narudzba.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Narudzba.cs",
+              "RelativeToolTip": "..\\eRestoran.Model\\Narudzba.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T12:15:04.633Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

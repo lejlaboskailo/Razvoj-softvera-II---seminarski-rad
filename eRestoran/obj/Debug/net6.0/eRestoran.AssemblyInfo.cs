@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("eRestoran")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f022ad22d3fc1839f8b90089495405654a43b3d4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33e333082841921b9ed6a2b687db8a5d9857a849")]
 [assembly: System.Reflection.AssemblyProductAttribute("eRestoran")]
 [assembly: System.Reflection.AssemblyTitleAttribute("eRestoran")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

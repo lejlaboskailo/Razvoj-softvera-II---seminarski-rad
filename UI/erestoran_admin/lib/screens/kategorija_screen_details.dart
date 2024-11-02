@@ -165,3 +165,4 @@ class _KategorijaDetailScreen extends State<KategorijaDetailScreen> {
     }
   }
 }
+

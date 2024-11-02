@@ -12,11 +12,9 @@ namespace eRestoran.Model
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public string ImePrezime { get; set; }
-        public int GradId { get; set; }
-        public int DrzavaId { get; set; }
         public string KorisnickoIme { get; set; }
         public string LozinkaHash { get; set; }
         public string LozinkaSalt { get; set; }
-        public virtual ICollection<KorisnikUloge> KorisniciUloges { get; } = new List<KorisnikUloge>();
+        public virtual ICollection<KorisniciUloge> KorisniciUloges { get; } = new List<KorisniciUloge>();
     }
 }

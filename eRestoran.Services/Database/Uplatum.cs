@@ -16,4 +16,5 @@ public partial class Uplatum
     public int? KorisnikId { get; set; }
 
     public virtual Korisnici? Korisnik { get; set; }
+    public string? NacinPlacanja { get; set; }
 }

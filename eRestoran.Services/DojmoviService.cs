@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public class DojmoviService : BaseCRUDService<Model.Dojmovi, Database.Dojmovi, DojmoviSearchObject,DojmoviUpsertRequest, DojmoviUpsertRequest>, IDojmoviService
+    public class DojmoviService : BaseCRUDService<Model.Dojmovi, Database.Dojmovi, DojmoviSearchObject,DojmoviInsertRequest, DojmoviUpsertRequest>, IDojmoviService
     {
         public DojmoviService(ERestoranContext context, IMapper mapper) : base(context, mapper)
         {
         }
+
     }
 }

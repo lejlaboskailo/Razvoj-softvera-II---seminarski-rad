@@ -11,10 +11,6 @@ public partial class Korisnici
 
     public string? Prezime { get; set; }
 
-    public int? GradId { get; set; }
-
-    public int? DrzavaId { get; set; }
-
     public string? KorisnickoIme { get; set; }
 
     public string? LozinkaHash { get; set; }
@@ -22,10 +18,6 @@ public partial class Korisnici
     public string? LozinkaSalt { get; set; }
 
     public virtual ICollection<Dojmovi> Dojmovis { get; set; } = new List<Dojmovi>();
-
-    public virtual Drzava? Drzava { get; set; }
-
-    public virtual Grad? Grad { get; set; }
 
     public virtual ICollection<KorisniciUloge> KorisniciUloges { get; set; } = new List<KorisniciUloge>();
 

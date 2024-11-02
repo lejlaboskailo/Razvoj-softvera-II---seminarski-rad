@@ -8,7 +8,7 @@ namespace eRestoran.Model.SearchObjects
 {
     public class DrzavaSearchObject : BaseSearchObject
     {
-        public string Naziv { get; set; }
+        public string? Naziv { get; set; }
 
     }
 }

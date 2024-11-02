@@ -9,16 +9,12 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public interface INarudzbaService : ICRUDService<Model.Narudzba, NarudzbaSearchObject, NarudzbaUpsertRequest, NarudzbaUpsertRequest>
+    public interface INarudzbaService : ICRUDService<Model.Narudzba, NarudzbaSearchObject, NarudzbaInsertRequest, NarudzbaUpdateRequest>
     {
-       /* List<Model.Narudzba> Get(NarudzbaSearchObject search);
-        Task<Model.Narudzba> UpdateAsync(int id, NarudzbaUpsertRequest request);
+        Task<Model.Narudzba> Activate(int id);
+
+        Task<Model.Narudzba> Hide(int id);
 
         Task<List<string>> AllowedActions(int id);
-        Task<Narudzba> Accept(int id);
-        Task<Narudzba> InProgress(int id);
-        Task<Narudzba> Finish(int id);
-        Task<Narudzba> Deliver(int id);
-        Task<Narudzba> Cancel(int id);*/
     }
 }
