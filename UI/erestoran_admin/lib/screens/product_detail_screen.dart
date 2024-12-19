@@ -1,251 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-/*
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:erestoran_admin/models/jelo.dart';
-import 'package:erestoran_admin/models/kategorija.dart';
-import 'package:erestoran_admin/providers/jelo_provider.dart';
-import 'package:erestoran_admin/providers/kategorija_provider.dart';
-import 'package:erestoran_admin/widgets/master_screen.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:provider/provider.dart';
-
-import '../models/search_result.dart';
-
-class ProductDetailScreen extends StatefulWidget {
-  Jelo? jelo;
-  ProductDetailScreen({Key? key, this.jelo}) : super(key: key);
-
-  @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
-}
-
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  final _formKey = GlobalKey<FormBuilderState>();
-  Map<String, dynamic> _initialValue = {};
-  late KategorijaProvider _kategorijaProvider;
-  late ProductProvider _productProvider;
-
-  SearchResult<Kategorija>? kategorijaResult;
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _initialValue = {
-      'sifra': widget.jelo?.id,
-      'naziv': widget.jelo?.naziv,
-      'cijena': widget.jelo?.cijena?.toString(),
-      'opis': widget.jelo?.opis,
-      'kategorijaId': widget.jelo?.kategorijaId?.toString(),
-      'slika': widget.jelo?.slika, // Dodaj sliku u inicijalne vrijednosti
-    };
-
-    _kategorijaProvider = context.read<KategorijaProvider>();
-    _productProvider = context.read<ProductProvider>();
-
-    initForm();
-  }
-
-  Future initForm() async {
-    kategorijaResult = await _kategorijaProvider.get();
-  
-    // Provjeri podatke
-    if (kategorijaResult == null || kategorijaResult!.result == null) {
-      print('Kategorija result je null ili prazan');
-      return;
-    }
-
-    // Ispisivanje itema
-    for (var item in kategorijaResult!.result) {
-      print('Dropdown item: ${item.id} - ${item.naziv}');
-    }
-
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MasterScreenWidget(
-      child: Column(
-        children: [
-          isLoading ? Container() : _buildForm(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    _formKey.currentState?.saveAndValidate();
-
-                    print(_formKey.currentState?.value);
-                    print(_formKey.currentState?.value['naziv']);
-
-                    var request = new Map.from(_formKey.currentState!.value);
-
-                    request['slika'] = _base64Image;
-
-                    print(request['slika']);
-                    
-                    try {
-                      if (widget.jelo == null) {
-                        await _productProvider.insert(request);
-                      } else {
-                        await _productProvider.update(widget.jelo!.id!, request);
-                      }
-                    } on Exception catch (e) {
-                      print('Error occurred: $e'); // Ovdje ispiši grešku za lakše debagiranje
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: Text("Error"),
-                          content: Text(e.toString()),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text("OK")
-                            )
-                          ],
-                        )
-                      );
-                    }
-                  },
-                 child: Text(widget.jelo == null ? "Sačuvaj" : "Uredi")
-                ),
-              )
-            ],
-          )
-        ],
-      ),
-      title: this.widget.jelo?.naziv ?? "Product details",
-    );
-  }
-
-  FormBuilder _buildForm() {
-    return FormBuilder(
-      key: _formKey,
-      initialValue: _initialValue,
-      child: Column(children: [
-        Row(
-          children: [
-            Expanded(
-              child: FormBuilderTextField(
-                decoration: InputDecoration(labelText: "Naziv"),
-                name: "naziv",
-              ),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: FormBuilderTextField(
-                decoration: InputDecoration(labelText: "Opis"),
-                name: "opis",
-              ),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: FormBuilderDropdown<String>(
-                name: 'kategorijaId',
-                decoration: InputDecoration(
-                  labelText: 'Kategorija',
-                ),
-                items: kategorijaResult?.result
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item.id.toString(),
-                          child: Text(
-                            item.naziv ?? "",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ))
-                    .toList() ?? [],
-                initialValue: _initialValue['kategorijaId'] ?? null,
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: FormBuilderTextField(
-                decoration: const InputDecoration(labelText: "Cijena"),
-                name: "cijena",
-              ),
-            ),
-          ],
-        ),
-        Row(
-  children: [
-    Expanded(
-      child: FormBuilderField(
-        name: 'imageId',
-        builder: (field) {
-          return InputDecorator(
-            decoration: InputDecoration(
-              label: _initialValue['slika'] != null
-                  ? Text('') 
-                  : Text('Odaberite sliku'), // Label za dodavanje slike
-              errorText: field.errorText,
-            ),
-            child: _initialValue['slika'] != null
-                ? Container(
-                    constraints: BoxConstraints(
-                      maxHeight: 200, // Ovdje postavi željenu maksimalnu visinu
-                      maxWidth: double.infinity,
-                    ),
-                    child: Image.network(
-                      _initialValue['slika'],
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : ListTile(
-                    leading: Icon(Icons.photo),
-                    title: Text("Select image"),
-                    trailing: Icon(Icons.file_upload),
-                    onTap: getImage,
-                    
-                  ),
-          );
-        },
-      ),
-    ),
-  ],
-)
-
-
-      ]),
-    );
-  }
-
-  File? _image;
-  String? _base64Image;
-
-  Future getImage() async {
-    var result = await FilePicker.platform.pickFiles(type: FileType.image);
-
-    if (result != null && result.files.single.path != null) {
-      _image = File(result.files.single.path!);
-      _base64Image = base64Encode(_image!.readAsBytesSync());
-      setState(() {
-        _initialValue['slika'] = _base64Image; // Update the image in the form's initial value
-      });
-    }
-  }
-}
-*/
-
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:erestoran_admin/models/jelo.dart';
@@ -253,15 +5,18 @@ import 'package:erestoran_admin/models/kategorija.dart';
 import 'package:erestoran_admin/providers/jelo_provider.dart';
 import 'package:erestoran_admin/providers/kategorija_provider.dart';
 import 'package:erestoran_admin/widgets/master_screen.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 import '../models/search_result.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Jelo? jelo;
-  ProductDetailScreen({Key? key, this.jelo}) : super(key: key);
+  final Function()? onProductUpdated; 
+
+  ProductDetailScreen({Key? key, this.jelo, this.onProductUpdated})
+      : super(key: key);
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -271,10 +26,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
   late KategorijaProvider _kategorijaProvider;
   late ProductProvider _productProvider;
-  
+
   SearchResult<Kategorija>? kategorijaResult;
   bool isLoading = true;
   String? _base64Image;
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -286,8 +42,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Future<void> initForm() async {
     kategorijaResult = await _kategorijaProvider.get();
-    
-    // Provjeri podatke
+
     if (kategorijaResult == null || kategorijaResult!.result == null) {
       print('Kategorija result je null ili prazan');
       return;
@@ -313,14 +68,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   onPressed: () async {
                     if (_formKey.currentState?.saveAndValidate() ?? false) {
                       var request = Map.from(_formKey.currentState!.value);
-                      request['slika'] = _base64Image;
+                      request['slika'] = _base64Image; 
 
                       try {
                         if (widget.jelo == null) {
                           await _productProvider.insert(request);
+                          _showSnackbar("Jelo je uspješno dodano.");
                         } else {
-                          await _productProvider.update(widget.jelo!.id!, request);
+                          await _productProvider.update(
+                              widget.jelo!.id!, request);
+                          _showSnackbar("Jelo je uspješno uređeno.");
                         }
+
+                        if (widget.onProductUpdated != null) {
+                          widget.onProductUpdated!();
+                        }
+
+                        Navigator.of(context)
+                            .pop(); 
                       } catch (e) {
                         print('Error occurred: $e');
                         _showErrorDialog(e.toString());
@@ -377,11 +142,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 name: 'kategorijaId',
                 decoration: InputDecoration(labelText: 'Kategorija'),
                 items: kategorijaResult?.result
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item.id.toString(),
-                          child: Text(item.naziv ?? ""),
-                        ))
-                    .toList() ?? [],
+                        .map((item) => DropdownMenuItem<String>(value: item.id.toString(), child: Text(item.naziv ?? "")))
+                        .toList() ?? [],
                 initialValue: widget.jelo?.kategorijaId?.toString(),
               ),
             ),
@@ -420,7 +182,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             leading: Icon(Icons.photo),
                             title: Text("Odaberite sliku"),
                             trailing: Icon(Icons.file_upload),
-                            onTap: getImage,
+                            onTap: _pickImage,
                           ),
                   );
                 },
@@ -428,16 +190,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
           ],
         ),
-      ]),
+      ]), 
     );
   }
 
-  Future<void> getImage() async {
-    var result = await FilePicker.platform.pickFiles(type: FileType.image);
-    if (result != null && result.files.single.path != null) {
-      var image = File(result.files.single.path!);
-      _base64Image = base64Encode(image.readAsBytesSync());
-      setState(() {});
+  Future<void> _pickImage() async {
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      final bytes = await pickedFile.readAsBytes();
+      setState(() {
+        _base64Image = base64Encode(bytes); 
+      });
     }
   }
 
@@ -456,4 +219,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
     );
   }
+
+  void _showSnackbar(String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.grey,
+      duration: Duration(seconds: 3),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 }
+

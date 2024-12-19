@@ -7,7 +7,7 @@ part of 'drzava.dart';
 // **************************************************************************
 
 Drzava _$DrzavaFromJson(Map<String, dynamic> json) => Drzava(
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['Naziv'] as String?,
     );
 

@@ -249,11 +249,11 @@ namespace eRestoran.Services
 
             if (!string.IsNullOrWhiteSpace(search?.Naziv))
             {
-                filter = filter.Where(w => w.Naziv.Contains(search.Naziv.ToLower()));
+                filter = filter.Where(w => w.Naziv.ToLower().Contains(search.Naziv.ToLower()));
             }
             if (!string.IsNullOrWhiteSpace(search?.KategorijaNaziv))
             {
-                filter = filter.Where(w => w.Kategorija.Naziv.Contains(search.KategorijaNaziv.ToLower()));
+                filter = filter.Where(w => w.Kategorija.Naziv.ToLower().Contains(search.KategorijaNaziv.ToLower()));
             }
             return filter;
         }

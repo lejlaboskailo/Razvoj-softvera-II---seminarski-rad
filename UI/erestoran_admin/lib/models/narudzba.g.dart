@@ -7,10 +7,10 @@ part of 'narudzba.dart';
 // **************************************************************************
 
 Narudzba _$NarudzbaFromJson(Map<String, dynamic> json) => Narudzba(
-      json['id'] as int?,
+      (json['id'] as num?)?.toInt(),
       json['datumNarudzbe'] as String?,
-      json['korisnikId'] as int?,
-      json['statusNarudzbeId'] as int?,
+      (json['korisnikId'] as num?)?.toInt(),
+      (json['statusNarudzbeId'] as num?)?.toInt(),
       json['stateMachine'] as String?,
     );
 

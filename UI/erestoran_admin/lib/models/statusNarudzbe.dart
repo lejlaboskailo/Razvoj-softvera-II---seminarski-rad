@@ -4,10 +4,10 @@ part 'statusNarudzbe.g.dart';
  
 @JsonSerializable()
 class StatusNarudzbe{
-int? Id;
-String? Naziv;
+int? id;
+String? naziv;
  
-StatusNarudzbe(this.Id,this.Naziv);
+StatusNarudzbe(this.id,this.naziv);
  
 factory StatusNarudzbe.fromJson(Map<String,dynamic> json)=>_$StatusNarudzbeFromJson(json);
  

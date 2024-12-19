@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public interface IUlogeService:IService<Model.Uloge,UlogeSearchObject>
+    public interface IUlogaService:IService<Model.Uloge,UlogeSearchObject>
     {
     }
 }

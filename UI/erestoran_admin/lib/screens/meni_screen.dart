@@ -692,7 +692,7 @@ class _MeniScreenState extends State<MeniScreen> {
         const SizedBox(width: 8),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.grey,
+            backgroundColor: Colors.grey,
           ),
           onPressed: () async {
             try {
@@ -711,7 +711,7 @@ class _MeniScreenState extends State<MeniScreen> {
         const SizedBox(width: 8),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.grey,
+            backgroundColor: Colors.grey,
           ),
           onPressed: () {
             Navigator.of(context).push(

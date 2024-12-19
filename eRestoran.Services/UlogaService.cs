@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public class UlogeService:BaseService<Model.Uloge,Database.Uloge,UlogeSearchObject>,IUlogeService
+    public class UlogaService:BaseService<Model.Uloge,Database.Uloge,UlogeSearchObject>,IUlogaService
     {
-        public UlogeService(ERestoranContext context, IMapper mapper):base(context,mapper)
+        public UlogaService(ERestoranContext context, IMapper mapper):base(context,mapper)
         {
         }
         

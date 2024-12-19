@@ -7,11 +7,11 @@ part of 'uplata.dart';
 // **************************************************************************
 
 Uplata _$UplataFromJson(Map<String, dynamic> json) => Uplata(
-      json['Id'] as int?,
-      json['Iznos'] as int?,
+      (json['Id'] as num?)?.toInt(),
+      (json['Iznos'] as num?)?.toInt(),
       json['BrojTransakcije'] as String?,
       json['DatumTransakcije'] as String?,
-      json['KorisnikId'] as int?,
+      (json['KorisnikId'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$UplataToJson(Uplata instance) => <String, dynamic>{

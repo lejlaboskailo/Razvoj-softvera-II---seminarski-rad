@@ -1,14 +1,20 @@
 import 'package:erestoran_admin/main.dart';
 import 'package:erestoran_admin/screens/dojmovi_list_screen.dart';
 import 'package:erestoran_admin/screens/home_screen.dart';
+import 'package:erestoran_admin/screens/izvjestaj_o_prometu_po_korisniku.dart';
+import 'package:erestoran_admin/screens/izvjestaj_o_prometu_screen.dart';
 import 'package:erestoran_admin/screens/kategorija_screen.dart';
+import 'package:erestoran_admin/screens/korisnik_profile_screen.dart';
 import 'package:erestoran_admin/screens/meni_screen.dart';
 import 'package:erestoran_admin/screens/narudzbe_list_screen.dart';
 import 'package:erestoran_admin/screens/product_detail_screen.dart';
+import 'package:erestoran_admin/screens/status_narudzba_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:erestoran_admin/screens/product_list_screen.dart';
 import 'package:erestoran_admin/screens/grad_detail_screen.dart';
 import 'package:erestoran_admin/screens/grad_list_screen.dart';
+
+
 
 
  
@@ -28,8 +34,20 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
     return Scaffold(
       appBar: AppBar(
         title: widget.title_widget ?? Text(widget.title ?? ""),
-        
+        actions: [
+          IconButton(
+            icon: Icon(Icons.person),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => KorisnikScreen()
+                  )
+                );
+              print("Login button pressed");
+            },
+          ),
+        ],        
       ),
+      
       drawer: Drawer(
         child: ListView(
           children: [
@@ -61,7 +79,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               title: const Text("Evidencija narudzbi"),
               onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => NarudzbaListScreen()
+                  MaterialPageRoute(builder: (context) => StatusNarudzbaScreen()
                   )
                 );
               },
@@ -86,17 +104,27 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               },
             ),
              ListTile(
-              title: const Text("Izvjestaji"),
+              title: const Text("Izvjestaj o uplatama po korisniku"),
               onTap: (){
-                /*Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) =>  NarudzbaListScreen()
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => UplatePoKorisnikuReport()
                   )
-                );*/
+                );
+              },
+            ),
+            ListTile(
+              title: const Text("Izvjestaj o prometu po korisniku"),
+              onTap: (){
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => PrometPoKorisnikuReport()
+                  )
+                );
               },
             )
           ],
         ),
       ),
+      
       body: widget.child,
     );
   }

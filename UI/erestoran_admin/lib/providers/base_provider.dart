@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:erestoran_admin/models/promet_po_korisniku.dart';
 import 'package:erestoran_admin/models/search_result.dart';
+import 'package:erestoran_admin/models/uplata_po_korisniku.dart';
 import 'package:erestoran_admin/utils/util.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,9 +11,11 @@ abstract class BaseProvider<T> with ChangeNotifier{
   static String? _baseUrl;
 
   final String _endpoint;
+  String? totalUrl;
 
   BaseProvider(String endpoint) : _endpoint = endpoint {
     _baseUrl = const String.fromEnvironment("baseUrl", defaultValue: "http://localhost:7002/");
+    totalUrl= "$_baseUrl$endpoint";
   }
  
 
@@ -133,6 +137,47 @@ if(isValidResponse(response)){
 
     return headers;
   }
+
+Future<List<UplataPoKorisniku>> fetchUplate() async {
+    final response = await http.get(Uri.parse('$_baseUrl$_endpoint'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map((item) => UplataPoKorisniku.fromJson(item)).toList();
+    } else {
+      throw Exception("Failed to load data");
+    }
+  }
+/*
+  Future<List<PrometPoKorisniku>> fetchPromet() async {
+    final response = await http.get(Uri.parse('$_baseUrl$_endpoint'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map((item) => PrometPoKorisniku.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+*/
+Future<List<PrometPoKorisniku>> fetchPromet() async {
+  print("Zapocet API poziv na URL: $_baseUrl$_endpoint");
+
+  final response = await http.get(Uri.parse('$_baseUrl$_endpoint'));
+
+  print("Primljen odgovor sa statusnim kodom: ${response.statusCode}");
+  if (response.statusCode == 200) {
+    List<dynamic> data = json.decode(response.body);
+
+    print("Podaci primljeni sa servera: $data");
+
+    return data.map((item) => PrometPoKorisniku.fromJson(item)).toList();
+  } else {
+    print("Greška prilikom preuzimanja podataka: ${response.body}");
+    throw Exception('Failed to load data');
+  }
+}
+
  
    String getQueryString(Map params,
       {String prefix = '&', bool inRecursion = false}) {

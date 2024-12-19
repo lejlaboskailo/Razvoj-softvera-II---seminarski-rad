@@ -4,9 +4,12 @@ import 'package:erestoran_admin/providers/jelo_provider.dart';
 import 'package:erestoran_admin/providers/kategorija_provider.dart';
 import 'package:erestoran_admin/providers/korisnik_provider.dart';
 import 'package:erestoran_admin/providers/narudzbu_provider.dart';
+import 'package:erestoran_admin/providers/statusNarudzbe_provider.dart';
 import 'package:erestoran_admin/providers/stavkeNarudzbe_provider.dart';
+import 'package:erestoran_admin/providers/uloga_provider.dart';
 import 'package:erestoran_admin/screens/home_screen.dart';
 import 'package:erestoran_admin/screens/product_list_screen.dart';
+import 'package:erestoran_admin/screens/status_narudzba_screen.dart';
 import 'package:erestoran_admin/utils/util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +24,10 @@ void main() {
     ChangeNotifierProvider(create: (_)=> stavkeNarudzbeProvider()),
     ChangeNotifierProvider(create: (_)=> NarudzbaProvider()),
     ChangeNotifierProvider(create: (_)=> DojmoviProvider()),
+    ChangeNotifierProvider(create: (_)=> UlogaProvider()),
+    ChangeNotifierProvider(create: (_)=> StatusNarudzbeProvider()),
+
+
 
 
 
@@ -115,84 +122,183 @@ class MyMaterialApp extends StatelessWidget {
   }
 }
 
-class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  late TextEditingController _usernameController;
+  late TextEditingController _passwordController;
+  late KorisnikProvider _korisnikProvider;
+  int? loggedInUserID;
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _login() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    var username = _usernameController.text;
+    var password = _passwordController.text;
+
+    Authorization.username = username;
+    Authorization.password = password;
+
+    try {
+      Authorization.korisnik = await _korisnikProvider.Authenticate();
+
+      if (Authorization.korisnik?.korisniciUloges
+              .any((role) => role.uloga?.naziv == "Admin") ==
+          true) {
+        setState(() {
+          loggedInUserID = Authorization.korisnik?.id;
+        });
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(),
+          ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            content: Text(
+                "Vaš korisnički račun nema permisije za pristup admin panelu!"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              )
+            ],
+          ),
+        );
+      }
+    } on Exception {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                content: Text("Pogrešno korisničko ime ili lozinka!"),
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text("OK"))
+                ],
+              ));
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Access the KorisnikProvider instance from the context
-    final korisnikProvider = Provider.of<KorisnikProvider>(context, listen: false);
+    _korisnikProvider = context.read<KorisnikProvider>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
-      body: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 400, maxHeight: 400),
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Image.asset("assets/images/slika1.jpg", width: 100, height: 100),
-                  TextField(
-                    decoration: const InputDecoration(
-                        labelText: "Username", prefixIcon: Icon(Icons.email)),
-                    controller: _usernameController,
+        appBar: AppBar(
+          title: Text("Login Admin!"),
+        ),
+        body: 
+          Center(
+            child: Container(
+              constraints: BoxConstraints(maxWidth: 400, maxHeight: 500),
+              child: Container(
+                color:
+                    const Color.fromARGB(255, 202, 202, 202).withOpacity(0.7),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                       "assets/images/slika1.jpg",
+                        height: 200,
+                        width: 300,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Color(0x298031CC),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            labelText: "Username",
+                            labelStyle: TextStyle(color: Colors.black),
+                            prefixIcon:
+                                Icon(Icons.account_circle, color: Colors.black),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 12),
+                          ),
+                          controller: _usernameController,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Color(0x298031CC),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            labelStyle: TextStyle(color: Colors.black),
+                            prefixIcon:
+                                Icon(Icons.password, color: Colors.black),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 12),
+                          ),
+                          controller: _passwordController,
+                          obscureText: true,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      _isLoading
+                          ? CircularProgressIndicator()
+                          : ElevatedButton(
+                              onPressed: _login,
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
+                              ),
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            )
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    decoration: const InputDecoration(
-                        labelText: "Password",
-                        prefixIcon: Icon(Icons.password)),
-                    controller: _passwordController,
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                      onPressed: () async {
-                        var username = _usernameController.text;
-                        var password = _passwordController.text;
-
-                        print("login proceed $username $password");
-
-                        Authorization.username = username;
-                        Authorization.password = password;
-
-                        try {
-                          await korisnikProvider.get();
-                         Navigator.of(context).pushReplacement(
-  MaterialPageRoute(builder: (context) => HomeScreen()),
-);
-
-                        } on Exception catch (e) {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: const Text("Error"),
-                              content: Text(e.toString()),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text("OK"),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                      },
-                      child: const Text("Login"))
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
-    );
-    
-  } 
+        );
+  }
 }
- 

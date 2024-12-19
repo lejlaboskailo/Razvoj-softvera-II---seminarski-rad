@@ -8,7 +8,6 @@ import 'package:erestoran_admin/models/kategorija.dart';
 import 'package:erestoran_admin/providers/jelo_provider.dart';
 import 'package:erestoran_admin/providers/kategorija_provider.dart';
 import 'package:erestoran_admin/widgets/master_screen.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -153,7 +152,7 @@ class _KategorijaDetailScreen extends State<KategorijaDetailScreen> {
   File? _image;
   String? _base64Image;
 
-  Future getImage() async {
+ /* Future getImage() async {
     var result = await FilePicker.platform.pickFiles(type: FileType.image);
 
     if (result != null && result.files.single.path != null) {
@@ -163,6 +162,6 @@ class _KategorijaDetailScreen extends State<KategorijaDetailScreen> {
         _initialValue['slika'] = _base64Image; // Update the image in the form's initial value
       });
     }
-  }
+  }*/
 }
 

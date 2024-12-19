@@ -1,15 +1,17 @@
+import 'package:erestoran_admin/models/korisnik_uloga.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'korisnik.g.dart';
 
 @JsonSerializable()
 class Korisnik{
-int? Id;
-String? Ime;
-String? Prezime;
-String? KorisnickoIme;
+int? id;
+String? ime;
+String? prezime;
+String? korisnickoIme;
+List<KorisnikUloga> korisniciUloges;
 
-Korisnik(this.Id,this.Ime,this.Prezime,this.KorisnickoIme);
+Korisnik({this.id,this.ime,this.prezime,this.korisnickoIme, this.korisniciUloges = const []});
 
 factory Korisnik.fromJson(Map<String,dynamic> json)=>_$KorisnikFromJson(json);
 

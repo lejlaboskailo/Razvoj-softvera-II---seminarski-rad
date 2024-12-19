@@ -3,6 +3,7 @@ using eRestoran.Model;
 using eRestoran.Model.Requests;
 using eRestoran.Model.SearchObjects;
 using eRestoran.Services;
+using eRestoran.Services.NarudzbeStateMachine;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -10,14 +11,39 @@ using System.Text;
 namespace eRestoran.Controllers
 {
     [Route("[controller]")]
-   // [AllowAnonymous]
+    //[AllowAnonymous]
     public class NarudzbaController:BaseCRUDController<Model.Narudzba,NarudzbaSearchObject,NarudzbaInsertRequest,NarudzbaUpdateRequest>
     {
         protected readonly INarudzbaService _service;
-        public NarudzbaController(ILogger<BaseController<Model.Narudzba, NarudzbaSearchObject>> logger, INarudzbaService service) : base(logger, service)
+        /*public NarudzbaController(ILogger<BaseController<Model.Narudzba, NarudzbaSearchObject>> logger, INarudzbaService service) : base(logger, service)
         {
         }
+        */
+         public NarudzbaController(ILogger<BaseController<Model.Narudzba, NarudzbaSearchObject>> logger, INarudzbaService service)
+         : base(logger, service)
+         {
+             _service = service ?? throw new ArgumentNullException(nameof(service));
+         }
 
+       
+        [HttpPut("{id}/activate")]
+        public virtual async Task<Narudzba> Activate(int id)
+        {
+            return await _service.Activate(id);
+        }
+
+        [HttpPut("{id}/hide")]
+        public virtual async Task<Narudzba> Hide(int id)
+        {
+            return await _service.Hide(id);
+        }
+
+        [HttpGet("{id}/allowedActions")]
+        public virtual async Task<List<string>> AllowedActions(int id)
+        {
+            return await _service.AllowedActions(id);
+        }
+        /*
         [HttpPut("{id}/activate")]
         public virtual async Task<Narudzba> Activate(int id)
         {
@@ -43,6 +69,8 @@ namespace eRestoran.Controllers
           {
               return await _service.AllowedActions(id);
           }
+        */
+        /*
 
           [HttpPut("{id}/accept")]
           public virtual async Task<Narudzba> Accept(int id)

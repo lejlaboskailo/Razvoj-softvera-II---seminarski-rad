@@ -8,12 +8,12 @@ part of 'stavkeNarudzbe.dart';
 
 StavkeNarudzbe _$StavkeNarudzbeFromJson(Map<String, dynamic> json) =>
     StavkeNarudzbe(
-      json['id'] as int?,
-      json['kolicina'] as int?,
-      json['cijena'] as int?,
-      json['jeloId'] as int?,
-      json['narudzbaId'] as int?,
-      json['ukupno'] as int?,
+      (json['id'] as num?)?.toInt(),
+      (json['kolicina'] as num?)?.toInt(),
+      (json['cijena'] as num?)?.toInt(),
+      (json['jeloId'] as num?)?.toInt(),
+      (json['narudzbaId'] as num?)?.toInt(),
+      (json['ukupno'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$StavkeNarudzbeToJson(StavkeNarudzbe instance) =>

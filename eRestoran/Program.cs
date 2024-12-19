@@ -18,7 +18,7 @@ builder.Services.AddScoped<IDrzavaService, DrzavaService>();
 builder.Services.AddScoped<IDojmoviService, DojmoviService>();
 builder.Services.AddScoped<IGradService, GradService>();
 builder.Services.AddScoped<IKorisniciService, KorisniciService>();
-builder.Services.AddScoped<IUlogeService, UlogeService>();
+builder.Services.AddScoped<IUlogaService, UlogaService>();
 builder.Services.AddScoped<IKategorijaService, KategorijaService>();
 builder.Services.AddScoped<IJeloService, JeloService>();
 builder.Services.AddScoped<INarudzbaService, NarudzbaService>();
@@ -29,10 +29,10 @@ builder.Services.AddScoped<IReportService, ReportService>();
 
 
 
-builder.Services.AddTransient<BaseNarudzbaState>();
-builder.Services.AddTransient<InitialNarudzbaState>();
-builder.Services.AddTransient<DraftNarudzbeState>();
-builder.Services.AddTransient<ActiveNarudzbaState>();
+builder.Services.AddScoped<BaseNarudzbaState>();
+builder.Services.AddScoped<InitialNarudzbaState>();
+builder.Services.AddScoped<DraftNarudzbeState>();
+builder.Services.AddScoped<ActiveNarudzbaState>();
 
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>

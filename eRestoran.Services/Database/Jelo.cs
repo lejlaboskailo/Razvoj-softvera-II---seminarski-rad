@@ -17,7 +17,7 @@ public partial class Jelo
     public int? KategorijaId { get; set; }
     
     public byte[]? Slika { get; set; }
-    public byte[]? SlikaThumb { get; set; }
+   // public byte[]? SlikaThumb { get; set; }
 
     public virtual ICollection<Dojmovi> Dojmovis { get; set; } = new List<Dojmovi>();
 

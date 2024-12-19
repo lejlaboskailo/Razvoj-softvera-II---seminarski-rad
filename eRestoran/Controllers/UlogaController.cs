@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Components;
 namespace eRestoran.Controllers
 {
     [Route("[controller]")]
-    public class UlogeController:BaseController<Model.Uloge,UlogeSearchObject>
+    public class UlogaController:BaseController<Model.Uloge,UlogeSearchObject>
     {
-        public UlogeController(ILogger<BaseController<Uloge, UlogeSearchObject>> logger, IUlogeService service) : base(logger, service)
+        public UlogaController(ILogger<BaseController<Uloge, UlogeSearchObject>> logger, IUlogaService service) : base(logger, service)
         {
         }
     }

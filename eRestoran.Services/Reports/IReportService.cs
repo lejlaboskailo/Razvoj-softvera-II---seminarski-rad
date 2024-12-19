@@ -9,7 +9,9 @@ namespace eRestoran.Services.Reports
 {
     public interface IReportService
     {
-        Task<IzvjestajOPrometu> DobiIzvjestajOPrometuAsync(int godina);
-        Task<List<Uplatum>> DobiIzvjestajOUplatamaAsync(int korisnikId);
+        List<UplatePoKorisniku> ReportUplatePoKorisniku();
+        List<PrometPoKorisniku> ReportPrometPoKorisniku();
+        
+
     }
 }

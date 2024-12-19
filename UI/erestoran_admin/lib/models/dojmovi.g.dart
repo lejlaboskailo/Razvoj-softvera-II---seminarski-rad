@@ -7,11 +7,11 @@ part of 'dojmovi.dart';
 // **************************************************************************
 
 Dojmovi _$DojmoviFromJson(Map<String, dynamic> json) => Dojmovi(
-      json['id'] as int?,
-      json['ocjena'] as int?,
+      (json['id'] as num?)?.toInt(),
+      (json['ocjena'] as num?)?.toInt(),
       json['opis'] as String?,
-      json['jeloId'] as int?,
-      json['korisnikId'] as int?,
+      (json['jeloId'] as num?)?.toInt(),
+      (json['korisnikId'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$DojmoviToJson(Dojmovi instance) => <String, dynamic>{

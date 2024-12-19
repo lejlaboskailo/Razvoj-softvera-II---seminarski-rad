@@ -790,38 +790,74 @@
     ]
   },
   {
-    "ContainingType": "eRestoran.Controllers.ReportController",
-    "Method": "PrintIzvjestajOUplatama",
-    "RelativePath": "Report/print-uplate/{korisnikId}",
-    "HttpMethod": "GET",
+    "ContainingType": "eRestoran.Controllers.NarudzbaController",
+    "Method": "Activate",
+    "RelativePath": "Narudzba/{id}/activate",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "korisnikId",
+        "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "eRestoran.Model.Narudzba",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
-    "ContainingType": "eRestoran.Controllers.ReportController",
-    "Method": "DobiIzvjestajOPrometu",
-    "RelativePath": "Report/promet",
+    "ContainingType": "eRestoran.Controllers.NarudzbaController",
+    "Method": "AllowedActions",
+    "RelativePath": "Narudzba/{id}/allowedActions",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "godina",
+        "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "eRestoran.Services.Reports.IzvjestajOPrometu",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "eRestoran.Controllers.NarudzbaController",
+    "Method": "Hide",
+    "RelativePath": "Narudzba/{id}/hide",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "eRestoran.Model.Narudzba",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -833,21 +869,45 @@
   },
   {
     "ContainingType": "eRestoran.Controllers.ReportController",
-    "Method": "DobiIzvjestajOUplatama",
-    "RelativePath": "Report/uplate/{korisnikId}",
+    "Method": "PrintIzvjestajOPrometu",
+    "RelativePath": "Report/print-promet",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "korisnikId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "eRestoran.Controllers.ReportController",
+    "Method": "GetPrometPoKorisniku",
+    "RelativePath": "Report/reportPrometPoKorisniku",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[eRestoran.Model.Uplata, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[eRestoran.Services.Reports.PrometPoKorisniku, eRestoran.Services, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "eRestoran.Controllers.ReportController",
+    "Method": "ReportUplatePoKorisniku",
+    "RelativePath": "Report/reportUplatePoKorisniku",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "eRestoran.Services.Reports.UplatePoKorisniku",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1051,7 +1111,7 @@
   {
     "ContainingType": "eRestoran.Controllers.BaseController\u00602[[eRestoran.Model.Uloge, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.UlogeSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Get",
-    "RelativePath": "Uloge",
+    "RelativePath": "Uloga",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1087,7 +1147,7 @@
   {
     "ContainingType": "eRestoran.Controllers.BaseController\u00602[[eRestoran.Model.Uloge, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.UlogeSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
-    "RelativePath": "Uloge/{id}",
+    "RelativePath": "Uloga/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

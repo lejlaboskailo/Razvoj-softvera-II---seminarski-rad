@@ -15,7 +15,7 @@ namespace eRestoran.Services.NarudzbeStateMachine
 {
     public class InitialNarudzbaState : BaseNarudzbaState
     {
-        public InitialNarudzbaState(ERestoranContext context, IMapper mapper, ServiceProvider serviceProvider) : base(context, mapper, serviceProvider)
+        public InitialNarudzbaState(ERestoranContext context, IMapper mapper, IServiceProvider serviceProvider) : base(context, mapper, serviceProvider)
         {
         }
 

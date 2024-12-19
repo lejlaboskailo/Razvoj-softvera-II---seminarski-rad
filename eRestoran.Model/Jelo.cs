@@ -17,7 +17,7 @@ namespace eRestoran.Model
         public decimal Cijena { get; set; }
         public int KategorijaId { get; set; }
        // public Kategorija Kategorija { get; set; }
-        //public byte[]? Slika { get; set; }
+       public byte[]? Slika { get; set; }
         //public byte[]? SlikaThumb { get; set; }
     }
 }

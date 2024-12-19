@@ -109,17 +109,6 @@ class _NarudzbaListScreen extends State<NarudzbaListScreen> {
             },
             child: const Text("Pretraga"),
           ),
-          const SizedBox(width: 8),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ProductDetailScreen(jelo: null),
-                ),
-              );
-            },
-            child: const Text("Dodaj"),
-          ),
         ],
       ),
     );
@@ -143,11 +132,10 @@ class _NarudzbaListScreen extends State<NarudzbaListScreen> {
             label: Text('Naziv Jela', style: TextStyle(fontStyle: FontStyle.italic)),
           ),
           DataColumn(
-            label: Text('Datum Narudžbe', style: TextStyle(fontStyle: FontStyle.italic)), // Promjena naziva kolone
+            label: Text('Datum Narudžbe', style: TextStyle(fontStyle: FontStyle.italic)),
           ),
         ],
         rows: stavkeResult?.result.map((StavkeNarudzbe e) {
-          // Provjerite da li jeloId postoji u mapi
           String nazivJela = jeloMap[e.jeloId.toString()] ?? 'Nepoznato';
           String datumNarudzbe = narudzbaMap[e.narudzbaId.toString()] ?? 'Nepoznato';
 
