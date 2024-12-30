@@ -1,0 +1,12 @@
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\bin\Debug\net8.0\eRestoran.Subscriber.deps.json
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\bin\Debug\net8.0\eRestoran.Subscriber.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\bin\Debug\net8.0\eRestoran.Subscriber.pdb
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\obj\Debug\net8.0\eRestoran.Subscriber.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\obj\Debug\net8.0\eRestoran.Subscriber.AssemblyInfoInputs.cache
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\obj\Debug\net8.0\eRestoran.Subscriber.AssemblyInfo.cs
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\obj\Debug\net8.0\eRestoran.Subscriber.csproj.CoreCompileInputs.cache
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\obj\Debug\net8.0\eRestoran.Subscriber.sourcelink.json
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\obj\Debug\net8.0\eRestoran.Subscriber.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\obj\Debug\net8.0\refint\eRestoran.Subscriber.dll
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\obj\Debug\net8.0\eRestoran.Subscriber.pdb
+C:\Users\HOME\Documents\GitHub\Razvoj-softvera-II---seminarski-rad\eRestoran.Subscriber\obj\Debug\net8.0\ref\eRestoran.Subscriber.dll

@@ -93,6 +93,32 @@
     ]
   },
   {
+    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Dojmovi, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.DojmoviSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.DojmoviInsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.DojmoviUpsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "Dojmovi/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "eRestoran.Model.Dojmovi",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "eRestoran.Controllers.BaseController\u00602[[eRestoran.Model.Dojmovi, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.DojmoviSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
     "RelativePath": "Dojmovi/{id}",
@@ -341,6 +367,32 @@
     ]
   },
   {
+    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Jelo, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.JeloSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Services.JeloUpsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Services.JeloUpsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "Jelo/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "eRestoran.Model.Jelo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "eRestoran.Controllers.BaseController\u00602[[eRestoran.Model.Jelo, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.JeloSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
     "RelativePath": "Jelo/{id}",
@@ -357,6 +409,32 @@
     "ReturnTypes": [
       {
         "Type": "eRestoran.Model.Jelo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "eRestoran.Controllers.JeloController",
+    "Method": "GetPreporucenaJela",
+    "RelativePath": "Jelo/preporuceno/{korisnikId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "korisnikId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[eRestoran.Model.Jelo, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -444,6 +522,32 @@
       {
         "Name": "update",
         "Type": "eRestoran.Model.Requests.KategorijaUpdateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "eRestoran.Model.Kategorija",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Kategorija, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KategorijaSearchRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KategorijaInsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KategorijaUpdateRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "Kategorija/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -579,6 +683,32 @@
     ]
   },
   {
+    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Korisnik, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorisnikSearchRequests, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorisnikUpsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorisnikUpsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "Korisnik/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "eRestoran.Model.Korisnik",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "eRestoran.Controllers.BaseController\u00602[[eRestoran.Model.Korisnik, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorisnikSearchRequests, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
     "RelativePath": "Korisnik/{id}",
@@ -639,6 +769,47 @@
       },
       {
         "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "eRestoran.Model.Korisnik",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "eRestoran.Controllers.KorisnikController",
+    "Method": "Register",
+    "RelativePath": "Korisnik/registration",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ime",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "prezime",
         "Type": "System.String",
         "IsRequired": false
       }
@@ -748,6 +919,32 @@
       {
         "Name": "update",
         "Type": "eRestoran.Model.Requests.NarudzbaUpdateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "eRestoran.Model.Narudzba",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Narudzba, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.NarudzbaSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.NarudzbaInsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.NarudzbaUpdateRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "Narudzba/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -1083,6 +1280,32 @@
     ]
   },
   {
+    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.StavkeNarudzbe, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.StavkeNarudzbeSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.StavkeNarudzbeInsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.StavkeNarudzbeUpdateRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "StavkeNarudzbe/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "eRestoran.Model.StavkeNarudzbe",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "eRestoran.Controllers.BaseController\u00602[[eRestoran.Model.StavkeNarudzbe, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.StavkeNarudzbeSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
     "RelativePath": "StavkeNarudzbe/{id}",
@@ -1248,6 +1471,32 @@
       {
         "Name": "update",
         "Type": "eRestoran.Model.Requests.UplateUpdateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "eRestoran.Model.Uplata",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Uplata, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.UplataSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.UplataInsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.UplateUpdateRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "Uplata/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

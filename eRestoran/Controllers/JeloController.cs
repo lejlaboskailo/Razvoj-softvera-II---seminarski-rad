@@ -24,10 +24,10 @@ namespace eRestoran.Controllers
         {
             _mapper = mapper;
         }
-        /*  [HttpGet("preporuceno/{korisnikId}")]
+          [HttpGet("preporuceno/{korisnikId}")]
           public List<Model.Jelo>GetPreporucenaJela(int korisnikId)
           {
-              return (service as IJeloService).GetPreporucenaJela(korisnikId);
-          }*/
+              return (_service as IJeloService).GetPreporucenaJela(korisnikId);
+          }
     }
 }

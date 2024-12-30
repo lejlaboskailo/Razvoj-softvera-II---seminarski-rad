@@ -36,6 +36,12 @@ namespace eRestoran.Controllers
 
             return ((IKorisniciService)_service).Login(usernamePassword.Substring(0, seperatorIndex), usernamePassword[(seperatorIndex + 1)..]);
         }
+        [HttpPost("registration")]
+        [AllowAnonymous]
+        public Task<Model.Korisnik> Register(string username, string password, string ime, string prezime)
+        {
+            return (_service as IKorisniciService).Register(username, password, ime, prezime);
+        }
 
     }
 }

@@ -60,6 +60,118 @@ namespace eRestoran.Services.Migrations
                             KorisnikId = 1002,
                             Ocjena = 5,
                             Opis = "odlicna dostava"
+                        },
+                        new
+                        {
+                            Id = 8001,
+                            JeloId = 5000,
+                            KorisnikId = 1002,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
+                        },
+                        new
+                        {
+                            Id = 8002,
+                            JeloId = 5000,
+                            KorisnikId = 1002,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
+                        },
+                        new
+                        {
+                            Id = 8003,
+                            JeloId = 5000,
+                            KorisnikId = 1002,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
+                        },
+                        new
+                        {
+                            Id = 8004,
+                            JeloId = 5000,
+                            KorisnikId = 1002,
+                            Ocjena = 3,
+                            Opis = "dostava ok"
+                        },
+                        new
+                        {
+                            Id = 8005,
+                            JeloId = 5000,
+                            KorisnikId = 1002,
+                            Ocjena = 3,
+                            Opis = "dostava ok"
+                        },
+                        new
+                        {
+                            Id = 8006,
+                            JeloId = 5000,
+                            KorisnikId = 1002,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
+                        },
+                        new
+                        {
+                            Id = 9007,
+                            JeloId = 5000,
+                            KorisnikId = 1001,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
+                        },
+                        new
+                        {
+                            Id = 9008,
+                            JeloId = 5000,
+                            KorisnikId = 1001,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
+                        },
+                        new
+                        {
+                            Id = 9009,
+                            JeloId = 5000,
+                            KorisnikId = 1001,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
+                        },
+                        new
+                        {
+                            Id = 9019,
+                            JeloId = 5000,
+                            KorisnikId = 1001,
+                            Ocjena = 3,
+                            Opis = "dostava"
+                        },
+                        new
+                        {
+                            Id = 9100,
+                            JeloId = 5000,
+                            KorisnikId = 1001,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
+                        },
+                        new
+                        {
+                            Id = 9101,
+                            JeloId = 5000,
+                            KorisnikId = 1007,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
+                        },
+                        new
+                        {
+                            Id = 9102,
+                            JeloId = 5000,
+                            KorisnikId = 1007,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
+                        },
+                        new
+                        {
+                            Id = 9103,
+                            JeloId = 5000,
+                            KorisnikId = 1007,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava"
                         });
                 });
 
@@ -259,8 +371,8 @@ namespace eRestoran.Services.Migrations
                             Id = 1001,
                             Ime = "Medzida",
                             KorisnickoIme = "admin",
-                            LozinkaHash = "Dm7W7GwlkYUiV2Dq0g8BCMJdjLU=",
-                            LozinkaSalt = "HRtGg0/iBYOAR6Quz9eiqw==",
+                            LozinkaHash = "uWYqS1fpg+eNnJzJQwwxcKno35I=",
+                            LozinkaSalt = "E+lIX07uCbrUhUoKkFdULw==",
                             Prezime = "Bojcic"
                         },
                         new
@@ -268,9 +380,18 @@ namespace eRestoran.Services.Migrations
                             Id = 1002,
                             Ime = "Ena",
                             KorisnickoIme = "mobile",
-                            LozinkaHash = "yWc8ppidG490UzkZzsgh3CdaAvk=",
-                            LozinkaSalt = "nNVZJ01fSK3wI0DLFcAmPA==",
+                            LozinkaHash = "Yx6T6rEQPT+U8704xTIA6L2njUY=",
+                            LozinkaSalt = "RoH+566s/mrzK+9a5qTRVg==",
                             Prezime = "Bojcic"
+                        },
+                        new
+                        {
+                            Id = 1007,
+                            Ime = "Lejla",
+                            KorisnickoIme = "korisnik",
+                            LozinkaHash = "9FbPOvtpMe86Dgf3yuSRusRh76c=",
+                            LozinkaSalt = "G/fqHCuB3Dx3wBfmJL7LTA==",
+                            Prezime = "Boskailo"
                         });
                 });
 
@@ -304,14 +425,14 @@ namespace eRestoran.Services.Migrations
                         new
                         {
                             KorisnikUlogaId = 1,
-                            DatumIzmjene = new DateTime(2024, 12, 6, 15, 9, 10, 561, DateTimeKind.Local).AddTicks(6153),
+                            DatumIzmjene = new DateTime(2024, 12, 30, 18, 22, 56, 726, DateTimeKind.Local).AddTicks(1230),
                             KorisnikId = 1001,
                             UlogaId = 1
                         },
                         new
                         {
                             KorisnikUlogaId = 2,
-                            DatumIzmjene = new DateTime(2024, 12, 6, 15, 9, 10, 561, DateTimeKind.Local).AddTicks(6210),
+                            DatumIzmjene = new DateTime(2024, 12, 30, 18, 22, 56, 726, DateTimeKind.Local).AddTicks(1283),
                             KorisnikId = 1002,
                             UlogaId = 2
                         });
@@ -350,7 +471,7 @@ namespace eRestoran.Services.Migrations
                         new
                         {
                             Id = 6000,
-                            DatumNarudzbe = new DateTime(2024, 12, 6, 15, 9, 10, 561, DateTimeKind.Local).AddTicks(6934),
+                            DatumNarudzbe = new DateTime(2024, 12, 30, 18, 22, 56, 726, DateTimeKind.Local).AddTicks(2065),
                             KorisnikId = 1001,
                             StateMachine = "poslano",
                             StatusNarudzbeId = 8010

@@ -10,6 +10,6 @@ namespace eRestoran.Services
 {
     public interface IJeloService : ICRUDService<Model.Jelo, JeloSearchObject, JeloUpsertRequest, JeloUpsertRequest>
     {
-       
+        List<Model.Jelo> GetPreporucenaJela(int korisnikId);
     }
 }

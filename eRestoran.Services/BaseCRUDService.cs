@@ -48,6 +48,23 @@ namespace eRestoran.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<T>(entity);
         }
+        public virtual async Task<T> Delete(int id)
+        {
+            var set = _context.Set<TDb>();
+            var entity =await set.FindAsync(id);
+            if (entity != null)
+            {
+                var tmp = entity;
+                _context.Remove(entity);
+                int result = _context.SaveChanges(); // Dodajte ovaj red za proveru rezultata brisanja
+                Console.WriteLine($"Delete result: {result}"); // Dodajte ovaj red za proveru rezultata brisanja
+                return _mapper.Map<T>(tmp);
+            }
+            else
+            {
+                return null;
+            }
+        }
 
     }
 }

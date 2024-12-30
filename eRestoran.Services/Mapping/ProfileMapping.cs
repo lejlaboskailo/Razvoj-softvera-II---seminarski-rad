@@ -24,7 +24,8 @@ namespace eRestoran.Services.Mapping
             CreateMap<Database.Drzava, Model.Drzava>();
             CreateMap<DojmoviSearchObject, Database.Dojmovi>();
 
-            CreateMap<Database.Korisnici, Model.Korisnik>();
+            CreateMap<Database.Korisnici, Model.Korisnik>().ReverseMap();
+
             CreateMap<KorisnikSearchRequests, Database.Korisnici>();
             CreateMap<KorisnikInsertRequest, Database.Korisnici>();
             CreateMap<KorisnikUpsertRequest, Database.Korisnici>();
@@ -66,42 +67,6 @@ namespace eRestoran.Services.Mapping
             
 
 
-            /* CreateMap<eRestoran.Services.Database.Drzava, eRestoran.Model.Drzava>();
-             CreateMap<eRestoran.Services.Database.Grad, eRestoran.Model.Grad>();
-             CreateMap<eRestoran.Services.Database.Korisnici, eRestoran.Model.Korisnik>();
-             CreateMap<eRestoran.Services.Database.Uloge, eRestoran.Model.Uloge>();
-             CreateMap<eRestoran.Services.Database.KorisniciUloge, eRestoran.Model.KorisnikUloge>();
-             CreateMap<eRestoran.Services.Database.Kategorija, eRestoran.Model.Kategorija>();
-             CreateMap<eRestoran.Services.Database.Status, eRestoran.Model.StatusNarudzbe>();
-             CreateMap<StatusNarudzbeSearchObject, Model.StatusNarudzbe>();
-
-             CreateMap<eRestoran.Services.Database.StavkeNarudzbe, Model.StavkeNarudzbe>();
-             CreateMap<StavkeNarudzbeSearchObject, Model.StavkeNarudzbe>();
-             CreateMap<StavkeNarudzbeUpsertRequest, eRestoran.Services.Database.StavkeNarudzbe>();
-             CreateMap<StavkeNarudzbeUpsertRequest, eRestoran.Services.Database.StavkeNarudzbe>();
-
-             CreateMap<eRestoran.Services.Database.Narudzba, Model.Narudzba>();
-             CreateMap<NarudzbaSearchObject, Model.Narudzba>();
-             CreateMap<NarudzbaUpsertRequest, eRestoran.Services.Database.Narudzba>();
-
-             CreateMap<eRestoran.Services.Database.Jelo, Model.Jelo>();
-             CreateMap<JeloSearchObject, eRestoran.Services.Database.Jelo>();*/
-
-            /*CreateMap<eRestoran.Services.Database.Jelo, Model.Jelo>()
-                .ForMember(x => x.Kategorija, db => db.MapFrom(src => src.Kategorija.Naziv))
-                .ReverseMap*/
-            /*CreateMap<JeloUpsertRequest, eRestoran.Services.Database.Jelo>();
-
-            CreateMap<eRestoran.Model.Requests.KategorijaUpsertRequest, eRestoran.Services.Database.Kategorija>();
-
-            CreateMap<eRestoran.Model.Requests.KorisnikUpsertRequest, eRestoran.Services.Database.Korisnici>();
-            CreateMap<eRestoran.Model.Requests.KorisnikUpsertRequest, eRestoran.Services.Database.Korisnici>();
-            CreateMap<eRestoran.Services.Database.Dojmovi, Model.Dojmovi>();
-            CreateMap<DojmoviUpsertRequest, eRestoran.Services.Database.Dojmovi>();
-            CreateMap<KorisnikUpsertRequest, eRestoran.Model.Korisnik>();
-
-            CreateMap<eRestoran.Services.Database.Uplatum, Model.Uplata>();
-            CreateMap<eRestoran.Model.Requests.UplataUpsertRequest, eRestoran.Services.Database.Uplatum>();*/
 
         }
     }

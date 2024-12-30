@@ -67,6 +67,19 @@ namespace eRestoran.Services.Database
             korisnik2.LozinkaHash = GenerateHash(korisnik2.LozinkaSalt, "test");
             modelBuilder.Entity<Korisnici>().HasData(korisnik2);
 
+            Services.Database.Korisnici korisnik3 = new Services.Database.Korisnici()
+            {
+                Id = 1007,
+                Ime = "Lejla",
+                Prezime = "Boskailo",
+                KorisnickoIme = "korisnik",
+                LozinkaSalt = GenerateSalt(),
+                LozinkaHash = GenerateHash(GenerateSalt(), "test"),
+            };
+            korisnik3.LozinkaSalt = GenerateSalt();
+            korisnik3.LozinkaHash = GenerateHash(korisnik3.LozinkaSalt, "test");
+            modelBuilder.Entity<Korisnici>().HasData(korisnik3);
+
             #endregion
 
             #region Dodavanje Uloga
@@ -226,7 +239,120 @@ namespace eRestoran.Services.Database
                      Opis = "odlicna dostava",
                      JeloId = 5000,
                      KorisnikId = 1002,
-                 }
+                 },
+                  new Dojmovi()
+                  {
+                      Id = 8001,
+                      Ocjena = 5,
+                      Opis = "odlicna dostava",
+                      JeloId = 5000,
+                      KorisnikId = 1002,
+                  },
+                   new Dojmovi()
+                   {
+                       Id = 8002,
+                       Ocjena = 5,
+                       Opis = "odlicna dostava",
+                       JeloId = 5000,
+                       KorisnikId = 1002,
+                   },
+                    new Dojmovi()
+                    {
+                        Id = 8003,
+                        Ocjena = 5,
+                        Opis = "odlicna dostava",
+                        JeloId = 5000,
+                        KorisnikId = 1002,
+                    },
+                     new Dojmovi()
+                     {
+                         Id = 8004,
+                         Ocjena = 3,
+                         Opis = "dostava ok",
+                         JeloId = 5000,
+                         KorisnikId = 1002,
+                     },
+                      new Dojmovi()
+                      {
+                          Id = 8005,
+                          Ocjena = 3,
+                          Opis = "dostava ok",
+                          JeloId = 5000,
+                          KorisnikId = 1002,
+                      },
+                       new Dojmovi()
+                       {
+                           Id = 8006,
+                           Ocjena = 5,
+                           Opis = "odlicna dostava",
+                           JeloId = 5000,
+                           KorisnikId = 1002,
+                       },
+                       new Dojmovi()
+                       {
+                           Id = 9007,
+                           Ocjena = 5,
+                           Opis = "odlicna dostava",
+                           JeloId = 5000,
+                           KorisnikId = 1001,
+                       },
+                       new Dojmovi()
+                       {
+                           Id = 9008,
+                           Ocjena = 5,
+                           Opis = "odlicna dostava",
+                           JeloId = 5000,
+                           KorisnikId = 1001,
+                       },
+                       new Dojmovi()
+                       {
+                           Id = 9009,
+                           Ocjena = 5,
+                           Opis = "odlicna dostava",
+                           JeloId = 5000,
+                           KorisnikId = 1001,
+                       },
+                       new Dojmovi()
+                       {
+                           Id = 9019,
+                           Ocjena = 3,
+                           Opis = "dostava",
+                           JeloId = 5000,
+                           KorisnikId = 1001,
+                       },
+                       new Dojmovi()
+                       {
+                           Id = 9100,
+                           Ocjena = 5,
+                           Opis = "odlicna dostava",
+                           JeloId = 5000,
+                           KorisnikId = 1001,
+                       },
+                        new Dojmovi()
+                        {
+                            Id = 9101,
+                            Ocjena = 5,
+                            Opis = "odlicna dostava",
+                            JeloId = 5000,
+                            KorisnikId = 1007,
+                        },
+                         new Dojmovi()
+                         {
+                             Id = 9102,
+                             Ocjena = 5,
+                             Opis = "odlicna dostava",
+                             JeloId = 5000,
+                             KorisnikId = 1007,
+                         },
+                          new Dojmovi()
+                          {
+                              Id = 9103,
+                              Ocjena = 5,
+                              Opis = "odlicna dostava",
+                              JeloId = 5000,
+                              KorisnikId = 1007,
+                          }
+
                  );
             #endregion
 

@@ -12,6 +12,8 @@ namespace eRestoran.Services
     {
         Task<Model.Korisnik> InsertAsync(KorisnikUpsertRequest korisnici);
         Task<Model.Korisnik> Login(string username, string password);
+        Task<Model.Korisnik> Register(string username, string password, string ime, string prezime);
+
 
     }
 }

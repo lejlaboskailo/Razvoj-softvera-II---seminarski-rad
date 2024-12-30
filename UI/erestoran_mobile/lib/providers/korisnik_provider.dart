@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:erestoran_mobile/models/korisnik.dart';
+import 'package:erestoran_mobile/models/korisnik_uloga.dart';
 import 'package:erestoran_mobile/providers/base_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -51,6 +52,42 @@ class KorisnikProvider extends BaseProvider<Korisnik> {
       return user;
     } else {
       throw Exception("Pogrešno korisničko ime ili lozinka");
+    }
+  }
+
+  Future<Korisnik?> Register({
+    required String username,
+    required String password,
+    required String ime,
+    required String prezime,
+    required List<KorisnikUloga> korisniciUloges,
+
+  }) async {
+    try {
+      var url = "$totalUrl/registration";  
+      var uri = Uri.parse(url);
+
+      var headers = createHeaders();
+      var body = jsonEncode({
+        'username': username,
+        'password': password,
+        'ime': ime,
+        'prezime': prezime,
+      });
+
+      var response = await http.post(uri, headers: headers, body: body);
+
+      if (isValidResponse(response)) {
+        var data = jsonDecode(response.body);
+        Korisnik newUser = fromJson(data);
+        return newUser;
+      } else {
+        print("Registracija neuspešna");
+        return null;
+      }
+    } catch (e) {
+      print("Greška tokom registracije: $e");
+      return null;
     }
   }
 

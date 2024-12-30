@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:erestoran_mobile/models/jelo.dart';
 import 'package:erestoran_mobile/models/search_result.dart';
 import 'package:erestoran_mobile/utils/util.dart';
 import 'package:flutter/material.dart';
@@ -167,4 +168,17 @@ if(isValidResponse(response)){
     });
     return query;
   }
+  
+ /* Future<List<Jelo>> getPreporucenaJela(int? korisnikId) async {
+  final url = Uri.parse('$totalUrl/preporuceno/$korisnikId');
+  
+  final response = await http.get(url);
+  
+  if (response.statusCode == 200) {
+    List<dynamic> data = jsonDecode(response.body);
+    return data.map((item) => Jelo.fromJson(item)).toList();
+  } else {
+    throw Exception('Failed to load recommended dishes');
+  }
+}*/
 }

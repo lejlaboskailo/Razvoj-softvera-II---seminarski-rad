@@ -214,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     _korisnikProvider = context.read<KorisnikProvider>();
-
+/*
     return Scaffold(
         appBar: AppBar(
           title: Text("Login Admin!"),
@@ -299,6 +299,130 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-        );
+        );*/
+
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Login"),
+          backgroundColor: Colors.orange,
+          elevation: 0,
+        ),
+        body: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.orange.shade100,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 70,
+                      backgroundImage: AssetImage("assets/images/slika1.jpg"),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "Welcome Back!",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange.shade700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Login to your account",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: "Username",
+                        labelStyle: TextStyle(color: Colors.black54),
+                        prefixIcon: Icon(Icons.account_circle, color: Colors.orange),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 16),
+                      ),
+                      controller: _usernameController,
+                    ),
+                    SizedBox(height: 24),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: "Password",
+                        labelStyle: TextStyle(color: Colors.black54),
+                        prefixIcon: Icon(Icons.lock, color: Colors.orange),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 16),
+                      ),
+                      controller: _passwordController,
+                      obscureText: true,
+                    ),
+                    SizedBox(height: 32),
+                    _isLoading
+                        ? Center(child: CircularProgressIndicator())
+                        : ElevatedButton(
+                            onPressed: _login,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.orange,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 50, vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+
+
+
   }
 }

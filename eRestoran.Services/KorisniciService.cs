@@ -90,6 +90,55 @@ namespace eRestoran.Services
 
             return _mapper.Map<Model.Korisnik>(entity);
         }
+        public async Task<Model.Korisnik> Register(string username, string password, string ime, string prezime)
+        {
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(ime) || string.IsNullOrEmpty(prezime))
+            {
+                throw new ArgumentException("Svi podaci moraju biti popunjeni.");
+            }
+
+            var existingUser = await _context.Korisnicis.FirstOrDefaultAsync(x => x.KorisnickoIme == username);
+            if (existingUser != null)
+            {
+                throw new Exception("Korisničko ime već postoji.");
+            }
+
+            var salt = GenerateSalt();
+            if (string.IsNullOrEmpty(salt))
+            {
+                throw new Exception("Greška pri generisanju salt-a.");
+            }
+
+            var hash = GenerateHash(salt, password);
+            if (string.IsNullOrEmpty(hash))
+            {
+                throw new Exception("Greška pri generisanju hash-a.");
+            }
+
+            var newUser = new Korisnik
+            {
+                KorisnickoIme = username,
+                LozinkaSalt = salt,
+                LozinkaHash = hash,
+                Ime = ime,
+                Prezime = prezime,
+            };
+
+            var newUserEntity = _mapper.Map<Database.Korisnici>(newUser);
+            _context.Korisnicis.Add(newUserEntity);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Greška prilikom dodavanja korisnika u bazu podataka.", ex);
+            }
+
+            return _mapper.Map<Model.Korisnik>(newUser);
+        }
+
 
 
     }

@@ -1,17 +1,25 @@
+import 'package:erestoran_mobile/providers/dojmovi_provider.dart';
+import 'package:erestoran_mobile/providers/kategorija_provider.dart';
 import 'package:erestoran_mobile/providers/korisnik_provider.dart';
+import 'package:erestoran_mobile/providers/meni_provider.dart';
 import 'package:erestoran_mobile/providers/uloga_provider.dart';
 import 'package:erestoran_mobile/screens/home_screen.dart';
+import 'package:erestoran_mobile/screens/registration.dart';
 import 'package:erestoran_mobile/utils/util.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_)=> KorisnikProvider()),
-    ChangeNotifierProvider(create: (_)=> UlogaProvider()),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => KorisnikProvider()),
+      ChangeNotifierProvider(create: (_) => UlogaProvider()),
+      ChangeNotifierProvider(create: (_) => MeniProvider()),
+      ChangeNotifierProvider(create: (_) => KategorijaProvider()),
+      ChangeNotifierProvider(create: (_) => DojmoviProvider()),
 
-  ],
+
+    ],
     child: const MyApp(),
   ));
 }
@@ -19,27 +27,11 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -58,6 +50,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late TextEditingController _usernameController;
   late TextEditingController _passwordController;
+  late TextEditingController _imecontroller;
+  late TextEditingController _prezimeController;
   late KorisnikProvider _korisnikProvider;
   int? loggedInUserID;
   bool _isLoading = false;
@@ -67,12 +61,16 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     _usernameController = TextEditingController();
     _passwordController = TextEditingController();
+    _imecontroller = TextEditingController();
+    _prezimeController = TextEditingController();
   }
 
   @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
+    _imecontroller.dispose();
+    _prezimeController.dispose();
     super.dispose();
   }
 
@@ -91,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
       Authorization.korisnik = await _korisnikProvider.Authenticate();
 
       if (Authorization.korisnik?.korisniciUloges
-              .any((role) => role.uloga?.naziv == "Korisnik") ==
+              ?.any((role) => role.uloga?.naziv == "Korisnik") ==
           true) {
         setState(() {
           loggedInUserID = Authorization.korisnik?.id;
@@ -142,98 +140,110 @@ class _LoginPageState extends State<LoginPage> {
     _korisnikProvider = context.read<KorisnikProvider>();
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Login korisnika!"),
-        ),
-        body: Stack(children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.9,
-              child: Image.asset(
-                "assets/images/welcomepage.jpg",
-                fit: BoxFit.cover,
-              ),
+      appBar: AppBar(
+        title: Text("Login korisnika!"),
+      ),
+      body: Stack(children: [
+        Positioned.fill(
+          child: Opacity(
+            opacity: 0.9,
+            child: Image.asset(
+              "assets/images/welcomepage.jpg",
+              fit: BoxFit.cover,
             ),
           ),
-          Center(
+        ),
+        Center(
+          child: Container(
+            constraints: BoxConstraints(maxWidth: 400, maxHeight: 500),
             child: Container(
-              constraints: BoxConstraints(maxWidth: 400, maxHeight: 500),
-              child: Container(
-                color:
-                    const Color.fromARGB(255, 202, 202, 202).withOpacity(0.7),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        "assets/images/logo.jpg",
-                        height: 200,
-                        width: 300,
+              color: const Color.fromARGB(255, 202, 202, 202).withOpacity(0.7),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/logo.jpg",
+                      height: 200,
+                      width: 300,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0x298031CC),
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Color(0x298031CC),
-                          borderRadius: BorderRadius.circular(5),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: "Username",
+                          labelStyle: TextStyle(color: Colors.black),
+                          prefixIcon:
+                              Icon(Icons.account_circle, color: Colors.black),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 12),
                         ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: "Username",
-                            labelStyle: TextStyle(color: Colors.black),
-                            prefixIcon:
-                                Icon(Icons.account_circle, color: Colors.black),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 12),
+                        controller: _usernameController,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0x298031CC),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: "Password",
+                          labelStyle: TextStyle(color: Colors.black),
+                          prefixIcon:
+                              Icon(Icons.password, color: Colors.black),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 12),
+                        ),
+                        controller: _passwordController,
+                        obscureText: true,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    _isLoading
+                        ? CircularProgressIndicator()
+                        : ElevatedButton(
+                            onPressed: _login,
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.white),
+                            ),
+                            child: Text(
+                              "Login",
+                              style: TextStyle(fontSize: 18, color: Colors.black),
+                            ),
                           ),
-                          controller: _usernameController,
-                        ),
+                    SizedBox(height: 10), 
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RegistrationPage()),
+                        );
+                      },
+                      child: Text(
+                        "Nemate račun? Registrujte se!",
+                        style: TextStyle(color: Colors.blue),
                       ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Color(0x298031CC),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: "Password",
-                            labelStyle: TextStyle(color: Colors.black),
-                            prefixIcon:
-                                Icon(Icons.password, color: Colors.black),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 12),
-                          ),
-                          controller: _passwordController,
-                          obscureText: true,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      _isLoading
-                          ? CircularProgressIndicator()
-                          : ElevatedButton(
-                              onPressed: _login,
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.white),
-                              ),
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.black),
-                              ),
-                            )
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
-        ]));
+        ),
+      ]),
+    );
   }
 }
