@@ -162,9 +162,9 @@ namespace eRestoran.Services
             }
         }*/
 
-        public List<Model.Jelo> GetPreporucenaJela(int korisnikId)
+        public List<Model.Jelo> GetPreporucenaJela()
         {
-            var korisnici = _context.Korisnicis.Where(e => e.Id != korisnikId).ToList();
+            var korisnici = _context.Korisnicis.ToList(); // Uzmite sve korisnike
             Dictionary<Database.Korisnici, List<Database.Dojmovi>> dojmovi = new Dictionary<Database.Korisnici, List<Database.Dojmovi>>();
 
             foreach (var korisnik in korisnici)
@@ -175,52 +175,55 @@ namespace eRestoran.Services
                 dojmovi.Add(korisnik, ocjene);
             }
 
-            var dojmoviKorisnik = _context.Dojmovis.Where(e => e.KorisnikId == korisnikId).ToList();
+            // Kombinovane preporuke za sve korisnike
+            var zajednickeOcjeneKorisnik = new List<Database.Dojmovi>();
+            var zajednickeOcjeneKorisnik2 = new List<Database.Dojmovi>();
+            var preporucenaJelaIds = new HashSet<int>();
 
-            if (dojmoviKorisnik == null || dojmoviKorisnik.Count == 0)
-                return null;
-
-            List<Database.Dojmovi> zajednickeOcjeneKorisnik = new List<Database.Dojmovi>();
-            List<Database.Dojmovi> zajednickeOcjeneKorisnik2 = new List<Database.Dojmovi>();
-
-            var preporucenaJelaIds = new List<int>();
-
-            foreach (var item in dojmovi)
+            foreach (var korisnik1 in dojmovi)
             {
-                foreach (var dojam in dojmoviKorisnik)
+                foreach (var korisnik2 in dojmovi)
                 {
-                    if (item.Value.Any(x => x.JeloId == dojam.JeloId))
-                    {
-                        zajednickeOcjeneKorisnik.Add(dojam);
-                        zajednickeOcjeneKorisnik2.Add(item.Value.FirstOrDefault(e => e.JeloId == dojam.JeloId));
-                    }
-                }
-                double slicnost = GetSlicnost(zajednickeOcjeneKorisnik, zajednickeOcjeneKorisnik2);
-                if (slicnost > 0.5)
-                {
-                    var dobroOcjenjenaJelaIds = dojmovi
-                        .Select(e => e.Value)
-                        .SelectMany(e => e)
-                        .Where(e => e.Ocjena >= 3)
-                        .Select(e => e.JeloId)
-                        .Where(e => !preporucenaJelaIds.Contains((int)e))
-                        .ToList();
+                    if (korisnik1.Key.Id == korisnik2.Key.Id) continue; // Preskočite poređenje istog korisnika
 
-                    dobroOcjenjenaJelaIds.ForEach(e => {
-                        if (!preporucenaJelaIds.Contains((int)e))
-                            preporucenaJelaIds.Add((int)e);
-                    });
+                    // Nađite zajedničke ocene između korisnika
+                    foreach (var ocjena1 in korisnik1.Value)
+                    {
+                        if (korisnik2.Value.Any(x => x.JeloId == ocjena1.JeloId))
+                        {
+                            zajednickeOcjeneKorisnik.Add(ocjena1);
+                            zajednickeOcjeneKorisnik2.Add(korisnik2.Value.FirstOrDefault(x => x.JeloId == ocjena1.JeloId));
+                        }
+                    }
+
+                    double slicnost = GetSlicnost(zajednickeOcjeneKorisnik, zajednickeOcjeneKorisnik2);
+                    if (slicnost > 0.5)
+                    {
+                        // Uzmite dobro ocenjena jela
+                        var dobroOcjenjenaJelaIds = korisnik2.Value
+                            .Where(e => e.Ocjena >= 3)
+                            .Select(e => e.JeloId)
+                            .ToList();
+
+                        foreach (var jeloId in dobroOcjenjenaJelaIds)
+                        {
+                            preporucenaJelaIds.Add((int)jeloId); // Dodajte u skup preporučenih jela
+                        }
+                    }
+
+                    zajednickeOcjeneKorisnik.Clear();
+                    zajednickeOcjeneKorisnik2.Clear();
                 }
-                zajednickeOcjeneKorisnik.Clear();
-                zajednickeOcjeneKorisnik2.Clear();
             }
 
             var preporucenaJela = _context.Set<Database.Jelo>()
                 .Where(x => preporucenaJelaIds.Contains(x.Id))
                 .ToList();
+
             var result = _mapper.Map<List<Model.Jelo>>(preporucenaJela);
             return result;
         }
+
 
         private double GetSlicnost(List<Database.Dojmovi> zajednickeOcjene1, List<Database.Dojmovi> zajednickeOcjene2)
         {

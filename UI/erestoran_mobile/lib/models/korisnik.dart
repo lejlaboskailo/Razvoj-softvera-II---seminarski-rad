@@ -9,9 +9,12 @@ int? id;
 String? ime;
 String? prezime;
 String? korisnickoIme;
-List<KorisnikUloga> korisniciUloges;
+String? telefon;
+String? email;
+String? password;
+List<KorisnikUloga>? korisniciUloges;
 
-Korisnik({this.id,this.ime,this.prezime,this.korisnickoIme, this.korisniciUloges = const []});
+Korisnik({this.id,this.ime,this.prezime,this.korisnickoIme,this.password, this.telefon,this.email, this.korisniciUloges = const []});
 
 factory Korisnik.fromJson(Map<String,dynamic> json)=>_$KorisnikFromJson(json);
 

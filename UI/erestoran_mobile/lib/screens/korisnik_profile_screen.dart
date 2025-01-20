@@ -36,7 +36,7 @@ class _KorisnikProfileScreen extends State<KorisnikProfileScreen> {
       var data = await _korisnikProvider.get();
       setState(() {
         korisnikResult = data.result.where((korisnik) {
-          return korisnik.korisniciUloges.any((uloga) => uloga.ulogaId == 2);
+          return korisnik.korisniciUloges!.any((uloga) => uloga.ulogaId == 2);
         }).toList();
       });
     } catch (e) {

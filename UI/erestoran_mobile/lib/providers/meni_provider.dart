@@ -26,6 +26,16 @@ class MeniProvider extends BaseProvider<Jelo> {
       throw Exception('Failed to load recommended dishes');
     }
   }
+  Future<List<Jelo>> fetchPreporucenaJela() async {
+  final response = await http.get(Uri.parse('http://localhost:7002/Jelo/preporuceno'));
+
+  if (response.statusCode == 200) {
+    final List<dynamic> data = json.decode(response.body);
+    return data.map((item) => Jelo.fromJson(item)).toList();
+  } else {
+    throw Exception('Failed to load recommended dishes');
+  }
+}
 
 
   

@@ -55,42 +55,37 @@ class KorisnikProvider extends BaseProvider<Korisnik> {
     }
   }
 
-  Future<Korisnik?> Register({
-    required String username,
-    required String password,
-    required String ime,
-    required String prezime,
-    required List<KorisnikUloga> korisniciUloges,
-
-  }) async {
-    try {
-      var url = "$totalUrl/registration";  
-      var uri = Uri.parse(url);
-
-      var headers = createHeaders();
-      var body = jsonEncode({
-        'username': username,
-        'password': password,
-        'ime': ime,
-        'prezime': prezime,
-      });
-
-      var response = await http.post(uri, headers: headers, body: body);
-
-      if (isValidResponse(response)) {
-        var data = jsonDecode(response.body);
-        Korisnik newUser = fromJson(data);
-        return newUser;
-      } else {
-        print("Registracija neuspešna");
-        return null;
-      }
-    } catch (e) {
-      print("Greška tokom registracije: $e");
-      return null;
-    }
+Future<String> register(String username, String password, String ime, String prezime) async {
+  if (username.isEmpty || password.isEmpty || ime.isEmpty || prezime.isEmpty) {
+    throw Exception("All fields must be filled.");
   }
 
-  
+  final String apiUrl = '${totalUrl}/registration?username=$username&password=$password&ime=$ime&prezime=$prezime';
+
+  final Map<String, String> headers = {
+    'Authorization': 'Basic YWRtaW46dGVzdA==', // Authorization header if needed
+  };
+
+  try {
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: headers,
+    );
+
+    print('Raw response: ${response.body}');
+
+    if (response.statusCode == 200) {
+      // Decode the JSON response if returned
+      final responseData = json.decode(response.body);
+      return 'Registration successful: ${responseData['korisnickoIme']}';
+    } else {
+      throw Exception('Error: ${response.body}');
+    }
+  } catch (error) {
+    print('Error during registration: $error');
+    throw Exception('Error during registration: $error');
+  }
+}
+ 
 }
 

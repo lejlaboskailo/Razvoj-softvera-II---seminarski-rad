@@ -8,6 +8,7 @@ import 'package:erestoran_admin/providers/statusNarudzbe_provider.dart';
 import 'package:erestoran_admin/providers/stavkeNarudzbe_provider.dart';
 import 'package:erestoran_admin/providers/uloga_provider.dart';
 import 'package:erestoran_admin/screens/home_screen.dart';
+import 'package:erestoran_admin/screens/korisnik_profile_screen.dart';
 import 'package:erestoran_admin/screens/product_list_screen.dart';
 import 'package:erestoran_admin/screens/status_narudzba_screen.dart';
 import 'package:erestoran_admin/utils/util.dart';
@@ -173,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
 
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => HomeScreen(),
+            builder: (context) => KorisnikScreen(),
           ),
         );
       } else {

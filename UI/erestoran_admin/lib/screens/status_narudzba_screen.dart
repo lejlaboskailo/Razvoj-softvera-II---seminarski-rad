@@ -144,7 +144,7 @@ String? _getKorisnikIme(int? korisnikId) {
 }
 */
 
-import 'dart:async';
+/*import 'dart:async';
 import 'package:erestoran_admin/models/korisnik.dart';
 import 'package:erestoran_admin/models/narudzba.dart';
 import 'package:erestoran_admin/models/search_result.dart';
@@ -326,6 +326,186 @@ class _StatusNarudzbaScreen extends State<StatusNarudzbaScreen> {
         ),
       ),
     );
+  }
+
+  String? _getKorisnikIme(int? korisnikId) {
+    var korisnik = korisnikResult?.result.firstWhere(
+      (k) => k.id == korisnikId,
+      orElse: () => Korisnik(id: 0, ime: 'Nepoznat korisnik'),
+    );
+    return korisnik?.ime;
+  }
+}
+*/
+
+import 'dart:async';
+import 'package:erestoran_admin/models/korisnik.dart';
+import 'package:erestoran_admin/models/narudzba.dart';
+import 'package:erestoran_admin/models/search_result.dart';
+import 'package:erestoran_admin/models/statusNarudzbe.dart';
+import 'package:erestoran_admin/providers/korisnik_provider.dart';
+import 'package:erestoran_admin/providers/narudzbu_provider.dart';
+import 'package:erestoran_admin/providers/statusNarudzbe_provider.dart';
+import 'package:erestoran_admin/widgets/master_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+class StatusNarudzbaScreen extends StatefulWidget {
+  @override
+  State<StatusNarudzbaScreen> createState() => _StatusNarudzbaScreen();
+}
+
+class _StatusNarudzbaScreen extends State<StatusNarudzbaScreen> {
+  late StatusNarudzbeProvider _statusNarudzbeProvider;
+  late NarudzbaProvider _narudzbaProvider;
+  late KorisnikProvider _korisnikProvider;
+
+  SearchResult<StatusNarudzbe>? result;
+  SearchResult<Narudzba>? narudzbaResult;
+  SearchResult<Korisnik>? korisnikResult;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _statusNarudzbeProvider = context.read<StatusNarudzbeProvider>();
+    _narudzbaProvider = context.read<NarudzbaProvider>();
+    _korisnikProvider = context.read<KorisnikProvider>();
+
+    _fetchInitialData();
+  }
+
+  Future<void> _fetchInitialData() async {
+    var data = await _statusNarudzbeProvider.get();
+    var narudzbaResults = await _narudzbaProvider.get();
+    var korisnikResults = await _korisnikProvider.get();
+
+    setState(() {
+      result = data;
+      narudzbaResult = narudzbaResults;
+      korisnikResult = korisnikResults;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MasterScreenWidget(
+      title_widget: Text(
+        "Status narudžbe",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        color: Colors.white,
+        width: double.infinity,  // Use full width of the screen
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (result == null || narudzbaResult == null || korisnikResult == null)
+              Center(child: CircularProgressIndicator())  // Loading indicator
+            else
+              _buildDataListView(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDataListView() {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: result?.result.map((StatusNarudzbe e) {
+              var filteredNarudzbe = narudzbaResult?.result.where((narudzba) {
+                return narudzba.statusNarudzbeId == e.id;
+              }).toList();
+
+              return Card(
+                elevation: 4,
+                margin: const EdgeInsets.only(bottom: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        e.naziv ?? "",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange[700],
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Broj narudžbi: ${filteredNarudzbe?.length ?? 0}',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.info_outline, color: Colors.orange[700]),
+                            onPressed: () {
+                              // Implement action for detail view
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      ..._buildNarudzbaDetails(filteredNarudzbe),
+                    ],
+                  ),
+                ),
+              );
+            }).toList() ?? [],
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildNarudzbaDetails(List<Narudzba>? filteredNarudzbe) {
+    return filteredNarudzbe?.map((narudzba) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Datum: ${narudzba.datumNarudzbe ?? "Nepoznato"}',
+                style: TextStyle(color: Colors.black54),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                'Korisnik: ${_getKorisnikIme(narudzba.korisnikId) ?? "Nepoznat korisnik"}',
+                style: TextStyle(color: Colors.black54),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                'Stanje: ${narudzba.stateMachine ?? "Nepoznato"}',
+                style: TextStyle(color: Colors.black54),
+              ),
+            ),
+          ],
+        ),
+      );
+    }).toList() ?? [];
   }
 
   String? _getKorisnikIme(int? korisnikId) {

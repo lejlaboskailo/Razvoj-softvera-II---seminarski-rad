@@ -168,6 +168,22 @@ if(isValidResponse(response)){
     });
     return query;
   }
+  Future<List<Jelo>> fetchRecommendedJelo() async {
+    try {
+      final response = await http.get(Uri.parse('$totalUrl/preporuceno'),
+          headers: createHeaders());
+      if (isValidResponse(response)) {
+        return (jsonDecode(response.body) as List)
+            .map((item) => Jelo.fromJson(item))
+            .toList();
+      } else {
+        throw Exception('Invalid response: ${response.body}');
+      }
+    } catch (e) {
+      print('Error fetching recommended doctors: $e');
+      rethrow;
+    }
+  }
   
  /* Future<List<Jelo>> getPreporucenaJela(int? korisnikId) async {
   final url = Uri.parse('$totalUrl/preporuceno/$korisnikId');

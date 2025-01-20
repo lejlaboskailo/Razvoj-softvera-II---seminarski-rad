@@ -71,7 +71,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               title: const Text("Preporucena jela"),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PreporucenaJelaScreen(korisnikId: 1002)));
+                    builder: (context) => RecommendedJeloScreen()));
               },
             ),
              ListTile(

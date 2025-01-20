@@ -20,5 +20,9 @@ namespace eRestoran.Model.Requests
 
         [Compare("Password", ErrorMessage = "Passwords do not match.")]
         public string PasswordPotvrda { get; set; }
+        public string? Telefon { get; set; }
+        public string? Email { get; set; }
+
+
     }
 }

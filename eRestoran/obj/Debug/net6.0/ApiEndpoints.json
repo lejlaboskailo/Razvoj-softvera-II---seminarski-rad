@@ -421,7 +421,7 @@
   {
     "ContainingType": "eRestoran.Controllers.JeloController",
     "Method": "GetPreporucenaJela",
-    "RelativePath": "Jelo/preporuceno/{korisnikId}",
+    "RelativePath": "Jelo/preporuceno",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -429,7 +429,7 @@
       {
         "Name": "korisnikId",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [

@@ -148,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Opacity(
             opacity: 0.9,
             child: Image.asset(
-              "assets/images/welcomepage.jpg",
+              "assets/images/tan.jpg",
               fit: BoxFit.cover,
             ),
           ),
@@ -157,19 +157,20 @@ class _LoginPageState extends State<LoginPage> {
           child: Container(
             constraints: BoxConstraints(maxWidth: 400, maxHeight: 500),
             child: Container(
-              color: const Color.fromARGB(255, 202, 202, 202).withOpacity(0.7),
+              color: const Color.fromARGB(255, 255, 255, 255),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
                     Image.asset(
-                      "assets/images/logo.jpg",
+                      "assets/images/loggoo.jpg",
                       height: 200,
                       width: 300,
+                      
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Color(0x298031CC),
+                        color: Color.fromARGB(41, 199, 135, 93),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: TextField(
@@ -190,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Color(0x298031CC),
+                        color: Color.fromARGB(41, 199, 135, 93),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: TextField(
@@ -229,12 +230,12 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RegistrationPage()),
+                              builder: (context) => RegistracijaPage()),
                         );
                       },
                       child: Text(
                         "Nemate račun? Registrujte se!",
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
                       ),
                     ),
                   ],
