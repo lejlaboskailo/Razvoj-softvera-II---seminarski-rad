@@ -2,18 +2,22 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 7002
-ENV ASPNETCORE_URLS=http://+:7002
-
+EXPOSE 80
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
+COPY["eRestoran/eRestoran.csproj", "eRestoran/"]
+RUN dotnet restore "eRestoran/eRestoran.csproj"
 COPY . .
+WORKDIR "/src/eRestoran"
+RUN dotnet build "eRestoran.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "eRestoran/eRestoran.csproj" -c Release -o /app
+RUN dotnet publish "eRestoran.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app .
+COPY --from=publish /app/publish .
 
 ENTRYPOINT ["dotnet", "eRestoran.dll"]

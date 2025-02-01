@@ -1,25 +1,62 @@
-
-/*import 'package:erestoran_admin/screens/meni_screen.dart';
-import 'package:erestoran_admin/screens/product_list_screen.dart';
+import 'package:erestoran_admin/models/grad.dart';
+import 'package:erestoran_admin/models/restoran.dart';
+import 'package:erestoran_admin/models/search_result.dart';
+import 'package:erestoran_admin/providers/grad_provider.dart';
+import 'package:erestoran_admin/providers/restoran_provider.dart';
+import 'package:erestoran_admin/screens/izvjestaj_o_prometu_po_korisniku.dart';
+import 'package:erestoran_admin/screens/izvjestaj_o_prometu_screen.dart';
+import 'package:erestoran_admin/screens/meni_screen.dart';
 import 'package:erestoran_admin/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
- 
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
- 
-class _HomeScreenState extends State<HomeScreen> {
 
- 
+class _HomeScreenState extends State<HomeScreen> {
+  late RestoranProvider _restoranProvider;
+  late GradProvider _gradProvider;
+
+  SearchResult<Restoran>? restoran;
+  SearchResult<Grad>? grad;
+
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-  
+    _restoranProvider = context.read<RestoranProvider>();
+    _gradProvider = context.read<GradProvider>();
+
+    _loadData();
+    _loadGrad();
   }
- 
- 
+
+  Future<void> _loadData() async {
+    var data = await _restoranProvider.get();
+    setState(() {
+      restoran = data;
+    });
+  }
+  Future<void> _loadGrad()async{
+    var data=await  _gradProvider.get();
+    setState(() {
+      grad=data;
+    });
+  }
+
+  String getGradNaziv(int? gradId) {
+  if (grad == null || grad!.result.isEmpty || gradId == null) return 'N/A';
+
+  var gradObj = grad!.result.firstWhere(
+    (g) => g.id == gradId,
+  );
+
+  return gradObj.naziv ?? 'N/A';
+}
+
+
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
@@ -32,8 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+
               Expanded(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(16.0),
@@ -41,31 +78,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _buildWelcomeCard(),
-                      SizedBox(height: 44), // Razmak između kartice i dugmeta
-                    Center(
-                      child: Container(
-                        width: double.infinity, // Proširuje dugme do ivica
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(vertical: 25.0), // Povećava visinu dugmeta
-                            backgroundColor: Colors.white.withOpacity(0.8), // Boja dugmeta s prozirnošću
+                      SizedBox(height: 20),
+                      Row(
+                        children: [
+                          _buildMeniCard(),
+                          _buildIzvjestajCard(),
+                          Expanded(
+                            child: _buildLargeCard(),
                           ),
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => MeniScreen(),
-                              ),
-                            );
-                            // Akcija koju želite izvršiti kada dugme bude pritisnuto
-                            print("Dugme je pritisnuto!");
-                          },
-                          child: Text(
-                            "Go to Meni", // Tekst na dugmetu
-                            style: TextStyle(color: Colors.black), // Promjena boje teksta na crnu
-                          ),
-                        ),
+                          SizedBox(width: 16),
+                          
+                        ],
                       ),
-                    ),
                     ],
                   ),
                 ),
@@ -76,160 +100,237 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
- 
- 
+
   Widget _buildWelcomeCard() {
     return Card(
-      color: Colors.white.withOpacity(0.8),
+      color: Colors.white.withOpacity(0.9),
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Dobrodošli na eRestoran Admin početnu stranicu!',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 8),
             Text(
-              'Od tradicionalnih specijaliteta do modernih gastronomskih kreacija, naš meni je osmišljen da zadovolji sve ukuse. Brza i jednostavna online narudžba omogućava vam da uživate u omiljenim jelima iz udobnosti vašeg doma. Uz brzu dostavu, vaša hrana stiže topla i spremna za uživanje.',
-              style: TextStyle(fontSize: 18),
+              'Ovo je centralno mesto za upravljanje aplikacijom. Pregledajte narudžbe, korisnike i ostale funkcionalnosti.',
+              style: TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 16),
           ],
         ),
       ),
     );
   }
- 
- 
-}*/
 
-import 'package:erestoran_admin/screens/meni_screen.dart';
-import 'package:flutter/material.dart';
-
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("eRestoran Admin"),
-        backgroundColor: Colors.orange,
-        elevation: 0,
+  Widget _buildCard({required String title, required String value}) {
+    return Card(
+      color: Colors.white.withOpacity(0.9),
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              value,
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orange),
+            ),
+          ],
+        ),
       ),
-      body: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.orange.shade100,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 70,
-                    backgroundImage: AssetImage("assets/images/home.jpg"),
+    );
+  }
+
+  Widget _buildMeniCard() {
+  return SizedBox(
+    width: 250, // Postavi željenu širinu
+    child: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1, // Postavi na 1 ako želiš samo jednu veliku karticu
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 16,
+          childAspectRatio: 3 / 2,
+        ),
+        itemCount: 1,
+        itemBuilder: (context, index) {
+          return Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => MeniScreen(),
                   ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Welcome to eRestoran Admin!",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orange.shade700,
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.orange[100],
+                        ),
+                        child: Center(
+                          child: Icon(Icons.menu_book, size: 70, color: Colors.orange), // Povećana ikona
+                        ),
+                      ),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+                    SizedBox(height: 8),
+                    Center( // Centriran tekst
+                      child: Text(
+                        "Meni",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 10,
-                    offset: Offset(0, 4),
-                  ),
-                ],
-              ),
+          );
+        },
+      ),
+    ),
+  );
+}
+
+Widget _buildIzvjestajCard() {
+  return SizedBox(
+    width: 300,
+    child: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1, // Postavi na 1 ako želiš samo jednu veliku karticu
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 16,
+          childAspectRatio: 3 / 2,
+        ),
+        itemCount: 1, // Samo jedna kartica za izvještaje
+        itemBuilder: (context, index) {
+          return Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Card(
-                    color: Colors.white.withOpacity(0.9),
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Dobrodošli na eRestoran Admin početnu stranicu!',
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          SizedBox(height: 16),
-                          Text(
-                            'Od tradicionalnih specijaliteta do modernih gastronomskih kreacija, naš meni je osmišljen da zadovolji sve ukuse.',
-                            style: TextStyle(fontSize: 16, color: Colors.black54),
-                          ),
-                          SizedBox(height: 16),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 20.0),
-                      backgroundColor: Colors.orange,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    onPressed: () {
+                  InkWell(
+                    onTap: () {
                       Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => MeniScreen(),
-                        ),
+                        MaterialPageRoute(builder: (context) => UplatePoKorisnikuReport()),
                       );
                     },
                     child: Text(
-                      "Pogledajte ponudu",
+                      'Pregled uplata po korisniku',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+
+                  // Link za drugi izvještaj
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => PrometPoKorisnikuReport()), // Zamijeni s pravom stranicom
+                      );
+                    },
+                    child: Text(
+                      'Promet po korisniku',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
+          );
+        },
+      ),
+    ),
+  );
+}
+
+
+
+
+  Widget _buildLargeCard() {
+    return Center(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.4,
+        child: Card(
+          color: Colors.white.withOpacity(0.8),
+          elevation: 4,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Informations:',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 16),
+                if (restoran != null && restoran!.result.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 8),
+                      Text('Naziv: ${restoran!.result.first.nazivRestorana ?? 'N/A'}'),
+                      Text('Adresa: ${restoran!.result.first.adresa ?? 'N/A'}'),
+                      Text('Email: ${restoran!.result.first.email ?? 'N/A'}'),
+                      Text(
+                          'Telefon: ${restoran!.result.first.telefon ?? 'N/A'}'),
+                      
+                     Text('Grad: ${getGradNaziv(restoran!.result.first.gradId)}'),
+
+                    ],
+                  )
+                else
+                  Center(child: CircularProgressIndicator()),
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }

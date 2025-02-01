@@ -5,7 +5,7 @@ import 'package:erestoran_mobile/models/korisnik.dart';
 import 'package:erestoran_mobile/providers/korisnik_provider.dart';
 import 'package:erestoran_mobile/providers/uloga_provider.dart';
 import 'package:erestoran_mobile/screens/korisnik_details_screen.dart';
-import 'package:erestoran_mobile/utils/util.dart';
+
 import 'package:erestoran_mobile/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -170,13 +170,13 @@ class _KorisnikProfileScreen extends State<KorisnikProfileScreen> {
     );
   }
 
-  void _logout() {
+  /*void _logout() {
     Authorization.korisnik = null;
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => LoginPage()),
       (route) => false,
     );
-  }
+  }*/
 
   Widget _buildProfileDetail(String title, String value, IconData icon) {
     return Padding(

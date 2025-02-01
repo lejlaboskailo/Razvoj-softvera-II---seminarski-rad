@@ -162,9 +162,10 @@ namespace eRestoran.Services
             }
         }*/
 
-        public List<Model.Jelo> GetPreporucenaJela()
+        public List<Model.Jelo> GetPreporucenaJela(int trenutniKorisnikId)
         {
-            var korisnici = _context.Korisnicis.ToList(); // Uzmite sve korisnike
+            // Pronađi samo ocjene za trenutnog korisnika
+            var korisnici = _context.Korisnicis.ToList();
             Dictionary<Database.Korisnici, List<Database.Dojmovi>> dojmovi = new Dictionary<Database.Korisnici, List<Database.Dojmovi>>();
 
             foreach (var korisnik in korisnici)
@@ -175,16 +176,19 @@ namespace eRestoran.Services
                 dojmovi.Add(korisnik, ocjene);
             }
 
-            // Kombinovane preporuke za sve korisnike
             var zajednickeOcjeneKorisnik = new List<Database.Dojmovi>();
             var zajednickeOcjeneKorisnik2 = new List<Database.Dojmovi>();
             var preporucenaJelaIds = new HashSet<int>();
 
+            // Pretražuj samo sve korisnike osim trenutnog korisnika
             foreach (var korisnik1 in dojmovi)
             {
+                // Skip korisnik1 ako je trenutni korisnik
+                if (korisnik1.Key.Id == trenutniKorisnikId) continue;
+
                 foreach (var korisnik2 in dojmovi)
                 {
-                    if (korisnik1.Key.Id == korisnik2.Key.Id) continue; // Preskočite poređenje istog korisnika
+                    if (korisnik1.Key.Id == korisnik2.Key.Id) continue;
 
                     // Nađite zajedničke ocene između korisnika
                     foreach (var ocjena1 in korisnik1.Value)
@@ -199,7 +203,6 @@ namespace eRestoran.Services
                     double slicnost = GetSlicnost(zajednickeOcjeneKorisnik, zajednickeOcjeneKorisnik2);
                     if (slicnost > 0.5)
                     {
-                        // Uzmite dobro ocenjena jela
                         var dobroOcjenjenaJelaIds = korisnik2.Value
                             .Where(e => e.Ocjena >= 3)
                             .Select(e => e.JeloId)
@@ -207,7 +210,7 @@ namespace eRestoran.Services
 
                         foreach (var jeloId in dobroOcjenjenaJelaIds)
                         {
-                            preporucenaJelaIds.Add((int)jeloId); // Dodajte u skup preporučenih jela
+                            preporucenaJelaIds.Add((int)jeloId);
                         }
                     }
 
@@ -223,6 +226,7 @@ namespace eRestoran.Services
             var result = _mapper.Map<List<Model.Jelo>>(preporucenaJela);
             return result;
         }
+
 
 
         private double GetSlicnost(List<Database.Dojmovi> zajednickeOcjene1, List<Database.Dojmovi> zajednickeOcjene2)

@@ -19,8 +19,8 @@ namespace eRestoran.Services.RabbitMQ
             {
                 HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost",
                 Port = int.Parse(Environment.GetEnvironmentVariable("RABBITMQ_PORT") ?? "5672"),
-                UserName = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME") ?? "test",
-                Password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "test",
+                UserName = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME") ?? "guest",
+                Password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "guest",
             };
             factory.ClientProvidedName = "Rabbit Test";
 

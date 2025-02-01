@@ -6,7 +6,8 @@ part 'grad.g.dart';
 class Grad{
 int? id;
 String? naziv;
-Grad(this.id,this.naziv);
+int?drzavaId;
+Grad(this.id,this.naziv, this.drzavaId);
 
 factory Grad.fromJson(Map<String,dynamic> json)=>_$GradFromJson(json);
 

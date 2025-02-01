@@ -21,6 +21,12 @@ namespace eRestoran.Services.Mapping
             CreateMap<DojmoviInsertRequest, Database.Dojmovi>();
             CreateMap<DojmoviUpsertRequest, Database.Dojmovi>();
 
+
+            CreateMap<Database.KorisniciUloge, Model.KorisniciUloge>();
+            CreateMap<KorisniciUlogaSearchRequest, Database.KorisniciUloge>();
+            CreateMap<KorisniciUlogeInsertRequest, Database.KorisniciUloge>();
+            CreateMap<KorisniciUlogeUpdateRequest, Database.KorisniciUloge>();
+
             CreateMap<Database.Drzava, Model.Drzava>();
             CreateMap<DojmoviSearchObject, Database.Dojmovi>();
 
@@ -35,6 +41,8 @@ namespace eRestoran.Services.Mapping
 
             CreateMap<Database.Grad, Model.Grad>();
             CreateMap<GradSearchObject, Database.Grad>();
+
+            CreateMap<Database.Restoran, Model.Restoran>();
 
             CreateMap<Database.Jelo,Model.Jelo>();
             CreateMap<JeloSearchObject, Database.Jelo>();

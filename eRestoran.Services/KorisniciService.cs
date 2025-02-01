@@ -114,6 +114,12 @@ namespace eRestoran.Services
             {
                 throw new Exception("Greška pri generisanju hash-a.");
             }
+            var defaultRole = await _context.Uloges.FirstOrDefaultAsync(u => u.Naziv == "Korisnik");
+            if (defaultRole == null)
+            {
+                throw new Exception("Podrazumevana uloga nije pronađena.");
+            }
+
 
             var newUser = new Korisnik
             {
@@ -126,6 +132,12 @@ namespace eRestoran.Services
 
             var newUserEntity = _mapper.Map<Database.Korisnici>(newUser);
             _context.Korisnicis.Add(newUserEntity);
+
+            var korisniciUloga = new Model.KorisniciUloge
+            {
+                KorisnikId = newUserEntity.Id,  
+                UlogaId = defaultRole.Id       
+            };
 
             try
             {

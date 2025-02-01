@@ -1,36 +1,79 @@
 version: '3'
 services:
+  # RabbitMQ Docker
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: unless-stopped
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - erestorannet
+ 
 #mssql docker
   erestoran-sql:
-    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    image: mcr.microsoft.com/mssql/server:2019-latest
     restart: unless-stopped
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=QWElkj132!
+      - SA_PASSWORD=test12W!
       - MSSQL_PID=Developer
     ports:
       - 1401:1433
     expose:
-        - 1433
+      - 1433
     networks:
-      - erestoran
-
+      - erestorannet
+ 
   erestoran-api:
     restart: unless-stopped
     build:
       context: .
     environment:
-      - ConnectionStrings:DefaultConnection=Server=erestoran-sql,1433;Database=erestoran;User=sa;Password=QWElkj132!;ConnectRetryCount=0
+      - ConnectionStrings:DefaultConnection=Server=erestoran-sql,1433;Database=eRestoran;User=sa;Password=test12W!;ConnectRetryCount=0; TrustServerCertificate=True
       - ASPNETCORE_ENVIRONMENT=Development
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - SMTP_SERVER=smtp.outlook.com
+      - SMTP_PORT=587
+      - SMTP_USERNAME=testkorisnik.fit@gmail.com
+      - SMTP_PASSWORD=test12PASS!
     ports:
-      - 7002:7002
+      - 7003:7003
     networks:
-      - erestoran
+      - erestorannet
     links:
       - erestoran-sql
     depends_on:
       - erestoran-sql
-      
+      - rabbitmq
+ 
+        # RabbitMQ Service Docker
+  rabbitmq-service:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./eRestoran.Subscriber/Dockerfile
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - SMTP_SERVER=smtp.outlook.com
+      - SMTP_PORT=587
+      - SMTP_USERNAME=testkorisnik.fit@gmail.com
+      - SMTP_PASSWORD=test12PASS!
+    depends_on:
+      - rabbitmq
+    networks:
+      - erestorannet
+     
 networks:
-  erestoran:
-    driver: bridge      
+  erestorannet:
+    driver: bridge    

@@ -143,10 +143,25 @@ namespace eRestoran.Services.Database
             #region Dodavanje Grad
 
             modelBuilder.Entity<Grad>().HasData(
-                 new Drzava()
+                 new Grad()
                  {
                      Id = 3000,
                      Naziv = "Sarajevo",
+                     DrzavaId=2000,
+                 });
+            #endregion
+            #region Dodavanje Grad
+
+            modelBuilder.Entity<Restoran>().HasData(
+                 new Restoran()
+                 {
+                     RestoranId = 3111,
+                     NazivRestorana = "eRestoran",
+                     Adresa ="Mostar",
+                     Email="restoran@gmail.com",
+                     Telefon="066111111",
+                     GradId=3000,
+
                  });
             #endregion
 

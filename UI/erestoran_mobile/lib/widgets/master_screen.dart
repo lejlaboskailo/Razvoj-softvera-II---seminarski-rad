@@ -6,7 +6,7 @@ import 'package:erestoran_mobile/screens/home_screen.dart';
 import 'package:erestoran_mobile/screens/korisnik_profile_screen.dart';
 import 'package:erestoran_mobile/screens/meni_screen.dart';
 import 'package:erestoran_mobile/screens/preporuceni_screen.dart';
-import 'package:erestoran_mobile/utils/util.dart';
+
 import 'package:flutter/material.dart';
 
 class MasterScreenWidget extends StatefulWidget {
@@ -21,13 +21,13 @@ class MasterScreenWidget extends StatefulWidget {
 
 class _MasterScreenWidgetState extends State<MasterScreenWidget> {
 
-  void _logout() {
+  /*void _logout() {
     Authorization.korisnik = null;
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => LoginPage()),
       (route) => false,
     );
-  }
+  }*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,12 +81,12 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
                     builder: (context) =>  DojmoviDetailsScreen()));
               },
             ),
-            ListTile(
+           /* ListTile(
               title: const Text("Odjavi se"),
               onTap: () {
                 _logout(); 
               },
-            )
+            )*/
           ],
         ),
       ),

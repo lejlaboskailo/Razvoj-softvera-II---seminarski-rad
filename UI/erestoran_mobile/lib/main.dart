@@ -1,6 +1,7 @@
 import 'package:erestoran_mobile/providers/dojmovi_provider.dart';
 import 'package:erestoran_mobile/providers/kategorija_provider.dart';
 import 'package:erestoran_mobile/providers/korisnik_provider.dart';
+import 'package:erestoran_mobile/providers/korisnik_uloga_provider.dart';
 import 'package:erestoran_mobile/providers/meni_provider.dart';
 import 'package:erestoran_mobile/providers/uloga_provider.dart';
 import 'package:erestoran_mobile/screens/home_screen.dart';
@@ -17,6 +18,8 @@ void main() {
       ChangeNotifierProvider(create: (_) => MeniProvider()),
       ChangeNotifierProvider(create: (_) => KategorijaProvider()),
       ChangeNotifierProvider(create: (_) => DojmoviProvider()),
+      ChangeNotifierProvider(create: (_) => KorisnikUlogaProvider()),
+
 
 
     ],
@@ -230,7 +233,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RegistracijaPage()),
+                              builder: (context) => RegisterScreen()),
                         );
                       },
                       child: Text(

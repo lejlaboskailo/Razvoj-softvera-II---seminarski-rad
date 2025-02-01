@@ -983,6 +983,260 @@
         }
       }
     },
+    "/KorisniciUloga": {
+      "post": {
+        "tags": [
+          "KorisniciUloga"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/KorisniciUlogeInsertRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KorisniciUlogeInsertRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KorisniciUlogeInsertRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/KorisniciUlogeInsertRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "KorisniciUloga"
+        ],
+        "parameters": [
+          {
+            "name": "KorisnikId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "UlogaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUlogePagedResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUlogePagedResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUlogePagedResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/KorisniciUloga/{id}": {
+      "put": {
+        "tags": [
+          "KorisniciUloga"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/KorisniciUlogeUpdateRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KorisniciUlogeUpdateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KorisniciUlogeUpdateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/KorisniciUlogeUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "KorisniciUloga"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "KorisniciUloga"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KorisniciUloge"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Korisnik/login": {
       "post": {
         "tags": [
@@ -1835,6 +2089,93 @@
         "responses": {
           "200": {
             "description": "Success"
+          }
+        }
+      }
+    },
+    "/Restoran": {
+      "get": {
+        "tags": [
+          "Restoran"
+        ],
+        "parameters": [
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestoranPagedResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestoranPagedResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestoranPagedResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Restoran/{id}": {
+      "get": {
+        "tags": [
+          "Restoran"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Restoran"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Restoran"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Restoran"
+                }
+              }
+            }
           }
         }
       }
@@ -2913,6 +3254,71 @@
         },
         "additionalProperties": false
       },
+      "KorisniciUlogeInsertRequest": {
+        "type": "object",
+        "properties": {
+          "korisniciUlogaId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "ulogaId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "korisnikId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "datumIzmjene": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "KorisniciUlogePagedResult": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KorisniciUloge"
+            },
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "KorisniciUlogeUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "ulogaId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "korisnikId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "datumIzmjene": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Korisnik": {
         "type": "object",
         "properties": {
@@ -3118,6 +3524,58 @@
           },
           "nazivKategorije": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Restoran": {
+        "type": "object",
+        "properties": {
+          "restoranId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nazivRestorana": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefon": {
+            "type": "string",
+            "nullable": true
+          },
+          "adresa": {
+            "type": "string",
+            "nullable": true
+          },
+          "gradId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "grad": {
+            "$ref": "#/components/schemas/Grad"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RestoranPagedResult": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Restoran"
+            },
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },

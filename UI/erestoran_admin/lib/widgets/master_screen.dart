@@ -27,105 +27,82 @@ class MasterScreenWidget extends StatefulWidget {
   @override
   State<MasterScreenWidget> createState() => _MasterScreenWidgetState();
 }
+
+
  
 class _MasterScreenWidgetState extends State<MasterScreenWidget> {
+
+  Widget _buildNavBarItems(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildNavText(context, "Home", HomeScreen()),
+        _buildNavText(context, "Meni", MeniScreen()),
+        _buildNavText(context, "Status narudzbe", StatusNarudzbaScreen()),
+        _buildNavText(context, "Evidencija obavjestenja", StatusNarudzbaScreen()),
+        _buildNavText(context, "Dojmovi", DojmoiListScreen()),
+       // _buildNavText(context, "Reports", UplatePoKorisnikuReport()),
+       // _buildNavText(context, "Reports", PrometPoKorisnikuReport()),
+        _buildNavText(context, "Users", KorisnikScreen()),
+
+      ],
+    );
+  }
+
+  Widget _buildNavText(BuildContext context, String title, Widget screen) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => screen),
+          );
+        },
+        onHover: (isHovered) {
+          setState(() {});
+        },
+        child: MouseRegion(
+          onEnter: (_) {
+            setState(() {});
+          },
+          onExit: (_) {
+            setState(() {});
+          },
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 16.0,
+              decoration: TextDecoration.none,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: widget.title_widget ?? Text(widget.title ?? ""),
+        backgroundColor:  Colors.orange,
+        automaticallyImplyLeading: false,
+        title: 
+            Text(
+              widget.title ?? "",
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => KorisnikScreen()
-                  )
-                );
-              print("Login button pressed");
-            },
-          ),
-        ],        
+          _buildNavBarItems(context),
+        ],
       ),
-      
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              title: const Text("<-"),
-              onTap: (){
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              title: const Text("Home screen"),
-              onTap: (){
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => HomeScreen()
-                  )
-                );
-              },
-            ),
-            ListTile(
-              title: const Text("Meni"),
-              onTap: (){
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const MeniScreen()
-                  )
-                );
-              },
-            ),
-            ListTile(
-              title: const Text("Evidencija narudzbi"),
-              onTap: (){
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => StatusNarudzbaScreen()
-                  )
-                );
-              },
-            ),
-             ListTile(
-              title: const Text("Evidencija obavjestenja"),
-              onTap: (){
-                /*Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) =>  NarudzbaListScreen()
-                  )
-                );*/
-              },
-              
-            ),
-             ListTile(
-              title: const Text("Pregled ocjena/dojmovi"),
-              onTap: (){
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) =>  DojmoiListScreen()
-                  )
-                );
-              },
-            ),
-             ListTile(
-              title: const Text("Izvjestaj o uplatama po korisniku"),
-              onTap: (){
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => UplatePoKorisnikuReport()
-                  )
-                );
-              },
-            ),
-            ListTile(
-              title: const Text("Izvjestaj o prometu po korisniku"),
-              onTap: (){
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => PrometPoKorisnikuReport()
-                  )
-                );
-              },
-            )
-          ],
-        ),
+      body: Column(
+        children: [
+          Expanded(child: widget.child!),
+        ],
       ),
-      
-      body: widget.child,
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
  
 import 'package:erestoran_mobile/models/korisnik.dart';
@@ -10,8 +11,29 @@ class Authorization {
   static int? userId;
   static Korisnik? korisnik;
   static Uloga? uloga;
+    static String? email;
 
 }
+
+class Info {
+  static String? name;
+  static String? surname;
+  static String? image;
+  static int? id;
+}
+
+class Debouncer {
+  final Duration delay;
+  Timer? _timer;
+
+  Debouncer({required this.delay});
+
+  void run(VoidCallback action) {
+    _timer?.cancel();
+    _timer = Timer(delay, action);
+  }
+}
+
 Image imageFromBase64String(String base64Image){
   return Image.memory(base64Decode(base64Image));
 }

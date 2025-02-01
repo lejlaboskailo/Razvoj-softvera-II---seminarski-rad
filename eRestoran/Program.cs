@@ -4,6 +4,7 @@ using eRestoran.Model.SearchObjects;
 using eRestoran.Services;
 using eRestoran.Services.Database;
 using eRestoran.Services.NarudzbeStateMachine;
+using eRestoran.Services.RabbitMQ;
 using eRestoran.Services.Reports;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,12 @@ builder.Services.AddScoped<IStatusNarudzbeService, StatusNarudzbeService>();
 builder.Services.AddScoped<IStavkeNrudzbeService, StavkeNarudzbeService>();
 builder.Services.AddScoped<IUplataService, UplataService>();
 builder.Services.AddScoped<IReportService, ReportService>();
+builder.Services.AddScoped<IRestoranService, RestoranService>();
+builder.Services.AddScoped<IKorisniciUloga, KorisniciUlogaService>();
+
+builder.Services.AddSingleton<IMailProducer, MailProducer>();
+
+
 
 
 
@@ -96,5 +103,17 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+/*using (var scope = app.Services.CreateScope())
+
+{
+
+    var dataContext = scope.ServiceProvider.GetRequiredService<ERestoranContext>();
+
+    dataContext.Database.Migrate();
+
+}*/
+
 
 app.Run();

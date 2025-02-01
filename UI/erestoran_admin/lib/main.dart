@@ -4,6 +4,7 @@ import 'package:erestoran_admin/providers/jelo_provider.dart';
 import 'package:erestoran_admin/providers/kategorija_provider.dart';
 import 'package:erestoran_admin/providers/korisnik_provider.dart';
 import 'package:erestoran_admin/providers/narudzbu_provider.dart';
+import 'package:erestoran_admin/providers/restoran_provider.dart';
 import 'package:erestoran_admin/providers/statusNarudzbe_provider.dart';
 import 'package:erestoran_admin/providers/stavkeNarudzbe_provider.dart';
 import 'package:erestoran_admin/providers/uloga_provider.dart';
@@ -27,6 +28,8 @@ void main() {
     ChangeNotifierProvider(create: (_)=> DojmoviProvider()),
     ChangeNotifierProvider(create: (_)=> UlogaProvider()),
     ChangeNotifierProvider(create: (_)=> StatusNarudzbeProvider()),
+    ChangeNotifierProvider(create: (_)=> RestoranProvider()),
+
 
 
 
@@ -174,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
 
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => KorisnikScreen(),
+            builder: (context) => HomeScreen(),
           ),
         );
       } else {

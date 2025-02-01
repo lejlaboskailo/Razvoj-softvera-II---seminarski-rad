@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Dockerfile.txt = Dockerfile.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eRestoran.Subscriber", "..\eRestoran.Subscriber\eRestoran.Subscriber.csproj", "{C9E0B277-502B-439F-92F4-A463AE5011C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eRestoran.Subscriber", "..\eRestoran.Subscriber\eRestoran.Subscriber.csproj", "{4DAE71EA-43B9-4481-BDF0-6518C5FD4868}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{35D32FAD-4090-4A5B-8E84-9B04628BB050}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35D32FAD-4090-4A5B-8E84-9B04628BB050}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35D32FAD-4090-4A5B-8E84-9B04628BB050}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9E0B277-502B-439F-92F4-A463AE5011C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9E0B277-502B-439F-92F4-A463AE5011C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9E0B277-502B-439F-92F4-A463AE5011C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9E0B277-502B-439F-92F4-A463AE5011C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DAE71EA-43B9-4481-BDF0-6518C5FD4868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DAE71EA-43B9-4481-BDF0-6518C5FD4868}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DAE71EA-43B9-4481-BDF0-6518C5FD4868}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DAE71EA-43B9-4481-BDF0-6518C5FD4868}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

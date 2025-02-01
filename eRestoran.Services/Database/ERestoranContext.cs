@@ -40,6 +40,8 @@ public partial class ERestoranContext : DbContext
     public virtual DbSet<Uloge> Uloges { get; set; }
 
     public virtual DbSet<Uplatum> Uplata { get; set; }
+    public virtual DbSet<Restoran> Restorans { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Data Source=localhost,1433;Initial Catalog=eRestoran; user=sa;password=test; TrustServerCertificate=True");
@@ -79,6 +81,8 @@ public partial class ERestoranContext : DbContext
             entity.ToTable("Grad");
 
             entity.Property(e => e.Naziv).HasMaxLength(50);
+            entity.Property(e => e.DrzavaId).HasMaxLength(50);
+
         });
 
         modelBuilder.Entity<Jelo>(entity =>

@@ -55,7 +55,7 @@ class KorisnikProvider extends BaseProvider<Korisnik> {
     }
   }
 
-Future<String> register(String username, String password, String ime, String prezime) async {
+Future<String> registerUser(String username, String password, String ime, String prezime) async {
   if (username.isEmpty || password.isEmpty || ime.isEmpty || prezime.isEmpty) {
     throw Exception("All fields must be filled.");
   }
@@ -86,6 +86,38 @@ Future<String> register(String username, String password, String ime, String pre
     throw Exception('Error during registration: $error');
   }
 }
- 
+Future<void> registerUserWithRole(
+    String username,
+    String password,
+    String ime,
+    String prezime,
+    String telefon,
+    String email,
+    int selectedRoleId, // Role ID za povezivanje sa ulogom
+  ) async {
+    final response = await http.post(
+      Uri.parse('${totalUrl}/registration'),
+      body: json.encode({
+        'username': username,
+        'password': password,
+        'ime': ime,
+        'prezime': prezime,
+        'telefon': telefon,
+        'email': email,
+        // Dodajemo povezanost sa ulogom kroz KorisnikUloga
+        'korisniciUloges': [
+          {
+            'ulogaId': selectedRoleId, // ID uloge koju korisnik dobija
+          },
+        ],
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // Registracija je uspela
+    } else {
+      throw Exception('Greška pri registraciji.');
+    }
+  }
 }
 

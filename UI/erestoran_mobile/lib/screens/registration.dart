@@ -1,371 +1,788 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:erestoran_mobile/main.dart';
 import 'package:erestoran_mobile/models/korisnik.dart';
+import 'package:erestoran_mobile/models/search_result.dart';
+import 'package:erestoran_mobile/models/uloga.dart';
+import 'package:erestoran_mobile/models/user_insert.dart';
+import 'package:erestoran_mobile/models/user_role_insert.dart';
+import 'package:erestoran_mobile/models/user_role_update.dart';
 import 'package:erestoran_mobile/providers/korisnik_provider.dart';
+import 'package:erestoran_mobile/providers/korisnik_uloga_provider.dart';
+import 'package:erestoran_mobile/providers/uloga_provider.dart';
+import 'package:erestoran_mobile/screens/home_screen.dart';
+import 'package:erestoran_mobile/screens/korisnik_profile_screen.dart';
+import 'package:erestoran_mobile/utils/util.dart';
 import 'package:erestoran_mobile/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 
-class RegistracijaPage extends StatefulWidget {
-  const RegistracijaPage({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  Korisnik? user;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordRepeatController =
+      TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _surenameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+
+  RegisterScreen({super.key, this.user});
 
   @override
-  State<RegistracijaPage> createState() => _RegistracijaPageState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegistracijaPageState extends State<RegistracijaPage> {
-  final TextEditingController imeController = TextEditingController();
-  final TextEditingController prezimeController = TextEditingController();
-  final TextEditingController spolController = TextEditingController();
-  final TextEditingController telefonController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController adresaController = TextEditingController();
-  final TextEditingController korisnickoImeController = TextEditingController();
-  final TextEditingController lozinkaController = TextEditingController();
-  final _formKey = GlobalKey<FormBuilderState>();
+class _RegisterScreenState extends State<RegisterScreen> {
+  bool _showPassword = false;
+  bool _showRepeatPassword = false;
+  Color _emailColor = Colors.black;
+  Color _nameColor = Colors.black;
+  Color _surenameColor = Colors.black;
+  Color _phoneNumberColor = Colors.black;
+  Color _passwordColor = Colors.black;
+  late KorisnikProvider _userProvider;
+  late KorisnikUlogaProvider _userRoleProvider;
+  late UlogaProvider _roleProvider;
+  SearchResult<Uloga>? result;
+  SearchResult<Korisnik>? resultU;
+  String? selectedRole;
+  late List<Uloga> roles;
+  late List<Korisnik> users;
+  bool _isLoading = true;
 
-  bool isLoading = true;
-  Korisnik? korisnik;
-  late KorisnikProvider _korisniciProvider;
-  DateTime? _selectedDate;
-  final FocusNode _imeFocusNode = FocusNode();
-  final FocusNode _prezimeFocusNode = FocusNode();
-  final FocusNode _telefonFocusNode = FocusNode();
-  final FocusNode _emailFocusNode = FocusNode();
-  final FocusNode _adresaFocusNode = FocusNode();
-  final FocusNode _usernameFocusNode = FocusNode();
-  final FocusNode _lozinkaFocusNode = FocusNode();
-  bool usernameTaken = false;
-  String? _selectedSpol;
-  List<String> spolovi = [];
+  bool validateEmail(TextEditingController controller) {
+    final emailRegex = RegExp(
+        r"[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+");
+    if (controller.text.isEmpty) {
+      setState(() {
+        _emailColor = Colors.red; // Change color to red on empty field
+      });
+      return false;
+    } else if (emailRegex.hasMatch(controller.text) == false) {
+      setState(() {
+        _emailColor = Colors.red; // Change color to red on invalid format
+      });
+      return false;
+    }
+    setState(() {
+      _emailColor = Colors.black; // Reset color to black on valid input
+    });
+    return true; // No error
+  }
+
+  bool validateEmailExistance(TextEditingController controller) {
+    if (widget.user != null) {
+      users.removeWhere((user) => user.email == widget.user!.email);
+    }
+    bool mailExists = false;
+    users.forEach((user) {
+      if (user.email == controller.text) {
+        mailExists = true;
+        _emailColor = Colors.red;
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return AlertDialog(
+                  title: Text(
+                    "Upss, nešto nije okay!",
+                    textAlign: TextAlign.center,
+                  ),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Ovaj mail se vec koristi, pokusajte sa drugim!",
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Ok"),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        );
+      }
+    });
+    if (mailExists) {
+      _emailColor = Colors.red;
+      return false;
+    }
+    setState(() {
+      _emailColor = Colors.black; // Reset color to black on valid input
+    });
+    return true; // No error
+  }
+
+  bool validateName(TextEditingController controller, bool isName) {
+    if (controller.text.isEmpty && isName) {
+      setState(() {
+        _nameColor = Colors.red; // Change color to red on empty field
+      });
+      return false;
+    }
+    if (controller.text.isEmpty && !isName) {
+      setState(() {
+        _surenameColor = Colors.red; // Change color to red on empty field
+      });
+      return false;
+    }
+    if ((controller.text.length < 2 || controller.text.length > 50)) {
+      if (isName) {
+        setState(() {
+          _nameColor = Colors.red; // Change color to red on invalid format
+        });
+      } else {
+        setState(() {
+          _surenameColor = Colors.red; // Change color to red on invalid format
+        });
+      }
+      return false;
+    }
+    if (isName) {
+      setState(() {
+        _nameColor = Colors.black; // Change color to red on invalid format
+      });
+    } else {
+      setState(() {
+        _surenameColor = Colors.black; // Change color to red on invalid format
+      });
+    }
+    return true;
+  }
+
+  bool validatePhoneNumber(TextEditingController controller) {
+    final phoneRegex = RegExp(r"^\+?[0-9]*$");
+
+    if (controller.text.isEmpty) {
+      setState(() {
+        _phoneNumberColor = Colors.red; // Change color to red on empty field
+      });
+      return false;
+    } else if (!phoneRegex.hasMatch(controller.text)) {
+      setState(() {
+        _phoneNumberColor = Colors.red; // Change color to red on empty field
+      });
+      return false;
+    }
+    setState(() {
+      _phoneNumberColor = Colors.black; // Change color to red on empty field
+    });
+    return true;
+  }
+
+  bool validatePasswords(
+      TextEditingController controller1, TextEditingController controller2) {
+    if ((controller1.text != controller2.text) || controller1.text.isEmpty) {
+      setState(() {
+        _passwordColor = Colors.red; // Change color to red on invalid format
+      });
+      return false;
+    }
+    setState(() {
+      _passwordColor = Colors.black; // Reset color to black on valid input
+    });
+    return true;
+  }
 
   @override
   void initState() {
     super.initState();
-    _korisniciProvider = context.read<KorisnikProvider>();
-    initForm();
+    super.didChangeDependencies();
+
+    _userProvider = context.read<KorisnikProvider>();
+    _userRoleProvider = context.read<KorisnikUlogaProvider>();
+    _roleProvider = context.read<UlogaProvider>();
+    _loadData();
   }
 
-  @override
-  void dispose() {
-    _imeFocusNode.dispose();
-    _prezimeFocusNode.dispose();
-    _telefonFocusNode.dispose();
-    _emailFocusNode.dispose();
-    _telefonFocusNode.dispose();
-    _usernameFocusNode.dispose();
-    _lozinkaFocusNode.dispose();
-    super.dispose();
-  }
-
-  Future initForm() async {
+  Future<void> _loadData() async {
+    var data = await _roleProvider.get();
+    var dataU = await _userProvider.get();
     setState(() {
-      isLoading = false;
-    });
-  }
+      result = data;
+      roles = result!.result;
 
-  Future<void> provjeriUsername(String username) async {
-    try {
-      var temp = await _korisniciProvider
-          .get(filter: {"korisnickoIme": username, "admin": true});
-      if (mounted) {
-        setState(() {
-          usernameTaken = temp.count > 0;
-        });
+      resultU = dataU;
+      users = resultU!.result;
+
+      if (widget.user != null) {
+        widget._emailController.text = widget.user!.email!;
+        widget._nameController.text = widget.user!.korisnickoIme!;
+        widget._surenameController.text = widget.user!.prezime!;
+        widget._phoneController.text = widget.user!.telefon!;
       }
-    } catch (e) {
-      print('Greška pri provjeri username-a: $e');
-    }
+
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MasterScreenWidget(
-      title: "Registracija",
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Center(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Column(
-              children: [isLoading ? Container() : _addForm()],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+    return (_isLoading)
+        ? Center(child: CircularProgressIndicator())
+        : MasterScreenWidget(
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: 400,
+                      child: Card(
+                        child: SingleChildScrollView(
+                          padding: EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Image.asset(
+                                'assets/images/RestoranteLogo.png',
+                                width: 450,
+                                height: 100,
+                              ),
+                              SizedBox(height: 20.0),
+                              Text(
+                                (widget.user == null)
+                                    ? 'Registriraj se'
+                                    : "Promjeni podatke za radnika ${widget.user!.korisnickoIme}",
+                                style: TextStyle(
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(111, 63, 189, 0.612),
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
 
-  void _showSnackbar(String message) {
-    final snackBar = SnackBar(
-      content: Text(message),
-      backgroundColor: Colors.grey,
-      duration: Duration(seconds: 3),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+                              //Name text field
+                              TextField(
+                                controller: widget._nameController,
+                                decoration: InputDecoration(
+                                  labelText: 'Ime',
+                                  prefixIcon: Icon(Icons.info),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  errorText: _nameColor == Colors.red
+                                      ? 'Ime nije ok. Ime može imati min 2 slova i max 50'
+                                      : null,
+                                ),
+                                keyboardType: TextInputType.name,
+                                style: TextStyle(color: _nameColor),
+                                onChanged: (value) =>
+                                    validateName(widget._nameController, true),
+                              ),
+                              SizedBox(height: 10.0),
+                              (widget.user == null)
+                                  ? SizedBox.shrink()
+                                  : Text(
+                                      "Ime je bilo: ${widget.user!.korisnickoIme}"),
+                              (widget.user == null)
+                                  ? SizedBox.shrink()
+                                  : SizedBox(height: 10.0),
+                              //Surename text field
+                              TextField(
+                                controller: widget._surenameController,
+                                decoration: InputDecoration(
+                                  labelText: 'Prezime',
+                                  prefixIcon: Icon(Icons.info),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  errorText: _surenameColor == Colors.red
+                                      ? 'Prezime nije ok. Prezime može imati min 2 slova i max 50'
+                                      : null,
+                                ),
+                                keyboardType: TextInputType.name,
+                                style: TextStyle(color: _surenameColor),
+                                onChanged: (value) => validateName(
+                                    widget._surenameController, false),
+                              ),
+                              SizedBox(height: 10.0),
+                              (widget.user == null)
+                                  ? SizedBox.shrink()
+                                  : Text(
+                                      "Prezime je bilo: ${widget.user!.prezime}"),
+                              (widget.user == null)
+                                  ? SizedBox.shrink()
+                                  : SizedBox(height: 10.0),
+                              // Email text field
+                              TextField(
+                                controller: widget._emailController,
+                                decoration: InputDecoration(
+                                  labelText: 'Email',
+                                  prefixIcon: Icon(Icons.email),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  errorText: _emailColor == Colors.red
+                                      ? 'Mail nije ok. Format mora biti: example@email.com'
+                                      : null,
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                                style: TextStyle(color: _emailColor),
+                                onChanged: (value) =>
+                                    validateEmail(widget._emailController),
+                              ),
+                              SizedBox(height: 10.0),
+                              (widget.user == null)
+                                  ? SizedBox.shrink()
+                                  : Text("Mail je bio: ${widget.user!.email}"),
+                              (widget.user == null)
+                                  ? SizedBox.shrink()
+                                  : SizedBox(height: 10.0),
+                              //Telephone text field
+                              TextField(
+                                controller: widget._phoneController,
+                                decoration: InputDecoration(
+                                  labelText: 'Telefon',
+                                  prefixIcon: Icon(Icons.phone),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  errorText: _phoneNumberColor == Colors.red
+                                      ? 'Broj telefona može samo imati brojeve'
+                                      : null,
+                                ),
+                                keyboardType: TextInputType.phone,
+                                style: TextStyle(color: _phoneNumberColor),
+                                onChanged: (value) => validatePhoneNumber(
+                                    widget._phoneController),
+                              ),
+                              SizedBox(height: 10.0),
+                              (widget.user == null)
+                                  ? SizedBox.shrink()
+                                  : Text(
+                                      "Telefon je bio: ${widget.user!.telefon}"),
+                              (widget.user == null)
+                                  ? SizedBox.shrink()
+                                  : SizedBox(height: 10.0),
+                              // Password text field
+                              (widget.user != null)
+                                  ? SizedBox.shrink()
+                                  : TextField(
+                                      controller: widget._passwordController,
+                                      obscureText: !_showPassword,
+                                      decoration: InputDecoration(
+                                        labelText: 'Lozinka',
+                                        prefixIcon: Icon(Icons.lock),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            _showPassword
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              _showPassword = !_showPassword;
+                                            });
+                                          },
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        errorText: _passwordColor == Colors.red
+                                            ? 'Lozinka i ponovljena lozinka moraju biti iste.'
+                                            : null,
+                                      ),
+                                      style: TextStyle(color: _passwordColor),
+                                    ),
+                              SizedBox(height: 10.0),
+                              // Password Repeat text field
+                              (widget.user != null)
+                                  ? SizedBox.shrink()
+                                  : TextField(
+                                      controller:
+                                          widget._passwordRepeatController,
+                                      obscureText: !_showRepeatPassword,
+                                      decoration: InputDecoration(
+                                        labelText: 'Ponovite Lozinku',
+                                        prefixIcon: Icon(Icons.lock),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            _showRepeatPassword
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              _showRepeatPassword =
+                                                  !_showRepeatPassword;
+                                            });
+                                          },
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        errorText: _passwordColor == Colors.red
+                                            ? 'Lozinka i ponovljena lozinka moraju biti iste.'
+                                            : null,
+                                      ),
+                                      style: TextStyle(color: _passwordColor),
+                                    ),
+                              SizedBox(height: 20.0),
+                              // Login button
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => HomeScreen()),
+                                      );
+                                    },
+                                    child: Text('Nazad'),
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      surfaceTintColor:
+                                          const Color.fromARGB(255, 255, 0, 0),
+                                      overlayColor: Colors.red,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 15.0),
+                                    ),
+                                  ),
+                                  SizedBox(width: 50.0),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      if (!validateEmailExistance(
+                                          widget._emailController)) {
+                                        return;
+                                      }
+                                      if (widget.user == null &&
+                                          !validatePasswords(
+                                              widget._passwordController,
+                                              widget
+                                                  ._passwordRepeatController)) {
+                                        return;
+                                      }
+                                      if ((!validateName(widget._nameController,
+                                                  true) ||
+                                              !validateName(
+                                                  widget._surenameController,
+                                                  false)) ||
+                                          (!validateEmail(
+                                                  widget._emailController) ||
+                                              (!validatePhoneNumber(
+                                                  widget._phoneController)))) {
+                                        return;
+                                      } else {
+                                        try {
+                                          if (widget.user != null) {
+                                            if (widget.user!.email ==
+                                                Authorization.email) {
+                                              Authorization.email =
+                                                  widget._emailController.text;
+                                              Info.name =
+                                                  widget._nameController.text;
+                                              Info.surname = widget
+                                                  ._surenameController.text;
+                                            }
 
-  Widget _addForm() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FocusScope.of(context).requestFocus(_imeFocusNode);
-    });
+                                            // Kreiranje novog korisnika bez slike
+                                            Korisnik newUser = Korisnik(
+                                              id: 1,
+                                              ime: widget._nameController.text,
+                                              prezime: widget
+                                                  ._surenameController.text,
+                                              email:
+                                                  widget._emailController.text,
+                                              telefon:
+                                                  widget._phoneController.text,
+                                            );
 
-    return FormBuilder(
-      key: _formKey,
-      autovalidateMode: AutovalidateMode.always,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Card(
-              elevation: 6,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: SizedBox(
-                height: 550,
-                width: 600,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(height: 15),
-                      FormBuilderTextField(
-                        name: "ime",
-                        focusNode: _imeFocusNode,
-                        controller: imeController,
-                        decoration: const InputDecoration(labelText: "Ime"),
-                        textInputAction: TextInputAction.next,
-                        onEditingComplete: () => FocusScope.of(context)
-                            .requestFocus(_prezimeFocusNode),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Ovo polje je obavezno!';
-                          } else if (!RegExp(r'^[A-Z-ŠĐČĆŽ]').hasMatch(value)) {
-                            return 'Ime mora početi velikim slovom.';
-                          } else if (!RegExp(r'^[a-zA-ZšđčćžŠĐČĆŽ\s]+$')
-                              .hasMatch(value)) {
-                            return 'Ime može sadržavati samo slova.';
-                          } else if (value.length < 3) {
-                            return 'Morate unijeti najmanje 3 karaktera.';
-                          } else if (value.length > 50) {
-                            return 'Premašili ste maksimalan broj karaktera (50).';
-                          }
+                                            await _userProvider.update(
+                                                widget.user!.id!, newUser);
+                                            showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return StatefulBuilder(
+                                                  builder: (context, setState) {
+                                                    return AlertDialog(
+                                                      title: Text(
+                                                        "Uspješno ažuriran radnik",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                      content: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Text(
+                                                            "Uspješno ste ažurirali izabranog radnika! Izaberite novu ulogu za radnika:",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                          SizedBox(height: 20),
+                                                          DropdownButton<
+                                                              String>(
+                                                            value: selectedRole,
+                                                            hint: Text(
+                                                                "Izaberite ulogu"),
+                                                            onChanged: (String?
+                                                                newValue) {
+                                                              setState(() {
+                                                                selectedRole =
+                                                                    newValue;
+                                                              });
+                                                            },
+                                                            items: roles.map<
+                                                                DropdownMenuItem<
+                                                                    String>>((Uloga
+                                                                value) {
+                                                              return DropdownMenuItem<
+                                                                  String>(
+                                                                value:
+                                                                    value.naziv,
+                                                                child: Text(value
+                                                                    .naziv!),
+                                                              );
+                                                            }).toList(),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      actions: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            ElevatedButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                var role = roles.firstWhere(
+                                                                    (role) => role
+                                                                        .naziv!
+                                                                        .startsWith(
+                                                                            selectedRole!));
 
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      FormBuilderTextField(
-                        name: "prezime",
-                        focusNode: _prezimeFocusNode,
-                        controller: prezimeController,
-                        decoration: const InputDecoration(labelText: "Prezime"),
-                        textInputAction: TextInputAction.next,
-                        onEditingComplete: () => FocusScope.of(context)
-                            .requestFocus(_telefonFocusNode),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Ovo polje je obavezno!';
-                          } else if (!RegExp(r'^[A-Z-ŠĐČĆŽ]').hasMatch(value)) {
-                            return 'Prezime mora početi velikim slovom.';
-                          } else if (!RegExp(r'^[a-zA-ZšđčćžŠĐČĆŽ\s]+$')
-                              .hasMatch(value)) {
-                            return 'Prezime može sadržavati samo slova.';
-                          } else if (value.length < 3) {
-                            return 'Morate unijeti najmanje 3 karaktera.';
-                          } else if (value.length > 50) {
-                            return 'Premašili ste maksimalan broj karaktera (50).';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      FormBuilderTextField(
-                          name: "telefon",
-                          focusNode: _telefonFocusNode,
-                          controller: telefonController,
-                          decoration:
-                              const InputDecoration(labelText: "Telefon"),
-                          textInputAction: TextInputAction.next,
-                          onEditingComplete: () => FocusScope.of(context)
-                              .requestFocus(_emailFocusNode),
-                          validator: (value) {
-                            if (value != null && value.isNotEmpty) {
-                              if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                return 'Ovo polje može sadržavati samo brojeve.';
-                              } else if (value.length < 9) {
-                                return 'Broj telefona može imati minimalno 9 cifara.';
-                              } else if (value.length > 10) {
-                                return 'Broj telefona može imati maksimalno 10 cifara.';
-                              }
-                            }
-                            return null;
-                          }),
-                      const SizedBox(height: 15),
-                      FormBuilderTextField(
-                        name: "email",
-                        focusNode: _emailFocusNode,
-                        controller: emailController,
-                        decoration: const InputDecoration(labelText: "E-mail"),
-                        textInputAction: TextInputAction.next,
-                        onEditingComplete: () => FocusScope.of(context)
-                            .requestFocus(_adresaFocusNode),
-                        validator: (value) {
-                          if (value != null && value.isNotEmpty) {
-                            if (!RegExp(
-                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                .hasMatch(value)) {
-                              return 'Unesite validnu e-mail adresu.';
-                            } else if (value.length > 50) {
-                              return 'Premašili ste maksimalan broj karaktera (50).';
-                            }
-                          }
-                          return null;
-                        },
-                      ),
-                      FormBuilderTextField(
-                        name: "korisnickoIme",
-                        focusNode: _usernameFocusNode,
-                        controller: korisnickoImeController,
-                        decoration: InputDecoration(
-                          labelText: "Korisničko ime",
-                          errorText: usernameTaken
-                              ? "Admin sa ovim korisničkim imenom već postoji."
-                              : null,
-                        ),
-                        textInputAction: TextInputAction.next,
-                        onEditingComplete: () => FocusScope.of(context)
-                            .requestFocus(_lozinkaFocusNode),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Ovo polje je obavezno!';
-                          } else if (value.length < 5) {
-                            return 'Morate unijeti najmanje 5 karaktera.';
-                          } else if (value.length > 50) {
-                            return 'Premašili ste maksimalan broj karaktera (50).';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      FormBuilderTextField(
-                        name: "password",
-                        focusNode: _lozinkaFocusNode,
-                        controller: lozinkaController,
-                        decoration: const InputDecoration(labelText: "Lozinka"),
-                        textInputAction: TextInputAction.done,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Ovo polje je obavezno!';
-                          } else if (value.length < 8 ||
-                              !value.contains(RegExp(r'[A-Z]')) ||
-                              !value.contains(RegExp(r'[a-z]')) ||
-                              !value.contains(RegExp(r'[0-9]'))) {
-                            return '8 karaktera, uključujući najmanje jedno veliko slovo (A-Z), jedno malo slovo (a-z) i jednu cifru (0-9)';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      ElevatedButton(
-                        onPressed: () async {
-                          // Check if the form is valid
-                          if (_formKey.currentState?.saveAndValidate() ?? false) {
-                            // Validate if username is available
-                            Korisnik noviKorisnik = Korisnik(
-                              ime: imeController.text,
-                              prezime: prezimeController.text,
-                              telefon: telefonController.text,
-                              email: emailController.text,
-                              korisnickoIme: korisnickoImeController.text,
-                              password: lozinkaController.text,
-                            );
-                            
-                            // Save the user to the database via the provider
-                            try {
-                              await _korisniciProvider.insert(noviKorisnik);
-                              
-                              // Show success message and navigate to login page
-                              _showAlertDialog('Uspješno ste registrirani', 'Možete se prijaviti sada.', Colors.green);
-                              Navigator.pushReplacementNamed(context, '/login');
-                            } catch (e) {
-                              // Handle error while saving the user
-                              _showSnackbar('Greška pri registraciji: $e');
-                            }
-                          } else {
-                            _showSnackbar('Molimo vas ispunite sva polja.');
-                          }
-                        },
-                        child: Text(
-                          "Spremaj",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                                                                UserRoleUpdate
+                                                                    newUserRole =
+                                                                    UserRoleUpdate(
+                                                                  role.ulogaId,
+                                                                );
+                                                                await _userRoleProvider.update(
+                                                                    widget
+                                                                        .user!
+                                                                        .korisniciUloges![
+                                                                            0]
+                                                                        .korisnikUlogaId!,
+                                                                    newUserRole);
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            KorisnikProfileScreen(),
+                                                                  ),
+                                                                );
+                                                              },
+                                                              child: const Text(
+                                                                  "Ok"),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            );
+                                          } else if (widget.user == null) {
+                                            UserInsert newUser = UserInsert(
+                                              widget._nameController.text,
+                                              widget._surenameController.text,
+                                              widget._emailController.text,
+                                              widget._phoneController.text,
+                                              widget._passwordController.text,
+                                              widget._passwordRepeatController
+                                                  .text,
+                                              1,
+                                            );
+                                            await _userProvider.insert(newUser);
+                                            showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return StatefulBuilder(
+                                                  builder: (context, setState) {
+                                                    return AlertDialog(
+                                                      title: Text(
+                                                        "Uspješno dodan radnik",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                      content: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Text(
+                                                            "Uspješno ste dodali novog radnika! Izaberite novu ulogu za radnika:",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                          SizedBox(height: 20),
+                                                          DropdownButton<
+                                                              String>(
+                                                            value: selectedRole,
+                                                            hint: Text(
+                                                                "Izaberite ulogu"),
+                                                            onChanged: (String?
+                                                                newValue) {
+                                                              setState(() {
+                                                                selectedRole =
+                                                                    newValue;
+                                                              });
+                                                            },
+                                                            items: roles.map<
+                                                                DropdownMenuItem<
+                                                                    String>>((Uloga
+                                                                value) {
+                                                              return DropdownMenuItem<
+                                                                  String>(
+                                                                value:
+                                                                    value.naziv,
+                                                                child: Text(value
+                                                                    .naziv!),
+                                                              );
+                                                            }).toList(),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      actions: [
+                                                        ElevatedButton(
+                                                          onPressed: () async {
+                                                            var role = roles.firstWhere(
+                                                                (role) => role
+                                                                    .naziv!
+                                                                    .startsWith(
+                                                                        selectedRole!));
+
+                                                            var userSearch =
+                                                                await _userProvider
+                                                                    .get();
+                                                            var user =
+                                                                userSearch
+                                                                    .result
+                                                                    .last;
+                                                            UserRoleInsert
+                                                                newUserRole =
+                                                                UserRoleInsert(
+                                                              user.id!,
+                                                              role.ulogaId,
+                                                            );
+                                                            await _userRoleProvider
+                                                                .insert(
+                                                                    newUserRole);
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        KorisnikProfileScreen(),
+                                                              ),
+                                                            );
+                                                          },
+                                                          child:
+                                                              const Text("Ok"),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            );
+                                          }
+                                        } on Exception catch (e) {
+                                          showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  AlertDialog(
+                                                    title: Text(
+                                                      "Greška u registraciji",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    content: Text(
+                                                      "Upps, nešto nije okay, pokušajte ponovo!",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    actions: [
+                                                      ElevatedButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context),
+                                                        child: Text("OK"),
+                                                      )
+                                                    ],
+                                                  ));
+                                          return;
+                                        }
+                                      }
+                                    },
+                                    child: (widget.user != null)
+                                        ? Text('Sačuvaj')
+                                        : Text('Registriraj'),
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      overlayColor: Colors.green,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 15.0),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10.0),
+                              (widget.user != null)
+                                  ? SizedBox.shrink()
+                                  : TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()),
+                                        );
+                                      },
+                                      child: Text('Već imate račun?'),
+                                      style: TextButton.styleFrom(),
+                                    ),
+                            ],
                           ),
                         ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 63, 125, 137),
-                          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showAlertDialog(String naslov, String poruka, Color boja) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        backgroundColor: const Color.fromARGB(255, 238, 247, 255),
-        title: Text(
-          naslov,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: boja,
-          ),
-        ),
-        content: Text(
-          poruka,
-          style: const TextStyle(
-            fontSize: 16.0,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
-            },
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white,
-              textStyle: const TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
-            child: const Text("OK"),
-          ),
-        ],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
+          );
   }
 }

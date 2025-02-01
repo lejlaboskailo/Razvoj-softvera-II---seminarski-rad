@@ -86,29 +86,7 @@ Widget build(BuildContext context) {
                                   ),
                                 ),
                                 SizedBox(height: 8),
-                                Text(
-                                  korisnik.korisnickoIme ?? '',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.grey[700],
-                                  ),
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  korisnik.telefon ?? '',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.grey[700],
-                                  ),
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  korisnik.email ?? '',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.grey[700],
-                                  ),
-                                ),
+                                
                               ],
                             ),
                           ],

@@ -1,6 +1,8 @@
-﻿using eRestoran.Model.Requests;
+﻿using eRestoran.Model;
+using eRestoran.Model.Requests;
 using eRestoran.Model.SearchObjects;
 using eRestoran.Services;
+using eRestoran.Services.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -42,6 +44,24 @@ namespace eRestoran.Controllers
         {
             return (_service as IKorisniciService).Register(username, password, ime, prezime);
         }
+
+       /* [AllowAnonymous] //[Authorize(Roles = "Administrator")] 
+        public Task<Korisnik> Insert([FromBody] KorisnikUpsertRequest insert)
+        {
+            return base.Insert(insert);
+        }*/
+
+       /* [AllowAnonymous]
+        public Task<PagedResult<Korisnik>> Get([FromQuery] KorisnikSearchRequests? search)
+        {
+            return base.Get(search);
+        }
+
+        [AllowAnonymous]
+        public Task<Korisnik> GetById(int id)
+        {
+            return base.GetById(id);
+        }*/
 
     }
 }

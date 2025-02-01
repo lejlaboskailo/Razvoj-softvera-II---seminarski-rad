@@ -34,7 +34,7 @@ namespace eRestoran.Controllers
         [HttpGet("preporuceno")]
         public List<Model.Jelo> GetPreporucenaJela(int korisnikId)
         {
-            return (_service as IJeloService).GetPreporucenaJela();
+            return (_service as IJeloService).GetPreporucenaJela(korisnikId);
         }
     }
 }

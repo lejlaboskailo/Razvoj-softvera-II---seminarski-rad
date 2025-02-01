@@ -9,9 +9,11 @@ part of 'grad.dart';
 Grad _$GradFromJson(Map<String, dynamic> json) => Grad(
       (json['id'] as num?)?.toInt(),
       json['naziv'] as String?,
+      (json['drzavaId'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$GradToJson(Grad instance) => <String, dynamic>{
       'id': instance.id,
       'naziv': instance.naziv,
+      'drzavaId': instance.drzavaId,
     };
