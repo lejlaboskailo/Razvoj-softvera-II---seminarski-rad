@@ -207,6 +207,7 @@ namespace eRestoran.Services.Database
                      Cijena = 15,
                      KategorijaId = 4000,
                      Slika= slikaJelo,
+                     StateMachine="active",
                  },
                   new Jelo()
                   {
@@ -216,6 +217,8 @@ namespace eRestoran.Services.Database
                       Cijena = 15,
                       KategorijaId = 4000,
                       //Slika = slikaJelo,
+                      StateMachine = "active",
+
                   },
                    new Jelo()
                    {
@@ -225,6 +228,8 @@ namespace eRestoran.Services.Database
                        Cijena = 15,
                        KategorijaId = 4003,
                        //Slika = slikaJelo,
+                       StateMachine = "active",
+
                    },
                     new Jelo()
                     {
@@ -234,6 +239,8 @@ namespace eRestoran.Services.Database
                         Cijena = 15,
                         KategorijaId = 4001,
                         //Slika = slikaJelo,
+                        StateMachine = "cancelled",
+
                     },
                      new Jelo()
                      {
@@ -242,7 +249,9 @@ namespace eRestoran.Services.Database
                          Opis = "top",
                          Cijena = 15,
                          KategorijaId = 4002,
-                        // Slika = slikaJelo,
+                         // Slika = slikaJelo,
+                         StateMachine = "active",
+
                      }
                  );
             #endregion
@@ -525,7 +534,19 @@ namespace eRestoran.Services.Database
                  );
             #endregion
 
-           
+
+            modelBuilder.Entity<Korpa>().HasData(
+                 new Korpa()
+                 {
+                     KorpaId=7898,
+                     ProizvodId=5000,
+                     KorisnikId=1002,
+                     Kolicina=2,
+                     Cijena = 30,
+                     KategorijaId = 4000,
+                 }
+                 );
+
 
         }
     }

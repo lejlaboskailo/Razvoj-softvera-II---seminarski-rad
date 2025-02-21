@@ -10,7 +10,6 @@ using System.Text;
 namespace eRestoran.Controllers
 {
     [Route("[controller]")]
-   //[AllowAnonymous]
     public class KorisnikController:BaseCRUDController<Model.Korisnik,KorisnikSearchRequests,KorisnikUpsertRequest,KorisnikUpsertRequest>
     {
         public KorisnikController(ILogger<BaseController<Model.Korisnik, KorisnikSearchRequests>> logger, IKorisniciService service) : base(logger, service)
@@ -44,24 +43,25 @@ namespace eRestoran.Controllers
         {
             return (_service as IKorisniciService).Register(username, password, ime, prezime);
         }
+   
 
-       /* [AllowAnonymous] //[Authorize(Roles = "Administrator")] 
-        public Task<Korisnik> Insert([FromBody] KorisnikUpsertRequest insert)
-        {
-            return base.Insert(insert);
-        }*/
+         /*[AllowAnonymous] [Authorize(Roles = "Administrator")] 
+         public Task<Korisnik> Insert([FromBody] KorisnikUpsertRequest insert)
+         {
+             return base.Insert(insert);
+         }*/
 
-       /* [AllowAnonymous]
-        public Task<PagedResult<Korisnik>> Get([FromQuery] KorisnikSearchRequests? search)
-        {
-            return base.Get(search);
-        }
+        /* [AllowAnonymous]
+         public Task<PagedResult<Korisnik>> Get([FromQuery] KorisnikSearchRequests? search)
+         {
+             return base.Get(search);
+         }
 
-        [AllowAnonymous]
-        public Task<Korisnik> GetById(int id)
-        {
-            return base.GetById(id);
-        }*/
+         [AllowAnonymous]
+         public Task<Korisnik> GetById(int id)
+         {
+             return base.GetById(id);
+         }*/
 
     }
 }

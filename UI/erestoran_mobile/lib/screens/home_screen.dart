@@ -1,22 +1,18 @@
-import 'package:erestoran_mobile/widgets/master_screen.dart';
+import 'package:erestoran_mobile/screens/meni_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
- 
+import 'package:erestoran_mobile/widgets/master_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
- 
-class _HomeScreenState extends State<HomeScreen> {
 
- 
+class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-  
   }
- 
- 
+
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
@@ -37,8 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _buildWelcomeCard(),
-                      SizedBox(height: 44), 
+                      _buildMenuButton(),
+                      SizedBox(height: 44),
                     ],
                   ),
                 ),
@@ -49,9 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
- 
- 
-  Widget _buildWelcomeCard() {
+
+  Widget _buildMenuButton() {
     return Card(
       color: Colors.white.withOpacity(0.8),
       elevation: 4,
@@ -62,20 +57,34 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Dobrodošli na eRestoran Admin početnu stranicu!',
+              'Prikaži meni',
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
-            Text(
-              'Od tradicionalnih specijaliteta do modernih gastronomskih kreacija, naš meni je osmišljen da zadovolji sve ukuse. Brza i jednostavna online narudžba omogućava vam da uživate u omiljenim jelima iz udobnosti vašeg doma. Uz brzu dostavu, vaša hrana stiže topla i spremna za uživanje.',
-              style: TextStyle(fontSize: 18),
+            ElevatedButton(
+              onPressed: () {
+                _navigateToMenuPage(context);
+              },
+              child: Text('Pogledaj Meni'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                textStyle: TextStyle(fontSize: 18),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
             ),
-            SizedBox(height: 16),
           ],
         ),
       ),
     );
   }
- 
- 
+
+  // Funkcija za navigaciju do stranice menija
+  void _navigateToMenuPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MeniScreen()),
+    );
+  }
 }

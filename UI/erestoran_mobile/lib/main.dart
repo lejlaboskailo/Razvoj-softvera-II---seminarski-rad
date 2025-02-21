@@ -1,3 +1,4 @@
+import 'package:erestoran_mobile/providers/cart_provider.dart';
 import 'package:erestoran_mobile/providers/dojmovi_provider.dart';
 import 'package:erestoran_mobile/providers/kategorija_provider.dart';
 import 'package:erestoran_mobile/providers/korisnik_provider.dart';
@@ -19,6 +20,8 @@ void main() {
       ChangeNotifierProvider(create: (_) => KategorijaProvider()),
       ChangeNotifierProvider(create: (_) => DojmoviProvider()),
       ChangeNotifierProvider(create: (_) => KorisnikUlogaProvider()),
+      ChangeNotifierProvider(create: (_) => CartProvider()),
+
 
 
 

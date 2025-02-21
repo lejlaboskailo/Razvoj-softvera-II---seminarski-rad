@@ -29,6 +29,8 @@ builder.Services.AddScoped<IUplataService, UplataService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IRestoranService, RestoranService>();
 builder.Services.AddScoped<IKorisniciUloga, KorisniciUlogaService>();
+builder.Services.AddScoped<IKorpaService, KorpaService>();
+
 
 builder.Services.AddSingleton<IMailProducer, MailProducer>();
 
@@ -106,14 +108,19 @@ app.MapControllers();
 
 
 /*using (var scope = app.Services.CreateScope())
-
 {
-
     var dataContext = scope.ServiceProvider.GetRequiredService<ERestoranContext>();
-
-    dataContext.Database.Migrate();
-
+    try
+    {
+        await dataContext.Database.MigrateAsync();
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database.");
+    }
 }*/
+
 
 
 app.Run();

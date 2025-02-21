@@ -18,6 +18,7 @@ public partial class Jelo
     
     public byte[]? Slika { get; set; }
    // public byte[]? SlikaThumb { get; set; }
+   public string? StateMachine {  get; set; }
 
     public virtual ICollection<Dojmovi> Dojmovis { get; set; } = new List<Dojmovi>();
 

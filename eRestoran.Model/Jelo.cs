@@ -18,6 +18,8 @@ namespace eRestoran.Model
         public int KategorijaId { get; set; }
        // public Kategorija Kategorija { get; set; }
        public byte[]? Slika { get; set; }
+        public string? StateMachine { get; set; }
+
         //public byte[]? SlikaThumb { get; set; }
     }
 }

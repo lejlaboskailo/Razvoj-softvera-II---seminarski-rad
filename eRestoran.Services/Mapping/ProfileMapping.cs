@@ -72,7 +72,12 @@ namespace eRestoran.Services.Mapping
             CreateMap<UplataInsertRequest, Database.Uplatum>();
             CreateMap<UplateUpdateRequest,Database.Uplatum>();
 
-            
+            CreateMap<Database.Korpa, Model.Korpa>();
+            CreateMap<BaseSearchObject, Database.Korpa>();
+            CreateMap<KorpaInsertRequest, Database.Korpa>();
+            CreateMap<KorpaUpdateRequest, Database.Korpa>();
+
+
 
 
 

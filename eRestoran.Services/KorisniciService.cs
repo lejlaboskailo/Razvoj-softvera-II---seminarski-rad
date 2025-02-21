@@ -62,6 +62,34 @@ namespace eRestoran.Services
             return _mapper.Map<Model.Korisnik>(entity);
 
         }
+       /* public async Task<Model.Korisnik> Insert(KorisnikUpsertRequest insert)
+        {
+            var set = _context.Set<Korisnici>();
+
+            Korisnici entity = _mapper.Map<Korisnici>(insert);
+
+            set.Add(entity);
+
+            await BeforeInsert(entity, insert);
+
+            var uloga = await _context.Uloges.FirstOrDefaultAsync(u => u.Id == 2);
+            if (uloga == null)
+            {
+                throw new Exception("Uloga sa ID-jem 2 nije pronađena.");
+            }
+
+            var korisnikUloga = new Database.KorisniciUloge
+            {
+                KorisnikId = entity.Id,
+                UlogaId = uloga.Id
+            };
+
+            _context.KorisniciUloges.Add(korisnikUloga);
+
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<Model.Korisnik>(entity);
+        }*/
 
         public override IQueryable<Korisnici> AddInclude(IQueryable<Korisnici> query, KorisnikSearchRequests? search = null)
         {
@@ -90,6 +118,7 @@ namespace eRestoran.Services
 
             return _mapper.Map<Model.Korisnik>(entity);
         }
+
         public async Task<Model.Korisnik> Register(string username, string password, string ime, string prezime)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(ime) || string.IsNullOrEmpty(prezime))

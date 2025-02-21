@@ -1,5 +1,6 @@
 
 import 'package:erestoran_mobile/models/kategorija.dart';
+import 'package:erestoran_mobile/providers/cart_provider.dart';
 import 'package:erestoran_mobile/providers/meni_provider.dart';
 import 'package:erestoran_mobile/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
@@ -126,114 +127,91 @@ class _ProductListScreenState extends State<ProductListScreen> {
     );
   }
 
-  Widget _buildDataListView() {
-    print('Result: ${result?.result}');
-    
-    final filteredResults = widget.kategorija != null 
-        ? result?.result.where((jelo) => jelo.kategorijaId == widget.kategorija!.id).toList() 
-        : result?.result ?? [];
+ Widget _buildDataListView() {
+  print('Result: ${result?.result}');
+  
+  final filteredResults = widget.kategorija != null 
+      ? result?.result.where((jelo) => jelo.kategorijaId == widget.kategorija!.id).toList() 
+      : result?.result ?? [];
 
-    final searchQuery = _nazivController.text.toLowerCase();
-    final finalResults = searchQuery.isNotEmpty
-        ? filteredResults?.where((jelo) => jelo.naziv!.toLowerCase().contains(searchQuery)).toList()
-        : filteredResults;
+  final searchQuery = _nazivController.text.toLowerCase();
+  final finalResults = searchQuery.isNotEmpty
+      ? filteredResults?.where((jelo) => jelo.naziv!.toLowerCase().contains(searchQuery)).toList()
+      : filteredResults;
 
-    return DataTable(
-      columns: const [
-        DataColumn(label: Text('ID', style: TextStyle(fontStyle: FontStyle.italic, color: Colors.orange))),
-        DataColumn(label: Text('Naziv', style: TextStyle(fontStyle: FontStyle.italic, color: Colors.orange))),
-        DataColumn(label: Text('Cijena', style: TextStyle(fontStyle: FontStyle.italic, color: Colors.orange))),
-        DataColumn(label: Text('Slika', style: TextStyle(fontStyle: FontStyle.italic, color: Colors.orange))),
-        DataColumn(label: Text('Akcije', style: TextStyle(fontStyle: FontStyle.italic, color: Colors.orange))),
-      ],
-      rows: finalResults?.map((Jelo e) {
-        print('Row data: ID: ${e.id}, Naziv: ${e.naziv}, Cijena: ${e.cijena}, Slika: ${e.slika}');
-        return DataRow(
-          onSelectChanged: (selected) {
-            if (selected == true) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ProductDetailScreen(jelo: e),
-                ),
-              ).then((_) {
-                _fetchInitialData();
-              });
-            }
+  return ListView.builder(
+    itemCount: finalResults?.length ?? 0,
+    itemBuilder: (context, index) {
+      Jelo e = finalResults![index];
+      return Card(
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ProductDetailScreen(jelo: e),
+              ),
+            );
           },
-          cells: [
-            DataCell(Text(e.id?.toString() ?? '')),
-            DataCell(Text(e.naziv ?? '')),
-            DataCell(Text(e.cijena != null ? e.cijena!.toStringAsFixed(2) : '')),
-            DataCell(
-              e.slika != null && e.slika!.isNotEmpty
-                ? Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: DecorationImage(
-                        image: MemoryImage(base64Decode(e.slika!)),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  )
-                : const Text('Nema slike'),
-            ),
-            DataCell(Row(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(
-                  icon: const Icon(Icons.edit, color: Colors.orange),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetailScreen(jelo: e),
-                      ),
-                    ).then((_) {
-                      _fetchInitialData();
-                    });
-                  },
+                Text(
+                  e.naziv ?? '',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () async {
-                    final confirm = await showDialog<bool>(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text("Potvrda brisanja"),
-                        content: Text("Da li ste sigurni da želite obrisati proizvod \"${e.naziv}\"?"),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, false),
-                            child: const Text("Ne"),
+                const SizedBox(height: 8),
+                Text(
+                  e.cijena != null ? '${e.cijena!.toStringAsFixed(2)} RSD' : 'Cena nije dostupna',
+                ),
+                const SizedBox(height: 8),
+                e.slika != null && e.slika!.isNotEmpty
+                    ? Container(
+                        width: double.infinity,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          image: DecorationImage(
+                            image: MemoryImage(base64Decode(e.slika!)),
+                            fit: BoxFit.cover,
                           ),
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, true),
-                            child: const Text("Da"),
-                          ),
-                        ],
-                      ),
+                        ),
+                      )
+                    : const Text('Nema slike'),
+                const SizedBox(height: 8),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  onPressed: () {
+                    // Add product to cart
+                    context.read<CartProvider>().insert(e);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("${e.naziv} added to cart!")),
                     );
-
-                    if (confirm == true) {
-                      try {
-                        await _productProvider.delete(e.id!);
-                        _fetchInitialData();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Proizvod \"${e.naziv}\" je uspješno obrisan.")),
-                        );
-                      } catch (error) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Greška prilikom brisanja proizvoda: $error")),
-                        );
-                      }
-                    }
                   },
+                  child: const Text("Dodaj u korpu"),
                 ),
               ],
-            )),
-          ],
-        );
-      }).toList() ?? [],
-    );
-  }
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+
 }

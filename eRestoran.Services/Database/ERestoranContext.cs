@@ -58,11 +58,12 @@ public partial class ERestoranContext : DbContext
 
             entity.HasOne(d => d.Jelo).WithMany(p => p.Dojmovis)
                 .HasForeignKey(d => d.JeloId)
-                .HasConstraintName("FK__Dojmovi__JeloId__36B12243");
+                .HasConstraintName("FK__Dojmovi__JeloId__36B12243")
+                .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne(d => d.Korisnik).WithMany(p => p.Dojmovis)
                 .HasForeignKey(d => d.KorisnikId)
-                .HasConstraintName("FK__Dojmovi__Korisni__37A5467C");
+                .HasConstraintName("FK__Dojmovi__Korisni__37A5467C").OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<Drzava>(entity =>
