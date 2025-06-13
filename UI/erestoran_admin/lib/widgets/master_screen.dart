@@ -14,23 +14,26 @@ import 'package:erestoran_admin/screens/product_list_screen.dart';
 import 'package:erestoran_admin/screens/grad_detail_screen.dart';
 import 'package:erestoran_admin/screens/grad_list_screen.dart';
 
-
-
-
- 
 class MasterScreenWidget extends StatefulWidget {
   Widget? child;
   String? title;
   Widget? title_widget;
-   MasterScreenWidget({this.child, this.title, this.title_widget, super.key});
- 
+  final String? activeItem;
+  MasterScreenWidget(
+      {this.child, this.title, this.title_widget, this.activeItem, super.key});
+
   @override
   State<MasterScreenWidget> createState() => _MasterScreenWidgetState();
 }
 
-
- 
 class _MasterScreenWidgetState extends State<MasterScreenWidget> {
+  late String _activeItem;
+
+  @override
+  void initState() {
+    super.initState();
+    _activeItem = widget.activeItem ?? "Home";
+  }
 
   Widget _buildNavBarItems(BuildContext context) {
     return Row(
@@ -39,12 +42,12 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
         _buildNavText(context, "Home", HomeScreen()),
         _buildNavText(context, "Meni", MeniScreen()),
         _buildNavText(context, "Status narudzbe", StatusNarudzbaScreen()),
-        _buildNavText(context, "Evidencija obavjestenja", StatusNarudzbaScreen()),
+        _buildNavText(
+            context, "Evidencija obavjestenja", StatusNarudzbaScreen()),
         _buildNavText(context, "Dojmovi", DojmoiListScreen()),
-       // _buildNavText(context, "Reports", UplatePoKorisnikuReport()),
-       // _buildNavText(context, "Reports", PrometPoKorisnikuReport()),
+        // _buildNavText(context, "Reports", UplatePoKorisnikuReport()),
+        // _buildNavText(context, "Reports", PrometPoKorisnikuReport()),
         _buildNavText(context, "Users", KorisnikScreen()),
-
       ],
     );
   }
@@ -81,27 +84,99 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
       ),
     );
   }
+
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Colors.orange,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         automaticallyImplyLeading: false,
-        title: 
-            Text(
-              widget.title ?? "",
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
+        title: Text(
+          widget.title ?? "",
+          style: TextStyle(color: Colors.black),
+        ),
         actions: [
-          _buildNavBarItems(context),
+          IconButton(
+            icon: Icon(Icons.person, color: Colors.black),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => KorisnikScreen()),
+              );
+            },
+          ),
         ],
       ),
-      body: Column(
+      body: Row(
         children: [
-          Expanded(child: widget.child!),
+          // Sidebar
+          Container(
+            width: 250,
+            color: const Color.fromARGB(255, 23, 22, 22),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20),
+                _buildSidebarItem(context, "Home", HomeScreen(), Icons.home),
+                _buildSidebarItem(
+                    context, "Meni", MeniScreen(), Icons.restaurant_menu),
+                _buildSidebarItem(context, "Status narudzbe",
+                    StatusNarudzbaScreen(), Icons.assignment),
+                _buildSidebarItem(context, "Evidencija obavjestenja",
+                    StatusNarudzbaScreen(), Icons.notifications),
+                _buildSidebarItem(
+                    context, "Dojmovi", DojmoiListScreen(), Icons.comment),
+                _buildSidebarItem(
+                    context, "Users", KorisnikScreen(), Icons.people),
+              ],
+            ),
+          ),
+          // Main content
+          Expanded(
+            child: widget.child ?? Container(),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSidebarItem(
+      BuildContext context, String title, Widget screen, IconData icon) {
+    final bool isActive = _activeItem == title;
+
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => MasterScreenWidget(
+              child: screen,
+              title: title,
+              activeItem: title, // ovdje prosljeđuješ aktivni item
+            ),
+          ),
+        );
+      },
+      child: Container(
+        color: isActive ? Colors.orange : Colors.transparent,
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: isActive ? Colors.black : Colors.orange,
+              size: 20,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: isActive ? Colors.black : Colors.orange,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

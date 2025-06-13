@@ -13,38 +13,32 @@ import 'package:erestoran_admin/screens/korisnik_profile_screen.dart';
 import 'package:erestoran_admin/screens/product_list_screen.dart';
 import 'package:erestoran_admin/screens/status_narudzba_screen.dart';
 import 'package:erestoran_admin/utils/util.dart';
+import 'package:erestoran_admin/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_)=> GradProvider()),
-    ChangeNotifierProvider(create: (_)=> ProductProvider()),
-    ChangeNotifierProvider(create: (_)=> KategorijaProvider()),
-    ChangeNotifierProvider(create: (_)=> KorisnikProvider()),
-    ChangeNotifierProvider(create: (_)=> KategorijaProvider()),
-    ChangeNotifierProvider(create: (_)=> stavkeNarudzbeProvider()),
-    ChangeNotifierProvider(create: (_)=> NarudzbaProvider()),
-    ChangeNotifierProvider(create: (_)=> DojmoviProvider()),
-    ChangeNotifierProvider(create: (_)=> UlogaProvider()),
-    ChangeNotifierProvider(create: (_)=> StatusNarudzbeProvider()),
-    ChangeNotifierProvider(create: (_)=> RestoranProvider()),
-
-
-
-
-
-
-
-
-  ],
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => GradProvider()),
+      ChangeNotifierProvider(create: (_) => ProductProvider()),
+      ChangeNotifierProvider(create: (_) => KategorijaProvider()),
+      ChangeNotifierProvider(create: (_) => KorisnikProvider()),
+      ChangeNotifierProvider(create: (_) => KategorijaProvider()),
+      ChangeNotifierProvider(create: (_) => stavkeNarudzbeProvider()),
+      ChangeNotifierProvider(create: (_) => NarudzbaProvider()),
+      ChangeNotifierProvider(create: (_) => DojmoviProvider()),
+      ChangeNotifierProvider(create: (_) => UlogaProvider()),
+      ChangeNotifierProvider(create: (_) => StatusNarudzbeProvider()),
+      ChangeNotifierProvider(create: (_) => RestoranProvider()),
+    ],
     child: const MyApp(),
   ));
 }
- 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
- 
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -73,24 +67,24 @@ class MyApp extends StatelessWidget {
     );
   }
 }
- 
+
 class MyAppBar extends StatelessWidget {
   String? title;
   MyAppBar({Key? key, required this.title}) : super(key: key);
- 
+
   @override
   Widget build(BuildContext context) {
     return Text(title!);
   }
 }
- 
+
 class Counter extends StatefulWidget {
   const Counter({Key? key}) : super(key: key);
- 
+
   @override
   State<Counter> createState() => _CounterState();
 }
- 
+
 class _CounterState extends State<Counter> {
   int _count = 0;
   void _incrementCounter() {
@@ -98,7 +92,7 @@ class _CounterState extends State<Counter> {
       _count++;
     });
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -112,16 +106,17 @@ class _CounterState extends State<Counter> {
     );
   }
 }
- 
+
 class MyMaterialApp extends StatelessWidget {
   const MyMaterialApp({Key? key}) : super(key: key);
- 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "RS II Material App",
       theme: ThemeData(primarySwatch: Colors.green),
       home: LoginPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -175,9 +170,14 @@ class _LoginPageState extends State<LoginPage> {
           loggedInUserID = Authorization.korisnik?.id;
         });
 
-        Navigator.of(context).push(
+        Navigator.pushReplacement(
+          context,
           MaterialPageRoute(
-            builder: (context) => HomeScreen(),
+            builder: (context) => MasterScreenWidget(
+              child: HomeScreen(),
+              title: "Home",
+              activeItem: "Home",
+            ),
           ),
         );
       } else {
@@ -305,128 +305,126 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );*/
 
-      return Scaffold(
-        appBar: AppBar(
-          title: Text("Login"),
-          backgroundColor: Colors.orange,
-          elevation: 0,
-        ),
-        body: Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.orange.shade100,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 70,
-                      backgroundImage: AssetImage("assets/images/slika1.jpg"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Login"),
+        backgroundColor: Colors.orange,
+        elevation: 0,
+      ),
+      body: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.orange.shade100,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 70,
+                    backgroundImage: AssetImage("assets/images/slika1.jpg"),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    "Welcome Back!",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.orange.shade700,
                     ),
-                    SizedBox(height: 20),
-                    Text(
-                      "Welcome Back!",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.orange.shade700,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 10,
-                      offset: Offset(0, 4),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Login to your account",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
                     ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Login to your account",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                  ),
+                  SizedBox(height: 24),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: "Username",
+                      labelStyle: TextStyle(color: Colors.black54),
+                      prefixIcon:
+                          Icon(Icons.account_circle, color: Colors.orange),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     ),
-                    SizedBox(height: 24),
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: "Username",
-                        labelStyle: TextStyle(color: Colors.black54),
-                        prefixIcon: Icon(Icons.account_circle, color: Colors.orange),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 16),
+                    controller: _usernameController,
+                  ),
+                  SizedBox(height: 24),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      labelStyle: TextStyle(color: Colors.black54),
+                      prefixIcon: Icon(Icons.lock, color: Colors.orange),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      controller: _usernameController,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     ),
-                    SizedBox(height: 24),
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: "Password",
-                        labelStyle: TextStyle(color: Colors.black54),
-                        prefixIcon: Icon(Icons.lock, color: Colors.orange),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 16),
-                      ),
-                      controller: _passwordController,
-                      obscureText: true,
-                    ),
-                    SizedBox(height: 32),
-                    _isLoading
-                        ? Center(child: CircularProgressIndicator())
-                        : ElevatedButton(
-                            onPressed: _login,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 50, vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+                    controller: _passwordController,
+                    obscureText: true,
+                  ),
+                  SizedBox(height: 32),
+                  _isLoading
+                      ? Center(child: CircularProgressIndicator())
+                      : ElevatedButton(
+                          onPressed: _login,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Center(
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                  ],
-                ),
+                        ),
+                ],
               ),
             ),
-          ],
-        ),
-      );
-
-
-
+          ),
+        ],
+      ),
+    );
   }
 }

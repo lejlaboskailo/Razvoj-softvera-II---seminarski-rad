@@ -20,7 +20,7 @@ services:
     restart: unless-stopped
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=test!12LE
+      - SA_PASSWORD=test12!W
       - MSSQL_PID=Developer
     ports:
       - 1433:1433
@@ -34,7 +34,7 @@ services:
     build:
       context: .
     environment:
-      - ConnectionStrings:DefaultConnection=Server=erestoran-sql,1433;Database=eRestoran;User=sa;Password=test!12LE;ConnectRetryCount=0; TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Server=erestoran-sql,1433;Database=eRestoran;User Id=sa;Password=test12!W;ConnectRetryCount=0;TrustServerCertificate=True
       - ASPNETCORE_ENVIRONMENT=Development
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672

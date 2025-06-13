@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public interface IKorisniciService:ICRUDService<Korisnik,KorisnikSearchRequests,KorisnikUpsertRequest,KorisnikUpsertRequest>
+    public interface IKorisniciService:ICRUDService<Korisnik,KorisnikSearchRequests,KorisnikInsertRequest,KorisnikUpsertRequest>
     {
         Task<Model.Korisnik> InsertAsync(KorisnikUpsertRequest korisnici);
         Task<Model.Korisnik> Login(string username, string password);
         Task<Model.Korisnik> Register(string username, string password, string ime, string prezime);
-       // Task<Korisnik> Insert(KorisnikUpsertRequest insert);
+        Task<Korisnik> Insert(KorisnikInsertRequest insert);
 
 
     }

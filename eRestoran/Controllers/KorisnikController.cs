@@ -10,11 +10,20 @@ using System.Text;
 namespace eRestoran.Controllers
 {
     [Route("[controller]")]
-    public class KorisnikController:BaseCRUDController<Model.Korisnik,KorisnikSearchRequests,KorisnikUpsertRequest,KorisnikUpsertRequest>
+    [Authorize(Roles = "Korisnik")]
+    [AllowAnonymous]
+    public class KorisnikController:BaseCRUDController<Model.Korisnik,KorisnikSearchRequests, KorisnikInsertRequest, KorisnikUpsertRequest>
     {
         public KorisnikController(ILogger<BaseController<Model.Korisnik, KorisnikSearchRequests>> logger, IKorisniciService service) : base(logger, service)
         {
         }
+        [HttpPost]
+        [Authorize(Roles = "Korisnik")]
+        public override async Task<Korisnik> Insert([FromBody] KorisnikInsertRequest insert)
+        {
+            return await base.Insert(insert);
+        }
+
         [HttpPost("login")]
         [AllowAnonymous]
         public Task<Model.Korisnik> Login(string username, string password)

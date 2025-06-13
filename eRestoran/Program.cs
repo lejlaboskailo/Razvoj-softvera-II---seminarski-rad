@@ -77,6 +77,7 @@ builder.Services.AddSwaggerGen(c =>
 
 
 var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
+Console.WriteLine("Connection string: " + connectionstring);
 var context = builder.Services.AddDbContext<ERestoranContext>(options => options.UseSqlServer(connectionstring));
 builder.Services.AddAutoMapper(typeof(IKorisniciService));
 builder.Services.AddAuthentication("BasicAuthentication")
@@ -107,19 +108,19 @@ app.UseAuthorization();
 app.MapControllers();
 
 
-/*using (var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<ERestoranContext>();
     try
     {
-        await dataContext.Database.MigrateAsync();
+        dataContext.Database.Migrate();
     }
     catch (Exception ex)
     {
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while migrating the database.");
+        Console.WriteLine("DB migration failed: " + ex.Message);
     }
-}*/
+
+}
 
 
 

@@ -50,14 +50,9 @@ class _KorisnikScreen extends State<KorisnikScreen> {
 Widget build(BuildContext context) {
   final korisnik = result?.result.first;
 
-  return MasterScreenWidget(
-    title_widget: Text(
-      "Hello, Admin! Welcome to your profile!",
-      style: TextStyle(
-        color: Colors.white,
-      ),
-    ),
-    child: korisnik != null
+  return Scaffold(
+  
+    body: korisnik != null
         ? Center(
             child: Padding(
               padding: const EdgeInsets.all(24.0),
@@ -111,10 +106,8 @@ Widget build(BuildContext context) {
                           ),
                         ),
                         SizedBox(height: 16),
-                        // Dodajte dugme za uređivanje
                         ElevatedButton(
                           onPressed: () {
-                            // Navigacija ka ekranu za uređivanje
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => KorisniciDetailsScreen(korisnik: korisnik),

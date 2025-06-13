@@ -6,118 +6,98 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eRestoran.Services.Migrations
 {
     /// <inheritdoc />
-    public partial class AddKorisniciDetails : Migration
+    public partial class DataInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Email",
-                table: "Korisnici",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Telefon",
-                table: "Korisnici",
-                type: "nvarchar(max)",
-                nullable: true);
-
             migrationBuilder.UpdateData(
                 table: "Korisnici",
                 keyColumn: "Id",
                 keyValue: 1001,
-                columns: new[] { "Email", "LozinkaHash", "LozinkaSalt", "Telefon" },
-                values: new object[] { "medzida@gmail.com", "rKyDjgN+Ay/JC5JpvpobXB9HRGw=", "dfDUv7ow/3ijB3mMkq3waw==", "066455778" });
+                columns: new[] { "LozinkaHash", "LozinkaSalt" },
+                values: new object[] { "Fp2Hhe9CzFxwMlBBakEJvNSoq8c=", "RkDYB8BPuC+lgVSFZtDQyw==" });
 
             migrationBuilder.UpdateData(
                 table: "Korisnici",
                 keyColumn: "Id",
                 keyValue: 1002,
-                columns: new[] { "Email", "LozinkaHash", "LozinkaSalt", "Telefon" },
-                values: new object[] { "ena@gmail.com", "18C/NPVCC5QuQPcQLCmPaYpsi6U=", "lerO4ZCyhDFiUdkxhkUj+A==", "066455778" });
+                columns: new[] { "LozinkaHash", "LozinkaSalt" },
+                values: new object[] { "Aa0IqwGS0glvs2LbGeWrOacDkU0=", "eurjWKSfEodMR4UQ3PCLTA==" });
 
             migrationBuilder.UpdateData(
                 table: "Korisnici",
                 keyColumn: "Id",
                 keyValue: 1007,
-                columns: new[] { "Email", "LozinkaHash", "LozinkaSalt", "Telefon" },
-                values: new object[] { "lejla@gmail.com", "miQeTaWOrTx5VM+UVTb98Iqedd8=", "EAXCe2XSAvALjnx/fS4cjg==", "066455778" });
+                columns: new[] { "LozinkaHash", "LozinkaSalt" },
+                values: new object[] { "sPf8ahtIDyxOuMFNrubGNxddgtg=", "cW9rMNhTd3gsQpTN7y4gPQ==" });
 
             migrationBuilder.UpdateData(
                 table: "KorisniciUloge",
                 keyColumn: "KorisnikUlogaId",
                 keyValue: 1,
                 column: "DatumIzmjene",
-                value: new DateTime(2025, 1, 20, 15, 25, 13, 853, DateTimeKind.Local).AddTicks(6637));
+                value: new DateTime(2025, 6, 13, 11, 50, 26, 857, DateTimeKind.Local).AddTicks(404));
 
             migrationBuilder.UpdateData(
                 table: "KorisniciUloge",
                 keyColumn: "KorisnikUlogaId",
                 keyValue: 2,
                 column: "DatumIzmjene",
-                value: new DateTime(2025, 1, 20, 15, 25, 13, 853, DateTimeKind.Local).AddTicks(6687));
+                value: new DateTime(2025, 6, 13, 11, 50, 26, 857, DateTimeKind.Local).AddTicks(449));
 
             migrationBuilder.UpdateData(
                 table: "Narudzba",
                 keyColumn: "Id",
                 keyValue: 6000,
                 column: "DatumNarudzbe",
-                value: new DateTime(2025, 1, 20, 15, 25, 13, 853, DateTimeKind.Local).AddTicks(7269));
+                value: new DateTime(2025, 6, 13, 11, 50, 26, 857, DateTimeKind.Local).AddTicks(1096));
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Email",
-                table: "Korisnici");
-
-            migrationBuilder.DropColumn(
-                name: "Telefon",
-                table: "Korisnici");
-
             migrationBuilder.UpdateData(
                 table: "Korisnici",
                 keyColumn: "Id",
                 keyValue: 1001,
                 columns: new[] { "LozinkaHash", "LozinkaSalt" },
-                values: new object[] { "MQZgbOenHjCiuDAWTRMJ4bl9fCE=", "qDfX7hRtbFf61N2sjUMUFw==" });
+                values: new object[] { "BAilvsOBtjHNU0r+tCWRI2eUo+U=", "DKzCrfwnpY0qBZ3H7JQ0Jg==" });
 
             migrationBuilder.UpdateData(
                 table: "Korisnici",
                 keyColumn: "Id",
                 keyValue: 1002,
                 columns: new[] { "LozinkaHash", "LozinkaSalt" },
-                values: new object[] { "BkK4hBSXQftXQEysheCs+Vhppq4=", "PAxBylDbx9t3GQEHgxgwRA==" });
+                values: new object[] { "ftuSgiiWzsQhgF/8fv9xVR1DaKA=", "afUn6JKjtH/yR867aVBMuw==" });
 
             migrationBuilder.UpdateData(
                 table: "Korisnici",
                 keyColumn: "Id",
                 keyValue: 1007,
                 columns: new[] { "LozinkaHash", "LozinkaSalt" },
-                values: new object[] { "4cJQ7WaYBqXLT/ha929T5GyiJKw=", "pvNKERZZAVlfkH9CB4iMYg==" });
+                values: new object[] { "28PfvKK4Xzfv+RAkQzn1BEHf7iw=", "5EuB4s2+RQcKgDRgOknUCg==" });
 
             migrationBuilder.UpdateData(
                 table: "KorisniciUloge",
                 keyColumn: "KorisnikUlogaId",
                 keyValue: 1,
                 column: "DatumIzmjene",
-                value: new DateTime(2025, 1, 20, 14, 4, 21, 668, DateTimeKind.Local).AddTicks(3410));
+                value: new DateTime(2025, 6, 13, 11, 44, 54, 646, DateTimeKind.Local).AddTicks(3452));
 
             migrationBuilder.UpdateData(
                 table: "KorisniciUloge",
                 keyColumn: "KorisnikUlogaId",
                 keyValue: 2,
                 column: "DatumIzmjene",
-                value: new DateTime(2025, 1, 20, 14, 4, 21, 668, DateTimeKind.Local).AddTicks(3461));
+                value: new DateTime(2025, 6, 13, 11, 44, 54, 646, DateTimeKind.Local).AddTicks(3499));
 
             migrationBuilder.UpdateData(
                 table: "Narudzba",
                 keyColumn: "Id",
                 keyValue: 6000,
                 column: "DatumNarudzbe",
-                value: new DateTime(2025, 1, 20, 14, 4, 21, 668, DateTimeKind.Local).AddTicks(4047));
+                value: new DateTime(2025, 6, 13, 11, 44, 54, 646, DateTimeKind.Local).AddTicks(4125));
         }
     }
 }

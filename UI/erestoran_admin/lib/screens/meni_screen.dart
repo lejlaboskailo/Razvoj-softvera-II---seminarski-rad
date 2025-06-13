@@ -39,48 +39,54 @@ class _MeniScreenState extends State<MeniScreen> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("eRestoran Admin"),
-        backgroundColor: Colors.orange,
-      ),
-      body: Row(
+      body: Column(
         children: [
           Container(
-            width: 250,
-            color: Colors.grey[200],
+            width: double.infinity,
+            color: const Color.fromARGB(255, 255, 255, 255),
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextField(
-                  controller: _nazivController,
-                  decoration: const InputDecoration(
-                    labelText: "Pretraži kategoriju",
-                    border: OutlineInputBorder(),
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _nazivController,
+                        decoration: const InputDecoration(
+                          labelText: "Pretraži kategoriju", 
+                          border: UnderlineInputBorder(),
+                          filled: true,
+                          fillColor:Color.fromARGB(255, 255, 255, 255),
+                          labelStyle: TextStyle(color: Color.fromARGB(255, 3, 3, 3))
+                        ),
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          var data = await _kategorijaProvider.get(filter: {
+                            'naziv': _nazivController.text,
+                          });
+                          setState(() {
+                            result = data;
+                          });
+                        } catch (e) {
+                          print('Error during search: $e');
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange),
+                      child: const Text("Pretraži", style: TextStyle(color: Color.fromARGB(255, 22, 22, 21)),),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      var data = await _kategorijaProvider.get(filter: {
-                        'naziv': _nazivController.text,
-                      });
-                      setState(() {
-                        result = data;
-                      });
-                    } catch (e) {
-                      print('Error during search: $e');
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-                  child: const Text("Pretraži"),
-                ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(
@@ -89,8 +95,9 @@ class _MeniScreenState extends State<MeniScreen> {
                       ),
                     );
                   },
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-                  child: const Text("Dodaj"),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+                  child: const Text("Dodaj", style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),),
                 ),
               ],
             ),
@@ -100,10 +107,11 @@ class _MeniScreenState extends State<MeniScreen> {
               padding: const EdgeInsets.all(16.0),
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4, // Adjust column count for desktop layout
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 50,
+                  crossAxisSpacing: 100,
                   childAspectRatio: 3 / 2,
+                  mainAxisExtent: 260,
                 ),
                 itemCount: result?.result.length ?? 0,
                 itemBuilder: (context, index) {
@@ -117,7 +125,8 @@ class _MeniScreenState extends State<MeniScreen> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => ProductListScreen(kategorija: kategorija),
+                            builder: (context) =>
+                                ProductListScreen(kategorija: kategorija),
                           ),
                         );
                       },
@@ -132,8 +141,9 @@ class _MeniScreenState extends State<MeniScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                   color: Colors.orange[100],
                                 ),
-                                child: Center(
-                                  child: const Icon(Icons.fastfood, size: 50, color: Colors.orange),
+                                child: const Center(
+                                  child: Icon(Icons.fastfood,
+                                      size: 50, color: Colors.orange),
                                 ),
                               ),
                             ),

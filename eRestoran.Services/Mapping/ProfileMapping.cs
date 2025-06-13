@@ -43,6 +43,9 @@ namespace eRestoran.Services.Mapping
             CreateMap<GradSearchObject, Database.Grad>();
 
             CreateMap<Database.Restoran, Model.Restoran>();
+            CreateMap<RestoranInsertRequest, Database.Restoran>();
+            CreateMap<RestoranUpdateRequest, Database.Restoran>();
+
 
             CreateMap<Database.Jelo,Model.Jelo>();
             CreateMap<JeloSearchObject, Database.Jelo>();

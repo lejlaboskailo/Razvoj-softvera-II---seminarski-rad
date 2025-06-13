@@ -3,28 +3,154 @@
   "WorkspaceRootPath": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\controllers\\korisnikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:controllers\\korisnikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\korisniciservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\korisniciuloge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\korisnik.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\korisniciuloge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\korisnici.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\erestorancontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\mapping\\profilemapping.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\ikorisniciservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\ikorisniciuloga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\controllers\\restorancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:controllers\\restorancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\controllers\\korpacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:controllers\\korpacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\controllers\\jelocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:controllers\\jelocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\irestoranservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\restoranservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\requests\\restoranupdaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\requests\\restoraninsertrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\restoran.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\narudzbaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\ikorpaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\korpaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\jeloservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\ikorpaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Migrations\\20250613094454_DataInitial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\ikategorijaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\ijeloservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\igradservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\gradservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\drzavaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\idrzavaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\baseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\iservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\basecrudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\jelo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\uplatum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\uloge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\stavkenarudzbe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\status.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\narudzba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\korpa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\kategorija.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\grad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\drzava.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\dojmovi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\databaseseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4DAE71EA-43B9-4481-BDF0-6518C5FD4868}|..\\eRestoran.Subscriber\\eRestoran.Subscriber.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.subscriber\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\korpa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\controllers\\jelocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:controllers\\jelocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\jeloservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\requests\\korpainsertrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -33,53 +159,18 @@
       "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\requests\\korpaupdaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\korpa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\ijeloservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Migrations\\20250221182103_AddedDataForKorpa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\databaseseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\erestorancontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\jelo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\jelo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\dojmovi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\database\\korisnici.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\controllers\\basecrudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:controllers\\basecrudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\controllers\\korisnikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:controllers\\korisnikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran\\basicauthenticationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:basicauthenticationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\korisniciservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\ikorisniciservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\documents\\github\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\migrations\\20250613095027_datainitial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -89,50 +180,281 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "Korisnik.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Korisnik.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Korisnik.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Korisnik.cs",
+              "RelativeToolTip": "..\\eRestoran.Model\\Korisnik.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-13T15:20:28.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "KorisniciService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\KorisniciService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\KorisniciService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\KorisniciService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\KorisniciService.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAuwF4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-19T14:11:50.501Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "RestoranService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\RestoranService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\RestoranService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\RestoranService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\RestoranService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAACnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-13T13:36:29.86Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IKorisniciUloga.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKorisniciUloga.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\IKorisniciUloga.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKorisniciUloga.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\IKorisniciUloga.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:33:11.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "ProfileMapping.cs",
               "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Mapping\\ProfileMapping.cs",
               "RelativeDocumentMoniker": "..\\eRestoran.Services\\Mapping\\ProfileMapping.cs",
               "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Mapping\\ProfileMapping.cs",
               "RelativeToolTip": "..\\eRestoran.Services\\Mapping\\ProfileMapping.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAQwE4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAQwCkAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-21T18:33:25.067Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "JeloController.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\JeloController.cs",
-              "RelativeDocumentMoniker": "Controllers\\JeloController.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\JeloController.cs",
-              "RelativeToolTip": "Controllers\\JeloController.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAiwBkAAAAJAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "ERestoranContext.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\ERestoranContext.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\ERestoranContext.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\ERestoranContext.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\ERestoranContext.cs",
+              "ViewState": "AgIAAIkAAAAAAAAAAAAAAJcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T18:27:37.025Z",
+              "WhenOpened": "2025-02-21T18:02:02.719Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Korisnici.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Korisnici.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Korisnici.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Korisnici.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Korisnici.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAA3wAgAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T18:05:34.89Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "KorisnikController.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\KorisnikController.cs",
+              "RelativeDocumentMoniker": "Controllers\\KorisnikController.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\KorisnikController.cs",
+              "RelativeToolTip": "Controllers\\KorisnikController.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABUAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-19T17:27:51.579Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "KorisniciUloge.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\KorisniciUloge.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Model\\KorisniciUloge.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\KorisniciUloge.cs",
+              "RelativeToolTip": "..\\eRestoran.Model\\KorisniciUloge.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-13T15:20:37.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IKorisniciService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKorisniciService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\IKorisniciService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKorisniciService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\IKorisniciService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA8AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-30T13:39:55.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "KorisniciUloge.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\KorisniciUloge.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\KorisniciUloge.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\KorisniciUloge.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\KorisniciUloge.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T16:28:42.606Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "KorpaController.cs",
               "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\KorpaController.cs",
               "RelativeDocumentMoniker": "Controllers\\KorpaController.cs",
               "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\KorpaController.cs",
               "RelativeToolTip": "Controllers\\KorpaController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAmwAoAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAmwAoAAAB8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-21T18:27:34.152Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 16,
+              "Title": "Restoran.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Restoran.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Restoran.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Restoran.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Restoran.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T16:28:57.806Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "BaseService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\BaseService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\BaseService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\BaseService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\BaseService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:22:49.901Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RestoranController.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\RestoranController.cs",
+              "RelativeDocumentMoniker": "Controllers\\RestoranController.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\RestoranController.cs",
+              "RelativeToolTip": "Controllers\\RestoranController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAACHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-13T13:49:43.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "NarudzbaService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbaService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\NarudzbaService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbaService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\NarudzbaService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAACcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-13T13:36:33.359Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IRestoranService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IRestoranService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\IRestoranService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IRestoranService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\IRestoranService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-13T13:37:26.601Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "RestoranInsertRequest.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\RestoranInsertRequest.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Requests\\RestoranInsertRequest.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\RestoranInsertRequest.cs",
+              "RelativeToolTip": "..\\eRestoran.Model\\Requests\\RestoranInsertRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-13T13:41:36.9Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "RestoranUpdateRequest.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\RestoranUpdateRequest.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Requests\\RestoranUpdateRequest.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\RestoranUpdateRequest.cs",
+              "RelativeToolTip": "..\\eRestoran.Model\\Requests\\RestoranUpdateRequest.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwA0AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-13T13:41:58.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "GradService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\GradService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\GradService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\GradService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\GradService.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:26:49.739Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "IDrzavaService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IDrzavaService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\IDrzavaService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IDrzavaService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\IDrzavaService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:18:53.7Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
               "Title": "KorpaService.cs",
               "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\KorpaService.cs",
               "RelativeDocumentMoniker": "..\\eRestoran.Services\\KorpaService.cs",
@@ -145,33 +467,129 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "KorpaUpdateRequest.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\KorpaUpdateRequest.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Requests\\KorpaUpdateRequest.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\KorpaUpdateRequest.cs",
-              "RelativeToolTip": "..\\eRestoran.Model\\Requests\\KorpaUpdateRequest.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwA4AAAAKAAAAAAAAAA==",
+              "DocumentIndex": 18,
+              "Title": "IKorpaService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKorpaService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\IKorpaService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKorpaService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\IKorpaService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAB4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T18:24:11.178Z",
+              "WhenOpened": "2025-02-21T18:22:37.594Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "KorpaInsertRequest.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\KorpaInsertRequest.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Requests\\KorpaInsertRequest.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\KorpaInsertRequest.cs",
-              "RelativeToolTip": "..\\eRestoran.Model\\Requests\\KorpaInsertRequest.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwA0AAAAsAAAAAAAAAA==",
+              "DocumentIndex": 25,
+              "Title": "IGradService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IGradService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\IGradService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IGradService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\IGradService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T18:23:36.161Z",
+              "WhenOpened": "2025-05-14T14:27:28.119Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "20250613095027_DataInitial.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Migrations\\20250613095027_DataInitial.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Migrations\\20250613095027_DataInitial.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Migrations\\20250613095027_DataInitial.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Migrations\\20250613095027_DataInitial.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-13T09:50:27.299Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "DrzavaService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\DrzavaService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\DrzavaService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\DrzavaService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\DrzavaService.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA8AAABpAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:17:09.804Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAowH8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T22:25:24.992Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 21,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-01T15:42:47.048Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "20250613094454_DataInitial.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Migrations\\20250613094454_DataInitial.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Migrations\\20250613094454_DataInitial.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Migrations\\20250613094454_DataInitial.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Migrations\\20250613094454_DataInitial.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-13T09:44:55.164Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IKategorijaService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKategorijaService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\IKategorijaService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKategorijaService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\IKategorijaService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:28:42.658Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "IService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\IService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\IService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:19:43.962Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "BaseCRUDService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\BaseCRUDService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\BaseCRUDService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\BaseCRUDService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\BaseCRUDService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T13:52:39.118Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
               "Title": "IJeloService.cs",
               "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IJeloService.cs",
               "RelativeDocumentMoniker": "..\\eRestoran.Services\\IJeloService.cs",
@@ -179,51 +597,215 @@
               "RelativeToolTip": "..\\eRestoran.Services\\IJeloService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T18:22:43.199Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-21T18:22:43.199Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IKorpaService.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKorpaService.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Services\\IKorpaService.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKorpaService.cs",
-              "RelativeToolTip": "..\\eRestoran.Services\\IKorpaService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAB3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T18:22:37.594Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAqwB8AAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-30T22:25:24.992Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "20250221182103_AddedDataForKorpa.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Migrations\\20250221182103_AddedDataForKorpa.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Migrations\\20250221182103_AddedDataForKorpa.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Migrations\\20250221182103_AddedDataForKorpa.cs",
-              "RelativeToolTip": "..\\eRestoran.Services\\Migrations\\20250221182103_AddedDataForKorpa.cs",
+              "DocumentIndex": 33,
+              "Title": "Uplatum.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Uplatum.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Uplatum.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Uplatum.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Uplatum.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T18:21:03.401Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-11T16:29:07.318Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 34,
+              "Title": "Uloge.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Uloge.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Uloge.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Uloge.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Uloge.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T16:29:05.136Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "StavkeNarudzbe.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\StavkeNarudzbe.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\StavkeNarudzbe.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\StavkeNarudzbe.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\StavkeNarudzbe.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T16:29:02.663Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "Status.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Status.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Status.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Status.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Status.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T16:29:00.648Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "Narudzba.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Narudzba.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Narudzba.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Narudzba.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Narudzba.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T16:28:55.163Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "Kategorija.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Kategorija.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Kategorija.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Kategorija.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Kategorija.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T16:28:23.574Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "Grad.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Grad.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Grad.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Grad.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Grad.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T16:28:19.038Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "Jelo.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Jelo.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Jelo.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Jelo.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Jelo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T16:52:13.366Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "Drzava.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Drzava.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Drzava.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Drzava.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Drzava.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T16:28:03.161Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "DatabaseSeed.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\DatabaseSeed.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\DatabaseSeed.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\DatabaseSeed.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\DatabaseSeed.cs",
+              "ViewState": "AgIAABgCAAAAAAAAAAAAACkCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T16:53:09.457Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "Dojmovi.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Dojmovi.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Dojmovi.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Dojmovi.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Dojmovi.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T18:05:49.669Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "Korpa.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Korpa.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Korpa.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Korpa.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Korpa.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T17:55:20.805Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "KorpaInsertRequest.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\KorpaInsertRequest.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Requests\\KorpaInsertRequest.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\KorpaInsertRequest.cs",
+              "RelativeToolTip": "..\\eRestoran.Model\\Requests\\KorpaInsertRequest.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwA0AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T18:23:36.161Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "KorpaUpdateRequest.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\KorpaUpdateRequest.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Requests\\KorpaUpdateRequest.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\KorpaUpdateRequest.cs",
+              "RelativeToolTip": "..\\eRestoran.Model\\Requests\\KorpaUpdateRequest.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwA4AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T18:24:11.178Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Subscriber\\Program.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Subscriber\\Program.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Subscriber\\Program.cs",
+              "RelativeToolTip": "..\\eRestoran.Subscriber\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T23:08:15.168Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "Korpa.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Korpa.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Korpa.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Korpa.cs",
+              "RelativeToolTip": "..\\eRestoran.Model\\Korpa.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T18:36:34.386Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "JeloController.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\JeloController.cs",
+              "RelativeDocumentMoniker": "Controllers\\JeloController.cs",
+              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\JeloController.cs",
+              "RelativeToolTip": "Controllers\\JeloController.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAiwBkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T18:27:37.025Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
               "Title": "JeloService.cs",
               "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\JeloService.cs",
               "RelativeDocumentMoniker": "..\\eRestoran.Services\\JeloService.cs",
@@ -231,77 +813,11 @@
               "RelativeToolTip": "..\\eRestoran.Services\\JeloService.cs",
               "ViewState": "AgIAAIEAAAAAAAAAAAAAAI4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T17:19:44.444Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-21T17:19:44.444Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Dojmovi.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Dojmovi.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Dojmovi.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Dojmovi.cs",
-              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Dojmovi.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAxwBUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T18:05:49.669Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Korisnici.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Korisnici.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Korisnici.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Korisnici.cs",
-              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Korisnici.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T18:05:34.89Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ERestoranContext.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\ERestoranContext.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\ERestoranContext.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\ERestoranContext.cs",
-              "RelativeToolTip": "..\\eRestoran.Services\\Database\\ERestoranContext.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAAAEIAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T18:02:02.719Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Korpa.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Korpa.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Korpa.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Korpa.cs",
-              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Korpa.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAA0wA8AAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T17:55:20.805Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "DatabaseSeed.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\DatabaseSeed.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\DatabaseSeed.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\DatabaseSeed.cs",
-              "RelativeToolTip": "..\\eRestoran.Services\\Database\\DatabaseSeed.cs",
-              "ViewState": "AgIAAPYAAAAAAAAAAAAAAP0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T16:53:09.457Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 50,
               "Title": "Jelo.cs",
               "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Jelo.cs",
               "RelativeDocumentMoniker": "..\\eRestoran.Model\\Jelo.cs",
@@ -309,25 +825,11 @@
               "RelativeToolTip": "..\\eRestoran.Model\\Jelo.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAxwBQAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T16:52:54.656Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-21T16:52:54.656Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Jelo.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Jelo.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Services\\Database\\Jelo.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\Database\\Jelo.cs",
-              "RelativeToolTip": "..\\eRestoran.Services\\Database\\Jelo.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAowBQAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T16:52:13.366Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 51,
               "Title": "BaseCRUDController.cs",
               "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\BaseCRUDController.cs",
               "RelativeDocumentMoniker": "Controllers\\BaseCRUDController.cs",
@@ -335,12 +837,11 @@
               "RelativeToolTip": "Controllers\\BaseCRUDController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T16:06:28.101Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-21T16:06:28.101Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 52,
               "Title": "BasicAuthenticationHandler.cs",
               "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\BasicAuthenticationHandler.cs",
               "RelativeDocumentMoniker": "BasicAuthenticationHandler.cs",
@@ -348,60 +849,7 @@
               "RelativeToolTip": "BasicAuthenticationHandler.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAowCMAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T15:46:46.69Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-01T15:42:47.048Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "KorisnikController.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\KorisnikController.cs",
-              "RelativeDocumentMoniker": "Controllers\\KorisnikController.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\KorisnikController.cs",
-              "RelativeToolTip": "Controllers\\KorisnikController.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAADwvzMAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-19T17:27:51.579Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "KorisniciService.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\KorisniciService.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Services\\KorisniciService.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\KorisniciService.cs",
-              "RelativeToolTip": "..\\eRestoran.Services\\KorisniciService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAK8AAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-19T14:11:50.501Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "IKorisniciService.cs",
-              "DocumentMoniker": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKorisniciService.cs",
-              "RelativeDocumentMoniker": "..\\eRestoran.Services\\IKorisniciService.cs",
-              "ToolTip": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\IKorisniciService.cs",
-              "RelativeToolTip": "..\\eRestoran.Services\\IKorisniciService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA8AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-30T13:39:55.744Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-21T15:46:46.69Z"
             }
           ]
         }

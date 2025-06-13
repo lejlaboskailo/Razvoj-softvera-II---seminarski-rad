@@ -1,10 +1,15 @@
-﻿using System;
+﻿using eRestoran.Model;
+using System;
 using System.Collections.Generic;
 
 namespace eRestoran.Services.Database;
 
 public partial class Korisnici
 {
+    public Korisnici()
+    {
+        KorisniciUloges = new HashSet<KorisniciUloge>();
+    }
     public int Id { get; set; }
 
     public string? Ime { get; set; }

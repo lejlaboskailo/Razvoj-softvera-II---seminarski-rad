@@ -572,15 +572,9 @@ class _StatusNarudzbaScreen extends State<StatusNarudzbaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MasterScreenWidget(
-      title_widget: Text(
-        "Status narudžbi",
-        style: TextStyle(
-          color: const Color.fromARGB(255, 0, 0, 0),
-          fontSize: 24,
-        ),
-      ),
-      child: Container(
+    return Scaffold(
+     
+      body: Container(
         padding: const EdgeInsets.all(16.0),
         color: Colors.white,
         child: result == null || narudzbaResult == null || korisnikResult == null

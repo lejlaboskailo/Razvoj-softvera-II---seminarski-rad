@@ -44,7 +44,7 @@ public partial class ERestoranContext : DbContext
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=localhost,1433;Initial Catalog=eRestoran; user=sa;password=test; TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Data Source=localhost,1433;Initial Catalog=eRestoran; user=sa;password=test12!W; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
