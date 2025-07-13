@@ -1,10 +1,10 @@
+import 'package:erestoran_admin/models/jelo.dart';
 import 'package:erestoran_admin/models/search_result.dart';
+import 'package:erestoran_admin/providers/jelo_provider.dart';
 import 'package:flutter/material.dart';
 import '../models/kategorija.dart';
 import '../providers/kategorija_provider.dart';
 import '../screens/product_detail_screen.dart';
-import '../screens/product_list_screen.dart';
-import '../widgets/master_screen.dart';
 import 'package:provider/provider.dart';
 
 class MeniScreen extends StatefulWidget {
@@ -16,29 +16,68 @@ class MeniScreen extends StatefulWidget {
 
 class _MeniScreenState extends State<MeniScreen> {
   late KategorijaProvider _kategorijaProvider;
+  late ProductProvider _jeloProvider;
   SearchResult<Kategorija>? result;
+  SearchResult<Jelo>? jeloResult;
   final TextEditingController _nazivController = TextEditingController();
   Kategorija? _odabranaKategorija;
+  Jelo? _odabranoJelo;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _kategorijaProvider = context.read<KategorijaProvider>();
-    _fetchInitialData();
+    _jeloProvider = context.read<ProductProvider>();
+
+    _fecthKategorija();
+    _fecthJelo();
   }
 
-  Future<void> _fetchInitialData() async {
+  Future<void> _fecthKategorija() async {
     try {
       var data = await _kategorijaProvider.get();
       setState(() {
         result = data;
       });
     } catch (e) {
-      print('Error fetching data: $e');
+      print('Error fetching kategorije: $e');
     }
   }
 
-  @override
+  Future<void> _fecthJelo() async {
+    try {
+      var data = await _jeloProvider.get();
+      setState(() {
+        jeloResult = data;
+      });
+    } catch (e) {
+      print('Error fetching jela: $e');
+    }
+  }
+
+  Future<void> _searchJela() async {
+    try {
+      Map<String, dynamic> filter = {};
+
+      if (_nazivController.text.isNotEmpty) {
+        filter['naziv'] = _nazivController.text;
+      }
+
+      if (_odabranaKategorija != null) {
+        filter['kategorijaId'] = _odabranaKategorija!.kategorijaId;
+      }
+
+      print("Šaljem filter: $filter");
+
+      var data = await _jeloProvider.get(filter: filter);
+      setState(() {
+        jeloResult = data;
+      });
+    } catch (e) {
+      print('Error during search: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,47 +96,85 @@ class _MeniScreenState extends State<MeniScreen> {
                       child: TextField(
                         controller: _nazivController,
                         decoration: const InputDecoration(
-                          labelText: "Pretraži kategoriju", 
-                          border: UnderlineInputBorder(),
-                          filled: true,
-                          fillColor:Color.fromARGB(255, 255, 255, 255),
-                          labelStyle: TextStyle(color: Color.fromARGB(255, 3, 3, 3))
-                        ),
-                        style: TextStyle(color: Colors.black),
+                            labelText: "Pretraži jela",
+                            border: UnderlineInputBorder(),
+                            filled: true,
+                            fillColor: Color.fromARGB(255, 255, 255, 255),
+                            labelStyle:
+                                TextStyle(color: Color.fromARGB(255, 3, 3, 3))),
+                        style: const TextStyle(color: Colors.black),
                       ),
                     ),
                     const SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () async {
-                        try {
-                          var data = await _kategorijaProvider.get(filter: {
-                            'naziv': _nazivController.text,
-                          });
-                          setState(() {
-                            result = data;
-                          });
-                        } catch (e) {
-                          print('Error during search: $e');
-                        }
-                      },
+                      onPressed: _searchJela,
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.orange),
-                      child: const Text("Pretraži", style: TextStyle(color: Color.fromARGB(255, 22, 22, 21)),),
+                      child: const Text(
+                        "Pretraži",
+                        style:
+                            TextStyle(color: Color.fromARGB(255, 22, 22, 21)),
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetailScreen(),
-                      ),
-                    );
+                DropdownButton<Kategorija>(
+                  isExpanded: true,
+                  value: _odabranaKategorija,
+                  hint: const Text("Odaberi kategoriju"),
+                  items: result?.result
+                      .map(
+                        (kategorija) => DropdownMenuItem<Kategorija>(
+                          value: kategorija,
+                          child: Text(kategorija.naziv ?? "Bez naziva"),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      _odabranaKategorija = newValue;
+                    });
+                    _searchJela(); // automatski pokreni pretragu
                   },
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-                  child: const Text("Dodaj", style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        final result = await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetailScreen(),
+                          ),
+                        );
+                        if (result == true) {
+                          await _fecthJelo();
+                        } else {
+                          // Ili jednostavno uvijek pozovi fetch ako ne šalješ true/false
+                          await _fecthJelo();
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange),
+                      child: const Text(
+                        "Dodaj",
+                        style:
+                            TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _odabranaKategorija = null;
+                          _nazivController.clear();
+                        });
+                        _fecthJelo();
+                      },
+                      child: const Text("Resetuj filtere"),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -113,9 +190,9 @@ class _MeniScreenState extends State<MeniScreen> {
                   childAspectRatio: 3 / 2,
                   mainAxisExtent: 260,
                 ),
-                itemCount: result?.result.length ?? 0,
+                itemCount: jeloResult?.result.length ?? 0,
                 itemBuilder: (context, index) {
-                  final kategorija = result!.result[index];
+                  final jelo = jeloResult!.result[index];
                   return Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -126,7 +203,7 @@ class _MeniScreenState extends State<MeniScreen> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) =>
-                                ProductListScreen(kategorija: kategorija),
+                                ProductDetailScreen(jelo: jelo),
                           ),
                         );
                       },
@@ -149,7 +226,7 @@ class _MeniScreenState extends State<MeniScreen> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              kategorija.naziv ?? "Nepoznata kategorija",
+                              jelo.naziv ?? "Nepoznato jelo",
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -157,10 +234,70 @@ class _MeniScreenState extends State<MeniScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              kategorija.opis ?? "",
+                              jelo.opis ?? "",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(color: Colors.grey),
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.delete,
+                                      color: Colors.red),
+                                  onPressed: () async {
+                                    final confirmed = await showDialog<bool>(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: const Text("Potvrda brisanja"),
+                                        content: Text(
+                                            "Da li ste sigurni da želite obrisati jelo \"${jelo.naziv}\"?"),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(context)
+                                                    .pop(false),
+                                            child: const Text("Otkaži"),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(true),
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.red),
+                                            child: const Text("Obriši"),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+
+                                    if (confirmed == true) {
+                                      try {
+                                        await _jeloProvider
+                                            .delete(jelo.jeloId!);
+                                        _fecthJelo();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                "Jelo \"${jelo.naziv}\" je obrisano."),
+                                          ),
+                                        );
+                                      } catch (e) {
+                                        print("Greška prilikom brisanja: $e");
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                "Greška prilikom brisanja jela."),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        );
+                                      }
+                                    }
+                                  },
+                                )
+                              ],
                             ),
                           ],
                         ),

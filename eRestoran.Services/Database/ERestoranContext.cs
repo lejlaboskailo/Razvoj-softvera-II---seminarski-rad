@@ -41,6 +41,8 @@ public partial class ERestoranContext : DbContext
 
     public virtual DbSet<Uplatum> Uplata { get; set; }
     public virtual DbSet<Restoran> Restorans { get; set; }
+    public virtual DbSet<Korpa> Korpas { get; set; }
+
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -88,7 +90,7 @@ public partial class ERestoranContext : DbContext
 
         modelBuilder.Entity<Jelo>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Jelo__3214EC0766C6F668");
+            entity.HasKey(e => e.JeloId).HasName("PK__Jelo__3214EC0766C6F668");
 
             entity.ToTable("Jelo");
 
@@ -103,7 +105,7 @@ public partial class ERestoranContext : DbContext
 
         modelBuilder.Entity<Kategorija>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Kategori__3214EC070A4F4900");
+            entity.HasKey(e => e.KategorijaId).HasName("PK__Kategori__3214EC070A4F4900");
 
             entity.ToTable("Kategorija");
 
@@ -143,7 +145,6 @@ public partial class ERestoranContext : DbContext
                 .HasForeignKey(d => d.UlogaId)
                 .HasConstraintName("FK__Korisnici__Uloga__440B1D61");
         });
-
 
 
         modelBuilder.Entity<Narudzba>(entity =>
@@ -186,6 +187,28 @@ public partial class ERestoranContext : DbContext
                 .HasForeignKey(d => d.NarudzbaId)
                 .HasConstraintName("FK__StavkeNar__Narud__3B75D760");
         });
+        modelBuilder.Entity<Korpa>().HasKey(z => z.KorpaId);
+        modelBuilder.Entity<Korpa>(entity =>
+        {
+            entity.ToTable("Korpa");
+
+
+            entity.Property(e => e.Kolicina).HasMaxLength(20);
+            entity.Property(e => e.Cijena).HasMaxLength(20);
+
+        });
+
+
+        modelBuilder.Entity<Korpa>()
+           .HasOne(m => m.Jelo)
+           .WithMany()
+           .HasForeignKey(m => m.JeloId);
+
+        modelBuilder.Entity<Korpa>()
+         .HasOne(m => m.Kategorija)
+         .WithMany()
+         .HasForeignKey(m => m.KategorijaId);
+
 
         modelBuilder.Entity<Uloge>(entity =>
         {

@@ -558,6 +558,14 @@
             }
           },
           {
+            "name": "KategorijaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
             "name": "Page",
             "in": "query",
             "schema": {
@@ -1672,6 +1680,13 @@
           "Korpa"
         ],
         "parameters": [
+          {
+            "name": "IsJeloIncluded",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
           {
             "name": "Page",
             "in": "query",
@@ -3471,7 +3486,7 @@
       "Jelo": {
         "type": "object",
         "properties": {
-          "id": {
+          "jeloId": {
             "type": "integer",
             "format": "int32"
           },
@@ -3557,7 +3572,7 @@
       "Kategorija": {
         "type": "object",
         "properties": {
-          "id": {
+          "kategorijaId": {
             "type": "integer",
             "format": "int32"
           },
@@ -3849,13 +3864,15 @@
             "type": "integer",
             "format": "int32"
           },
-          "proizvodId": {
+          "jeloId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "korisnikId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "cijena": {
             "type": "number",
@@ -3878,7 +3895,7 @@
       "KorpaInsertRequest": {
         "type": "object",
         "properties": {
-          "proizvodId": {
+          "jeloId": {
             "type": "integer",
             "format": "int32"
           },

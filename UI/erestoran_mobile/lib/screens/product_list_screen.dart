@@ -112,13 +112,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
               ),
             ),
             onPressed: () {
-              Navigator.of(context).push(
+              /*Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ProductDetailScreen(jelo: null),
+                  builder: (context) => ProductDetailScreen(jelo: ),
                 ),
               ).then((_) {
                 _fetchInitialData();
-              });
+              });*/
             },
             child: const Text("Dodaj"),
           ),
@@ -131,7 +131,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   print('Result: ${result?.result}');
   
   final filteredResults = widget.kategorija != null 
-      ? result?.result.where((jelo) => jelo.kategorijaId == widget.kategorija!.id).toList() 
+      ? result?.result.where((jelo) => jelo.kategorijaId == widget.kategorija!.kategorijaId).toList() 
       : result?.result ?? [];
 
   final searchQuery = _nazivController.text.toLowerCase();

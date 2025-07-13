@@ -170,25 +170,25 @@ namespace eRestoran.Services.Database
             modelBuilder.Entity<Kategorija>().HasData(
                  new Kategorija()
                  {
-                     Id = 4000,
+                     KategorijaId = 4000,
                      Naziv = "Pizza",
                      Opis = "top"
                  },
                  new Kategorija()
                  {
-                     Id = 4001,
+                     KategorijaId = 4001,
                      Naziv = "Rostilj",
                      Opis = "top"
                  },
                  new Kategorija()
                  {
-                     Id = 4002,
+                     KategorijaId = 4002,
                      Naziv = "Pasta",
                      Opis = "top"
                  },
                  new Kategorija()
                  {
-                     Id = 4003,
+                     KategorijaId = 4003,
                      Naziv = "Desert",
                      Opis = "top"
                  }
@@ -201,7 +201,7 @@ namespace eRestoran.Services.Database
             modelBuilder.Entity<Jelo>().HasData(
                  new Jelo()
                  {
-                     Id = 5000,
+                     JeloId = 5000,
                      Naziv = "Margarita",
                      Opis = "top",
                      Cijena = 15,
@@ -211,7 +211,7 @@ namespace eRestoran.Services.Database
                  },
                   new Jelo()
                   {
-                      Id = 5001,
+                      JeloId = 5001,
                       Naziv = "Funghi",
                       Opis = "top",
                       Cijena = 15,
@@ -222,7 +222,7 @@ namespace eRestoran.Services.Database
                   },
                    new Jelo()
                    {
-                       Id = 5002,
+                       JeloId = 5002,
                        Naziv = "Cheesecake",
                        Opis = "top",
                        Cijena = 15,
@@ -233,7 +233,7 @@ namespace eRestoran.Services.Database
                    },
                     new Jelo()
                     {
-                        Id = 5004,
+                        JeloId = 5004,
                         Naziv = "Cevapi",
                         Opis = "top",
                         Cijena = 15,
@@ -244,7 +244,7 @@ namespace eRestoran.Services.Database
                     },
                      new Jelo()
                      {
-                         Id = 5005,
+                         JeloId = 5005,
                          Naziv = "Makaroni",
                          Opis = "top",
                          Cijena = 15,
@@ -539,7 +539,7 @@ namespace eRestoran.Services.Database
                  new Korpa()
                  {
                      KorpaId=7898,
-                     ProizvodId=5000,
+                     JeloId=5000,
                      KorisnikId=1002,
                      Kolicina=2,
                      Cijena = 30,

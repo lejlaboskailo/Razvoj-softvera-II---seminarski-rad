@@ -7,7 +7,7 @@ part of 'jelo.dart';
 // **************************************************************************
 
 Jelo _$JeloFromJson(Map<String, dynamic> json) => Jelo(
-      (json['id'] as num?)?.toInt(),
+      (json['jeloId'] as num?)?.toInt(),
       json['naziv'] as String?,
       json['slika'] as String?,
       (json['cijena'] as num?)?.toDouble(),
@@ -16,7 +16,7 @@ Jelo _$JeloFromJson(Map<String, dynamic> json) => Jelo(
     );
 
 Map<String, dynamic> _$JeloToJson(Jelo instance) => <String, dynamic>{
-      'id': instance.id,
+      'jeloId': instance.jeloId,
       'naziv': instance.naziv,
       'slika': instance.slika,
       'cijena': instance.cijena,

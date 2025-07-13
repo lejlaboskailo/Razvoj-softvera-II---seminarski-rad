@@ -313,6 +313,11 @@
         "IsRequired": false
       },
       {
+        "Name": "KategorijaId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
         "Name": "Page",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
@@ -977,7 +982,7 @@
     ]
   },
   {
-    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Korpa, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.BaseSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaInsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaUpdateRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Korpa, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaInsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaUpdateRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Insert",
     "RelativePath": "Korpa",
     "HttpMethod": "POST",
@@ -1003,13 +1008,18 @@
     ]
   },
   {
-    "ContainingType": "eRestoran.Controllers.BaseController\u00602[[eRestoran.Model.Korpa, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.BaseSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "ContainingType": "eRestoran.Controllers.BaseController\u00602[[eRestoran.Model.Korpa, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Get",
     "RelativePath": "Korpa",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
+      {
+        "Name": "IsJeloIncluded",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
       {
         "Name": "Page",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
@@ -1034,7 +1044,7 @@
     ]
   },
   {
-    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Korpa, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.BaseSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaInsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaUpdateRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Korpa, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaInsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaUpdateRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Update",
     "RelativePath": "Korpa/{id}",
     "HttpMethod": "PUT",
@@ -1065,7 +1075,7 @@
     ]
   },
   {
-    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Korpa, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.BaseSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaInsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaUpdateRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "ContainingType": "eRestoran.Controllers.BaseCRUDController\u00604[[eRestoran.Model.Korpa, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaInsertRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaUpdateRequest, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Delete",
     "RelativePath": "Korpa/{id}",
     "HttpMethod": "DELETE",
@@ -1091,7 +1101,7 @@
     ]
   },
   {
-    "ContainingType": "eRestoran.Controllers.BaseController\u00602[[eRestoran.Model.Korpa, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.SearchObjects.BaseSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "ContainingType": "eRestoran.Controllers.BaseController\u00602[[eRestoran.Model.Korpa, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[eRestoran.Model.Requests.KorpaSearchObject, eRestoran.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
     "RelativePath": "Korpa/{id}",
     "HttpMethod": "GET",

@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace eRestoran.Controllers
 {
     [Route("[controller]")]
-    public class KorpaController : BaseCRUDController<Model.Korpa, BaseSearchObject, KorpaInsertRequest, KorpaUpdateRequest>
+    public class KorpaController : BaseCRUDController<Model.Korpa, KorpaSearchObject, KorpaInsertRequest, KorpaUpdateRequest>
     {
 
         private readonly IMapper _mapper;
-        public KorpaController(ILogger<BaseController<Model.Korpa, BaseSearchObject>> logger, IKorpaService service, IMapper mapper) : base(logger, service)
+        public KorpaController(ILogger<BaseController<Model.Korpa, KorpaSearchObject>> logger, IKorpaService service, IMapper mapper) : base(logger, service)
         {
             _mapper = mapper;
         }

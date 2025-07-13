@@ -318,7 +318,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           await _productProvider.insert(request);
                           _showSnackbar("Jelo je uspješno dodano.");
                         } else {
-                          await _productProvider.update(widget.jelo!.id!, request);
+                          await _productProvider.update(widget.jelo!.jeloId!, request);
                           _showSnackbar("Jelo je uspješno uređeno.");
                         }
 
@@ -348,7 +348,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return FormBuilder(
       key: _formKey,
       initialValue: {
-        'sifra': widget.jelo?.id,
+        'sifra': widget.jelo?.jeloId,
         'naziv': widget.jelo?.naziv,
         'cijena': widget.jelo?.cijena?.toString(),
         'opis': widget.jelo?.opis,
@@ -414,7 +414,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                     items: kategorijaResult?.result
                             .map((item) => DropdownMenuItem<String>(
-                                value: item.id.toString(),
+                                value: item.kategorijaId.toString(),
                                 child: Text(item.naziv ?? "")))
                             .toList() ??
                         [],

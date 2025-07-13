@@ -6,7 +6,7 @@ namespace eRestoran.Services.Database;
 
 public partial class Jelo
 {
-    public int Id { get; set; }
+    public int JeloId { get; set; }
 
     public string? Naziv { get; set; }
 

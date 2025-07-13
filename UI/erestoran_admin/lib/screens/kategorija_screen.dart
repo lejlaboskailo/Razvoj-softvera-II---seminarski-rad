@@ -118,7 +118,7 @@ class _KategorijaListScreen extends State<KategorijaListScreen> {
       ],
       rows: result?.result
               .map((Kategorija e) {
-                print('Row data: ID: ${e.id}, Naziv: ${e.naziv}, Cijena: ${e.opis}');
+                print('Row data: ID: ${e.kategorijaId}, Naziv: ${e.naziv}, Cijena: ${e.opis}');
                 return DataRow(
                   onSelectChanged: (selected) {
                     if (selected == true) {
@@ -131,7 +131,7 @@ class _KategorijaListScreen extends State<KategorijaListScreen> {
                   },
                  
                   cells: [
-                    DataCell(Text(e.id?.toString() ?? '')),
+                    DataCell(Text(e.kategorijaId?.toString() ?? '')),
                     DataCell(Text(e.naziv ?? '')),
                     DataCell(Text(e.opis ?? '')),
                   ],

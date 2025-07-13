@@ -78,7 +78,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     _fetchInitialData();
                   });
                 },
-                child: const Text("Dodaj", style: TextStyle(color: Colors.black),),
+                child: const Text(
+                  "Dodaj",
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ),
           ],
@@ -125,7 +128,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 print('Error during search: $e');
               }
             },
-            child: const Text("Pretraga", style: TextStyle(color: Colors.black),),
+            child: const Text(
+              "Pretraga",
+              style: TextStyle(color: Colors.black),
+            ),
           ),
           const SizedBox(width: 8),
         ],
@@ -136,7 +142,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
   Widget _buildDataListView() {
     final filteredResults = widget.kategorija != null
         ? result?.result
-            .where((jelo) => jelo.kategorijaId == widget.kategorija!.id)
+            .where(
+                (jelo) => jelo.kategorijaId == widget.kategorija!.kategorijaId)
             .toList()
         : result?.result ?? [];
 
@@ -174,8 +181,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   builder: (context) => ProductDetailScreen(jelo: e),
                 ),
               )
-                  .then((_) {
-                _fetchInitialData();
+                  .then((result) {
+                if (result == true) {
+                  _fetchInitialData();
+                }
               });
             },
             child: Padding(
@@ -261,7 +270,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
                           if (confirm == true) {
                             try {
-                              await _productProvider.delete(e.id!);
+                              await _productProvider.delete(e.jeloId!);
                               _fetchInitialData();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

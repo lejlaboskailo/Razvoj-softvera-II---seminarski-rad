@@ -192,7 +192,7 @@ class _DojmoviDetailsScreenState extends State<DojmoviDetailsScreen> {
                     ),
                     items: jeloResults?.result
                             .map((item) => DropdownMenuItem<String>(
-                                value: item.id.toString(),
+                                value: item.kategorijaId.toString(),
                                 child: Text(item.naziv ?? "")))
                             .toList() ??
                         [],

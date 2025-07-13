@@ -11,5 +11,7 @@ namespace eRestoran.Model.SearchObjects
        // public int KategorijaId { get; set; }
         public string Naziv { get; set; }
         public string? KategorijaNaziv {  get; set; }
+        public int? KategorijaId { get; set; }
+
     }
 }

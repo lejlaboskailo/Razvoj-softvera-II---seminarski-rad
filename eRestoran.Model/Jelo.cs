@@ -11,7 +11,7 @@ namespace eRestoran.Model
 {
     public class Jelo
     {
-        public int Id { get; set; }
+        public int JeloId { get; set; }
         public string Naziv { get; set; }
         public string Opis { get; set; }
         public decimal Cijena { get; set; }

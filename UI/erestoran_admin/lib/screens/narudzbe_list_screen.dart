@@ -49,7 +49,7 @@ class _NarudzbaListScreen extends State<NarudzbaListScreen> {
         setState(() {
           // Kreirajte mapu jela za brzi pristup
           jeloMap = {
-            for (var jelo in jeloResult!.result) jelo.id.toString(): jelo.naziv ?? ''
+            for (var jelo in jeloResult!.result) jelo.jeloId.toString(): jelo.naziv ?? ''
           };
 
           // Kreirajte mapu narudžbi za brzi pristup

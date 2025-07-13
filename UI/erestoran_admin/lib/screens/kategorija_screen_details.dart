@@ -37,7 +37,7 @@ class _KategorijaDetailScreen extends State<KategorijaDetailScreen> {
   void initState() {
     super.initState();
     _initialValue = {
-      'id': widget.kategorija?.id,
+      'id': widget.kategorija?.kategorijaId,
       'naziv': widget.kategorija?.naziv,
       'opis': widget.kategorija?.opis,
     };
@@ -58,7 +58,7 @@ class _KategorijaDetailScreen extends State<KategorijaDetailScreen> {
 
     // Ispisivanje itema
     for (var item in kategorijaResult!.result) {
-      print('Dropdown item: ${item.id} - ${item.naziv}');
+      print('Dropdown item: ${item.kategorijaId} - ${item.naziv}');
     }
 
     setState(() {
@@ -90,7 +90,7 @@ class _KategorijaDetailScreen extends State<KategorijaDetailScreen> {
                       if (widget.kategorija == null) {
                         await _kategorijaProvider.insert(request);
                       } else {
-                        await _kategorijaProvider.update(widget.kategorija!.id!, request);
+                        await _kategorijaProvider.update(widget.kategorija!.kategorijaId!, request);
                       }
                     } on Exception catch (e) {
                       print('Error occurred: $e'); // Ovdje ispiši grešku za lakše debagiranje

@@ -9,8 +9,8 @@ namespace eRestoran.Model
     public class Korpa
     {
         public int KorpaId { get; set; }
-        public int ProizvodId { get; set; }
-        public int KorisnikId { get; set; }
+        public int? JeloId { get; set; }
+        public int? KorisnikId { get; set; }
         public decimal? Cijena { get; set; }
         public int? KategorijaId { get; set; }
         public int? Kolicina { get; set; }

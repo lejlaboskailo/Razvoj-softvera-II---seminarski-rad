@@ -38,7 +38,7 @@ part 'jelo.g.dart';
  
 @JsonSerializable()
 class Jelo{
-int? id;
+int? jeloId;
 String? naziv;
 String? slika;
 double? cijena;
@@ -46,7 +46,7 @@ String? opis;
 int? kategorijaId;
  
  
-Jelo(this.id, this.naziv, this.slika, this.cijena, this.opis, this.kategorijaId);
+Jelo(this.jeloId, this.naziv, this.slika, this.cijena, this.opis, this.kategorijaId);
  
 factory Jelo.fromJson(Map<String,dynamic> json)=>_$JeloFromJson(json);
  

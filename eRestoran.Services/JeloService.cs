@@ -220,7 +220,7 @@ namespace eRestoran.Services
             }
 
             var preporucenaJela = _context.Set<Database.Jelo>()
-                .Where(x => preporucenaJelaIds.Contains(x.Id))
+                .Where(x => preporucenaJelaIds.Contains(x.JeloId))
                 .ToList();
 
             var result = _mapper.Map<List<Model.Jelo>>(preporucenaJela);
@@ -260,10 +260,15 @@ namespace eRestoran.Services
             }
             if (!string.IsNullOrWhiteSpace(search?.KategorijaNaziv))
             {
-                filter = filter.Where(w => w.Kategorija.Naziv.ToLower().Contains(search.KategorijaNaziv.ToLower()));
+                filter = filter.Where(x => x.Kategorija.Naziv == search.KategorijaNaziv);
+            }
+            if (search?.KategorijaId != null && search.KategorijaId > 0)
+            {
+                filter = filter.Where(x => x.KategorijaId == search.KategorijaId);
             }
             return filter;
         }
+
     }
 
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public interface IKorpaService : ICRUDService<Model.Korpa, BaseSearchObject, KorpaInsertRequest, KorpaUpdateRequest>
+    public interface IKorpaService : ICRUDService<Model.Korpa, KorpaSearchObject, KorpaInsertRequest, KorpaUpdateRequest>
     {
 
     }

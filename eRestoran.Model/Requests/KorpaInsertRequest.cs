@@ -9,7 +9,7 @@ namespace eRestoran.Model.Requests
     public class KorpaInsertRequest
     {
      //   public int KorpaId { get; set; }
-        public int ProizvodId { get; set; }
+        public int JeloId { get; set; }
         public int KorisnikId { get; set; }
         public decimal? Cijena { get; set; }
         public int? KategorijaId { get; set; }

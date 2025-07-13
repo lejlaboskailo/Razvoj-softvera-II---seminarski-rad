@@ -4,10 +4,10 @@ part 'kategorija.g.dart';
 
 @JsonSerializable()
 class Kategorija{
-int? id;
+int? kategorijaId;
 String? naziv;
 String? opis;
-Kategorija(this.id,this.naziv,this.opis);
+Kategorija(this.kategorijaId,this.naziv,this.opis);
 
 factory Kategorija.fromJson(Map<String,dynamic> json)=>_$KategorijaFromJson(json);
 

@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:erestoran_mobile/models/korisnik.dart';
@@ -8,14 +7,17 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class KorisnikProvider extends BaseProvider<Korisnik> {
-  KorisnikProvider(): super("Korisnik");
+  Korisnik? _currentUser;
+  KorisnikProvider() : super("Korisnik");
 
-   @override
+  Korisnik? get currentUser => _currentUser;
+  @override
   Korisnik fromJson(data) {
     // TODO: implement fromJson
     return Korisnik.fromJson(data);
   }
-   Future<Korisnik?> login(String username, String password) async {
+
+  Future<Korisnik?> login(String username, String password) async {
     try {
       var url = "$totalUrl/login";
       var uri = Uri.parse(url);
@@ -55,38 +57,45 @@ class KorisnikProvider extends BaseProvider<Korisnik> {
     }
   }
 
-Future<String> registerUser(String username, String password, String ime, String prezime) async {
-  if (username.isEmpty || password.isEmpty || ime.isEmpty || prezime.isEmpty) {
-    throw Exception("All fields must be filled.");
-  }
-
-  final String apiUrl = '${totalUrl}/registration?username=$username&password=$password&ime=$ime&prezime=$prezime';
-
-  final Map<String, String> headers = {
-    'Authorization': 'Basic YWRtaW46dGVzdA==', // Authorization header if needed
-  };
-
-  try {
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: headers,
-    );
-
-    print('Raw response: ${response.body}');
-
-    if (response.statusCode == 200) {
-      // Decode the JSON response if returned
-      final responseData = json.decode(response.body);
-      return 'Registration successful: ${responseData['korisnickoIme']}';
-    } else {
-      throw Exception('Error: ${response.body}');
+  Future<String> registerUser(
+      String username, String password, String ime, String prezime) async {
+    if (username.isEmpty ||
+        password.isEmpty ||
+        ime.isEmpty ||
+        prezime.isEmpty) {
+      throw Exception("All fields must be filled.");
     }
-  } catch (error) {
-    print('Error during registration: $error');
-    throw Exception('Error during registration: $error');
+
+    final String apiUrl =
+        '${totalUrl}/registration?username=$username&password=$password&ime=$ime&prezime=$prezime';
+
+    final Map<String, String> headers = {
+      'Authorization':
+          'Basic YWRtaW46dGVzdA==', // Authorization header if needed
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+      );
+
+      print('Raw response: ${response.body}');
+
+      if (response.statusCode == 200) {
+        // Decode the JSON response if returned
+        final responseData = json.decode(response.body);
+        return 'Registration successful: ${responseData['korisnickoIme']}';
+      } else {
+        throw Exception('Error: ${response.body}');
+      }
+    } catch (error) {
+      print('Error during registration: $error');
+      throw Exception('Error during registration: $error');
+    }
   }
-}
-Future<void> registerUserWithRole(
+
+  Future<void> registerUserWithRole(
     String username,
     String password,
     String ime,
@@ -120,4 +129,3 @@ Future<void> registerUserWithRole(
     }
   }
 }
-

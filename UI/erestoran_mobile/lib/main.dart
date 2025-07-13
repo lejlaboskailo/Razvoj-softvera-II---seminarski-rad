@@ -1,5 +1,6 @@
 import 'package:erestoran_mobile/providers/cart_provider.dart';
 import 'package:erestoran_mobile/providers/dojmovi_provider.dart';
+import 'package:erestoran_mobile/providers/jelo_provider.dart';
 import 'package:erestoran_mobile/providers/kategorija_provider.dart';
 import 'package:erestoran_mobile/providers/korisnik_provider.dart';
 import 'package:erestoran_mobile/providers/korisnik_uloga_provider.dart';
@@ -21,10 +22,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => DojmoviProvider()),
       ChangeNotifierProvider(create: (_) => KorisnikUlogaProvider()),
       ChangeNotifierProvider(create: (_) => CartProvider()),
-
-
-
-
+      ChangeNotifierProvider(create: (_) => ProductProvider()),
     ],
     child: const MyApp(),
   ));
@@ -94,9 +92,22 @@ class _LoginPageState extends State<LoginPage> {
     try {
       Authorization.korisnik = await _korisnikProvider.Authenticate();
 
-      if (Authorization.korisnik?.korisniciUloges
-              ?.any((role) => role.uloga?.naziv == "Korisnik") ==
-          true) {
+      if (Authorization.korisnik != null) {
+        // Upisi userId
+        Authorization.userId = Authorization.korisnik!.id;
+
+        // Ako korisnik ima makar jednu ulogu
+        if (Authorization.korisnik!.korisniciUloges != null &&
+            Authorization.korisnik!.korisniciUloges!.isNotEmpty) {
+          Authorization.uloga =
+              Authorization.korisnik!.korisniciUloges!.first.uloga;
+        }
+
+        print("ULOGA OBJEKAT: ${Authorization.uloga}");
+        print("ULOGA ID: ${Authorization.uloga?.ulogaId}");
+      }
+
+      if (Authorization.uloga?.naziv == "Korisnik") {
         setState(() {
           loggedInUserID = Authorization.korisnik?.id;
         });
@@ -172,7 +183,6 @@ class _LoginPageState extends State<LoginPage> {
                       "assets/images/loggoo.jpg",
                       height: 200,
                       width: 300,
-                      
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -204,8 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           labelText: "Password",
                           labelStyle: TextStyle(color: Colors.black),
-                          prefixIcon:
-                              Icon(Icons.password, color: Colors.black),
+                          prefixIcon: Icon(Icons.password, color: Colors.black),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 10, vertical: 12),
@@ -222,15 +231,16 @@ class _LoginPageState extends State<LoginPage> {
                         : ElevatedButton(
                             onPressed: _login,
                             style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.white),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white),
                             ),
                             child: Text(
                               "Login",
-                              style: TextStyle(fontSize: 18, color: Colors.black),
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.black),
                             ),
                           ),
-                    SizedBox(height: 10), 
+                    SizedBox(height: 10),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -241,7 +251,8 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: Text(
                         "Nemate račun? Registrujte se!",
-                        style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
+                        style: TextStyle(
+                            color: const Color.fromARGB(255, 0, 0, 0)),
                       ),
                     ),
                   ],
