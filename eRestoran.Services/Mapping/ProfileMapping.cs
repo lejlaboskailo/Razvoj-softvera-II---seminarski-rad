@@ -47,6 +47,9 @@ namespace eRestoran.Services.Mapping
             CreateMap<RestoranUpdateRequest, Database.Restoran>();
 
 
+            CreateMap<Database.Prilozi, Model.Prilozi>();
+            CreateMap<PriloziSearchObject, Database.Prilozi>();
+
             CreateMap<Database.Jelo,Model.Jelo>();
             CreateMap<JeloSearchObject, Database.Jelo>();
             CreateMap<JeloUpsertRequest, Database.Jelo>();
@@ -57,10 +60,22 @@ namespace eRestoran.Services.Mapping
             CreateMap<KategorijaInsertRequest, Database.Kategorija>();
             CreateMap<KategorijaUpdateRequest, Database.Kategorija>();
 
-            CreateMap<Database.Narudzba, Model.Narudzba>();
+            CreateMap<Services.Database.Narudzba, Model.Narudzba>()
+    .ForMember(d => d.StatusNarudzbe,
+               opt => opt.MapFrom(s => s.StatusNarudzbe != null ? s.StatusNarudzbe.Naziv : null));
+
             CreateMap<NarudzbaSearchObject, Database.Narudzba>();
             CreateMap<NarudzbaInsertRequest, Database.Narudzba>();
             CreateMap<NarudzbaUpdateRequest,Database.Narudzba>();
+
+            CreateMap<Database.Narudzba, Model.Narudzba>()
+            .ForMember(d => d.StatusNarudzbe,
+                opt => opt.MapFrom(s => s.StatusNarudzbe != null ? s.StatusNarudzbe.Naziv : null));
+
+            CreateMap<Model.Requests.NarudzbaInsertRequest, Database.Narudzba>()
+                .ForMember(d => d.StatusNarudzbe, opt => opt.Ignore()); // <-- BITNO
+
+            CreateMap<Model.Requests.StavkaInsertRequest, Database.StavkeNarudzbe>();
 
             CreateMap<Database.Status, Model.StatusNarudzbe>();
             CreateMap<StatusNarudzbeSearchObject, Database.Status>();

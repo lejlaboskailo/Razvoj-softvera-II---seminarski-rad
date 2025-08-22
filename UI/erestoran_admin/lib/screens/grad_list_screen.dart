@@ -16,12 +16,10 @@ class GradListScreen extends StatefulWidget {
 class _GradListScreenState extends State<GradListScreen> {
   late GradProvider _gradProvider;
   SearchResult<Grad>? result;
-  // ignore: prefer_final_fields, unnecessary_new
   TextEditingController _nazivController = new TextEditingController();
   
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     _gradProvider = context.read<GradProvider>();
     _loadData();
@@ -34,7 +32,6 @@ Future<void> _loadData() async {
   }
   @override
   Widget build(BuildContext context) {
-    // ignore: avoid_unnecessary_containers
     return Container(
       child: MasterScreenWidget(
         title_widget: Container(

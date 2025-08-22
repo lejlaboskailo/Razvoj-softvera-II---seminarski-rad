@@ -4,6 +4,7 @@ using eRestoran.Model.Requests;
 using eRestoran.Model.SearchObjects;
 using eRestoran.Services;
 using eRestoran.Services.NarudzbeStateMachine;
+using eRestoran.Services.RabbitMQ;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -11,21 +12,48 @@ using System.Text;
 namespace eRestoran.Controllers
 {
     [Route("[controller]")]
-    //[AllowAnonymous]
     public class NarudzbaController:BaseCRUDController<Model.Narudzba,NarudzbaSearchObject,NarudzbaInsertRequest,NarudzbaUpdateRequest>
     {
         protected readonly INarudzbaService _service;
-        /*public NarudzbaController(ILogger<BaseController<Model.Narudzba, NarudzbaSearchObject>> logger, INarudzbaService service) : base(logger, service)
-        {
-        }
-        */
-         public NarudzbaController(ILogger<BaseController<Model.Narudzba, NarudzbaSearchObject>> logger, INarudzbaService service)
+        private readonly IMailProducer _mailProducer;
+        public NarudzbaController(IMailProducer mailProducer, ILogger<BaseController<Model.Narudzba, NarudzbaSearchObject>> logger, INarudzbaService service)
          : base(logger, service)
          {
-             _service = service ?? throw new ArgumentNullException(nameof(service));
-         }
+            _service = service ?? throw new ArgumentNullException(nameof(service));
+            //_service = service;
+            _mailProducer = mailProducer;
+        }
 
-       
+        public class EmailModel
+        {
+            public string Sender { get; set; }
+            public string Recipient { get; set; }
+            public string Subject { get; set; }
+            public string Content { get; set; }
+        }
+
+
+
+        [HttpPost("checkout")]
+        public async Task<ActionResult<int>> Checkout([FromBody] NarudzbaCheckoutRequest request)
+        {
+            var narudzba = await _service.Checkout(request);
+            // Ako želiš da Flutter dobije samo ID:
+            return Ok(narudzba.Id);
+
+            // ili vrati cijeli objekat:
+            // return Ok(narudzba);
+        }
+
+        [HttpPost("checkoutFromCart/{korisnikId:int}")]
+        public async Task<ActionResult<int>> CheckoutFromCart(int korisnikId)
+        {
+            // servis vraća samo ID narudžbe
+            var id = await _service.CheckoutFromCart(korisnikId, 1); // 1 = "Kreirana"
+            return Ok(id);
+        }
+
+
         [HttpPut("{id}/activate")]
         public virtual async Task<Narudzba> Activate(int id)
         {

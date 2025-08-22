@@ -14,9 +14,19 @@ abstract class BaseProvider<T> with ChangeNotifier {
 
   BaseProvider(String endpoint) : _endpoint = endpoint {
     _baseUrl = const String.fromEnvironment("baseUrl",
-        defaultValue: "http://localhost:7002/");
+        defaultValue: "http://10.0.2.2:7003/");
     totalUrl = "$_baseUrl$endpoint";
   }
+  //http://localhost:7002/swagger/index.html
+  //http://localhost:7002/
+  static String? _basicUser;
+  static String? _basicPass;
+  static void setBasic(String username, String password) {
+    _basicUser = username;
+    _basicPass = password;
+  }
+
+  static bool get hasAuth => (_basicUser?.isNotEmpty ?? false);
 
   //http://10.0.2.2:7002/
   //http://localhost:7002/
@@ -49,8 +59,14 @@ abstract class BaseProvider<T> with ChangeNotifier {
     } else {
       throw Exception("Unknown error");
     }
-    // print("response: ${response.request} ${response.statusCode}, ${response.body}");
   }
+
+  T? firstWhereOrNull<T>(Iterable<T> items, bool Function(T) test) {
+  for (final i in items) {
+    if (test(i)) return i;
+  }
+  return null;
+}
 
   T fromJson(data) {
     throw Exception("Method not implemented");
@@ -185,6 +201,19 @@ abstract class BaseProvider<T> with ChangeNotifier {
     } catch (e) {
       print('Error fetching recommended doctors: $e');
       rethrow;
+    }
+  }
+
+  Future<int> checkoutFromCart(int korisnikId) async {
+    // KORISTI BASE URL, NE totalUrl (koje dodaje endpoint trenutnog providera, npr. "Korpa")
+    final uri = Uri.parse('${_baseUrl}Narudzba/checkoutFromCart/$korisnikId');
+    final headers = createHeaders();
+    final res = await http.post(uri, headers: headers);
+
+    if (isValidResponse(res)) {
+      return int.parse(res.body); // ili jsonDecode(res.body) ako vraćaš objekat
+    } else {
+      throw Exception('Checkout nije uspio: ${res.statusCode} ${res.body}');
     }
   }
 

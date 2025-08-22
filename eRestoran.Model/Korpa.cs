@@ -14,5 +14,6 @@ namespace eRestoran.Model
         public decimal? Cijena { get; set; }
         public int? KategorijaId { get; set; }
         public int? Kolicina { get; set; }
+        public int? PrilogId { get;set; }
     }
 }

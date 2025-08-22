@@ -45,8 +45,6 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
         _buildNavText(
             context, "Evidencija obavjestenja", StatusNarudzbaScreen()),
         _buildNavText(context, "Dojmovi", DojmoiListScreen()),
-        // _buildNavText(context, "Reports", UplatePoKorisnikuReport()),
-        // _buildNavText(context, "Reports", PrometPoKorisnikuReport()),
         _buildNavText(context, "Users", KorisnikScreen()),
       ],
     );
@@ -109,7 +107,6 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
       ),
       body: Row(
         children: [
-          // Sidebar
           Container(
             width: 250,
             color: const Color.fromARGB(255, 23, 22, 22),
@@ -120,7 +117,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
                 _buildSidebarItem(context, "Home", HomeScreen(), Icons.home),
                 _buildSidebarItem(
                     context, "Meni", MeniScreen(), Icons.restaurant_menu),
-                _buildSidebarItem(context, "Status narudzbe",
+                _buildSidebarItem(context, "Evidencija narudžbe",
                     StatusNarudzbaScreen(), Icons.assignment),
                 _buildSidebarItem(context, "Evidencija obavjestenja",
                     StatusNarudzbaScreen(), Icons.notifications),
@@ -131,7 +128,6 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               ],
             ),
           ),
-          // Main content
           Expanded(
             child: widget.child ?? Container(),
           ),
@@ -151,7 +147,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
             builder: (context) => MasterScreenWidget(
               child: screen,
               title: title,
-              activeItem: title, // ovdje prosljeđuješ aktivni item
+              activeItem: title, 
             ),
           ),
         );

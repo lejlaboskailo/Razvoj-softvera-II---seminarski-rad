@@ -544,8 +544,22 @@ namespace eRestoran.Services.Database
                      Kolicina=2,
                      Cijena = 30,
                      KategorijaId = 4000,
+                     PrilogId= 4898
                  }
                  );
+
+            modelBuilder.Entity<Prilozi>().HasData(
+     new Prilozi()
+     {
+         PrilogId = 4898,
+         NazivPriloga = "Majoneza",
+     },
+     new Prilozi()
+     {
+         PrilogId = 4878,
+         NazivPriloga = "Senf",
+     }
+     );
 
 
         }

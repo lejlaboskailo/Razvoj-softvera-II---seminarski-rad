@@ -1868,6 +1868,105 @@
         }
       }
     },
+    "/Narudzba/checkout": {
+      "post": {
+        "tags": [
+          "Narudzba"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NarudzbaCheckoutRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NarudzbaCheckoutRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NarudzbaCheckoutRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NarudzbaCheckoutRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Narudzba/checkoutFromCart/{korisnikId}": {
+      "post": {
+        "tags": [
+          "Narudzba"
+        ],
+        "parameters": [
+          {
+            "name": "korisnikId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Narudzba/{id}/activate": {
       "put": {
         "tags": [
@@ -2260,6 +2359,100 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Narudzba"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Prilozi": {
+      "get": {
+        "tags": [
+          "Prilozi"
+        ],
+        "parameters": [
+          {
+            "name": "NazivPriloga",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriloziPagedResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriloziPagedResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriloziPagedResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Prilozi/{id}": {
+      "get": {
+        "tags": [
+          "Prilozi"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Prilozi"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Prilozi"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Prilozi"
                 }
               }
             }
@@ -3888,6 +4081,11 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "prilogId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3985,13 +4183,53 @@
         },
         "additionalProperties": false
       },
-      "NarudzbaInsertRequest": {
+      "NarudzbaCheckoutRequest": {
         "type": "object",
         "properties": {
-          "id": {
+          "korisnikId": {
             "type": "integer",
             "format": "int32"
           },
+          "statusNarudzbeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "adresa": {
+            "type": "string",
+            "nullable": true
+          },
+          "napomena": {
+            "type": "string",
+            "nullable": true
+          },
+          "stavke": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NarudzbaCheckoutStavkaRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NarudzbaCheckoutStavkaRequest": {
+        "type": "object",
+        "properties": {
+          "jeloId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "kolicina": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NarudzbaInsertRequest": {
+        "type": "object",
+        "properties": {
           "datumNarudzbe": {
             "type": "string",
             "format": "date-time"
@@ -4002,7 +4240,8 @@
           },
           "statusNarudzbeId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "statusNarudzbe": {
             "type": "string",
@@ -4047,6 +4286,38 @@
           "statusNarudzbeId": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Prilozi": {
+        "type": "object",
+        "properties": {
+          "prilogId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nazivPriloga": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PriloziPagedResult": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Prilozi"
+            },
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false

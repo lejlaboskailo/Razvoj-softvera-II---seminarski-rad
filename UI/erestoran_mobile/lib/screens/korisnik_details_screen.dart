@@ -65,7 +65,7 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
                 padding: EdgeInsets.all(16),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orangeAccent, // Button color
+                    backgroundColor: Colors.orangeAccent,
                     padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                     textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     shape: RoundedRectangleBorder(

@@ -42,11 +42,18 @@ public partial class ERestoranContext : DbContext
     public virtual DbSet<Uplatum> Uplata { get; set; }
     public virtual DbSet<Restoran> Restorans { get; set; }
     public virtual DbSet<Korpa> Korpas { get; set; }
+    public virtual DbSet<Prilozi> Prilozis { get; set; }
 
 
+
+
+    /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+         => optionsBuilder.UseSqlServer("Data Source=localhost,1433;Initial Catalog=eRestoran; user=sa;password=test12!W; TrustServerCertificate=True");
+    */
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=localhost,1433;Initial Catalog=eRestoran; user=sa;password=test12!W; TrustServerCertificate=True");
+    {
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -85,6 +92,15 @@ public partial class ERestoranContext : DbContext
 
             entity.Property(e => e.Naziv).HasMaxLength(50);
             entity.Property(e => e.DrzavaId).HasMaxLength(50);
+
+        });
+        modelBuilder.Entity<Prilozi>(entity =>
+        {
+            entity.HasKey(e => e.PrilogId).HasName("PK__Prilozi__3214EC07EA4B5287");
+
+            entity.ToTable("Prilozi");
+
+            entity.Property(e => e.NazivPriloga).HasMaxLength(50);
 
         });
 
@@ -208,6 +224,15 @@ public partial class ERestoranContext : DbContext
          .HasOne(m => m.Kategorija)
          .WithMany()
          .HasForeignKey(m => m.KategorijaId);
+
+        modelBuilder.Entity<Status>().ToTable("Status"); 
+        modelBuilder.Entity<Status>().HasData(
+            new Status { Id = 1, Naziv = "Kreirana" },
+            new Status { Id = 2, Naziv = "Prihvaćena" },
+            new Status { Id = 3, Naziv = "U toku" },
+            new Status { Id = 4, Naziv = "Završena" },
+            new Status { Id = 5, Naziv = "Otkazana" }
+        );
 
 
         modelBuilder.Entity<Uloge>(entity =>

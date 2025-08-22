@@ -20,10 +20,8 @@ class GradDetailScreen extends StatefulWidget {
 class _GradDetailsScreenState extends State<GradDetailScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
   Map<String, dynamic> _initialValue = {};
-  //late DrzavaProvider _drzavaProvider;
   late GradProvider _gradProvider;
   Set<String> _existingNames = {};
- // SearchResult<Drzava>? drzavaResult;
   bool isLoading = true;
 
   @override
@@ -31,24 +29,12 @@ class _GradDetailsScreenState extends State<GradDetailScreen> {
     super.initState();
     _initialValue = {
       'naziv': widget.grad?.naziv,
-      //'drzavaId': widget.grad?.drzavaId?.toString(),
     };
 
-    //_drzavaProvider = context.read<DrzavaProvider>();
     _gradProvider = context.read<GradProvider>();
 
-    //initForm();
   }
-/*
-  Future initForm() async {
-    drzavaResult = await _drzavaProvider.get();
-    // ignore: avoid_print
-    print(drzavaResult);
 
-    setState(() {
-      isLoading = false;
-    });
-  } */
 void _showSuccessDialog(BuildContext context, String message) {
   showDialog(
     context: context,
@@ -101,7 +87,7 @@ void _showSuccessDialog(BuildContext context, String message) {
               Navigator.of(context).pop();
               _showSuccessDialog(context, 'Zapis uspješno obrisan.');
             } on Exception catch (e) {
-              print("Delete error: $e"); // Dodajte ispis u konzolu
+              print("Delete error: $e"); 
               _showErrorDialog(context, 'Greška prilikom brisanja: $e');
             }
           },
@@ -141,26 +127,16 @@ void _showSuccessDialog(BuildContext context, String message) {
 
                       try {
                         final naziv = _formKey.currentState?.value['naziv'] as String;
-                        /*if (widget.grad == null || widget.grad!.Naziv != naziv) {
-                          final isDuplicate = await _gradProvider.checkDuplicate(naziv);
-                          if (isDuplicate) {
-                            // ignore: use_build_context_synchronously
-                            _showErrorDialog(context, 'Zapis već postoji.');
-                            return; 
-                          }
-                        }*/
+                        
                         if (widget.grad == null) {
                           await _gradProvider.insert(request);
-                          // ignore: use_build_context_synchronously
                           _showSuccessDialog(context, 'Zapis uspješno dodan.');
                         } else {
                           await _gradProvider.update(widget.grad!.id!, request);
-                          // ignore: use_build_context_synchronously
                           _showSuccessDialog(context, 'Zapis uspješno ažuriran.');
                         }
                       } on Exception catch (e) {
                         showDialog(
-                          // ignore: use_build_context_synchronously
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
                             title: const Text("Error"),

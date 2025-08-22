@@ -537,8 +537,8 @@ namespace eRestoran.Services.Migrations
                             Email = "medzida@gmail.com",
                             Ime = "Medzida",
                             KorisnickoIme = "admin",
-                            LozinkaHash = "dds3wZUcMhcsT+grMyTc7bqVfic=",
-                            LozinkaSalt = "b0UbySjnuUo//4yMy2zTzg==",
+                            LozinkaHash = "VIF6Ogc7dsnbA+VwY2Z9P4LvWBo=",
+                            LozinkaSalt = "hwt0Oo+hTwEdxKYwi3ZSRQ==",
                             Prezime = "Bojcic",
                             Telefon = "066455778"
                         },
@@ -548,8 +548,8 @@ namespace eRestoran.Services.Migrations
                             Email = "ena@gmail.com",
                             Ime = "Ena",
                             KorisnickoIme = "mobile",
-                            LozinkaHash = "O33laiGC5nGg4a8kzjxf6G3+788=",
-                            LozinkaSalt = "AUj8VKnKMOljtmwNJAF7Ow==",
+                            LozinkaHash = "SsWiVjJg7rkF67RSrQm596KOYUA=",
+                            LozinkaSalt = "qi7ZjnG0GrkzAROoCLOzKw==",
                             Prezime = "Bojcic",
                             Telefon = "066455778"
                         },
@@ -559,8 +559,8 @@ namespace eRestoran.Services.Migrations
                             Email = "lejla@gmail.com",
                             Ime = "Lejla",
                             KorisnickoIme = "korisnik",
-                            LozinkaHash = "h6tqn7zcIQuXpSC3lxUBoF36ZBI=",
-                            LozinkaSalt = "z2fgcVl1LLyVn0kwDj2eOw==",
+                            LozinkaHash = "K5y4NHl4ZJZXSSrNM5VGzLiu5sk=",
+                            LozinkaSalt = "DZ0pLZ1w8wMogxDGe3x56g==",
                             Prezime = "Boskailo",
                             Telefon = "066455778"
                         });
@@ -596,14 +596,14 @@ namespace eRestoran.Services.Migrations
                         new
                         {
                             KorisnikUlogaId = 1,
-                            DatumIzmjene = new DateTime(2025, 7, 13, 13, 19, 50, 568, DateTimeKind.Local).AddTicks(2898),
+                            DatumIzmjene = new DateTime(2025, 8, 22, 21, 22, 18, 889, DateTimeKind.Local).AddTicks(7003),
                             KorisnikId = 1001,
                             UlogaId = 1
                         },
                         new
                         {
                             KorisnikUlogaId = 2,
-                            DatumIzmjene = new DateTime(2025, 7, 13, 13, 19, 50, 568, DateTimeKind.Local).AddTicks(2947),
+                            DatumIzmjene = new DateTime(2025, 8, 22, 21, 22, 18, 889, DateTimeKind.Local).AddTicks(7139),
                             KorisnikId = 1002,
                             UlogaId = 2
                         });
@@ -634,11 +634,19 @@ namespace eRestoran.Services.Migrations
                     b.Property<int?>("KorisnikId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PrilogId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PriloziPrilogId")
+                        .HasColumnType("int");
+
                     b.HasKey("KorpaId");
 
                     b.HasIndex("JeloId");
 
                     b.HasIndex("KategorijaId");
+
+                    b.HasIndex("PriloziPrilogId");
 
                     b.ToTable("Korpa", (string)null);
 
@@ -650,7 +658,8 @@ namespace eRestoran.Services.Migrations
                             JeloId = 5000,
                             KategorijaId = 4000,
                             Kolicina = 2,
-                            KorisnikId = 1002
+                            KorisnikId = 1002,
+                            PrilogId = 4898
                         });
                 });
 
@@ -687,10 +696,40 @@ namespace eRestoran.Services.Migrations
                         new
                         {
                             Id = 6000,
-                            DatumNarudzbe = new DateTime(2025, 7, 13, 13, 19, 50, 568, DateTimeKind.Local).AddTicks(3605),
+                            DatumNarudzbe = new DateTime(2025, 8, 22, 21, 22, 18, 889, DateTimeKind.Local).AddTicks(7881),
                             KorisnikId = 1001,
                             StateMachine = "poslano",
                             StatusNarudzbeId = 8010
+                        });
+                });
+
+            modelBuilder.Entity("eRestoran.Services.Database.Prilozi", b =>
+                {
+                    b.Property<int>("PrilogId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrilogId"));
+
+                    b.Property<string>("NazivPriloga")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("PrilogId")
+                        .HasName("PK__Prilozi__3214EC07EA4B5287");
+
+                    b.ToTable("Prilozi", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PrilogId = 4898,
+                            NazivPriloga = "Majoneza"
+                        },
+                        new
+                        {
+                            PrilogId = 4878,
+                            NazivPriloga = "Senf"
                         });
                 });
 
@@ -753,6 +792,31 @@ namespace eRestoran.Services.Migrations
                     b.ToTable("Status", (string)null);
 
                     b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Naziv = "Kreirana"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Naziv = "Prihvaćena"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Naziv = "U toku"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Naziv = "Završena"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Naziv = "Otkazana"
+                        },
                         new
                         {
                             Id = 8010,
@@ -944,9 +1008,15 @@ namespace eRestoran.Services.Migrations
                         .WithMany()
                         .HasForeignKey("KategorijaId");
 
+                    b.HasOne("eRestoran.Services.Database.Prilozi", "Prilozi")
+                        .WithMany()
+                        .HasForeignKey("PriloziPrilogId");
+
                     b.Navigation("Jelo");
 
                     b.Navigation("Kategorija");
+
+                    b.Navigation("Prilozi");
                 });
 
             modelBuilder.Entity("eRestoran.Services.Database.Narudzba", b =>

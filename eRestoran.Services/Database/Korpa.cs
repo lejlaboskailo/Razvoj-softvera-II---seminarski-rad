@@ -15,8 +15,12 @@ namespace eRestoran.Services.Database
         public decimal? Cijena { get; set; }    
         public int? KategorijaId { get; set; }
         public int? Kolicina { get; set; }
+        public int? PrilogId { get; set; }
+
         public virtual Jelo? Jelo { get; set; }
         public virtual Kategorija? Kategorija { get; set; }
+        public virtual Prilozi? Prilozi { get; set; }
+
 
 
     }

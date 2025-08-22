@@ -21,8 +21,8 @@ class _NarudzbaListScreen extends State<NarudzbaListScreen> {
   late NarudzbaProvider _narudzbaProvider;
   late ProductProvider _jeloProvider;
   SearchResult<StavkeNarudzbe>? stavkeResult;
-  Map<String, String> jeloMap = {}; // Mapa za brzi pristup nazivu jela na osnovu jeloId
-  Map<String, String> narudzbaMap = {}; // Mapa za brzi pristup datumu narudžbe na osnovu narudzbaId
+  Map<String, String> jeloMap = {}; 
+  Map<String, String> narudzbaMap = {}; 
 
   final TextEditingController _nazivController = TextEditingController();
 
@@ -38,27 +38,23 @@ class _NarudzbaListScreen extends State<NarudzbaListScreen> {
 
   Future<void> _fetchInitialData() async {
     try {
-      // Učitajte stavke narudžbe
       stavkeResult = await _stavkeNarudzbeProvider.get();
       
-      // Učitajte sve jela
       var jeloResult = await _jeloProvider.get();
       var narudzbaResult = await _narudzbaProvider.get();
 
       if (jeloResult?.result != null && narudzbaResult?.result != null) {
         setState(() {
-          // Kreirajte mapu jela za brzi pristup
           jeloMap = {
             for (var jelo in jeloResult!.result) jelo.jeloId.toString(): jelo.naziv ?? ''
           };
 
-          // Kreirajte mapu narudžbi za brzi pristup
           narudzbaMap = {
             for (var narudzba in narudzbaResult!.result) narudzba.id.toString(): narudzba.datumNarudzbe ?? 'Nepoznato'
           };
 
           print('Jelo Map: $jeloMap');
-          print('Narudzba Map: $narudzbaMap'); // Provjerite sadrži li ispravne podatke
+          print('Narudzba Map: $narudzbaMap'); 
         });
       }
     } catch (e) {

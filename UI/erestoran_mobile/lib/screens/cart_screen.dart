@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'package:collection/collection.dart';
 import 'package:erestoran_mobile/models/jelo.dart';
 import 'package:erestoran_mobile/models/search_result.dart';
 import 'package:erestoran_mobile/providers/jelo_provider.dart';
+import 'package:erestoran_mobile/providers/prilozi_provider.dart';
+import 'package:erestoran_mobile/utils/util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import 'package:provider/provider.dart';
 import 'package:erestoran_mobile/providers/cart_provider.dart';
 import '../models/korpa.dart';
@@ -16,6 +20,8 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   late CartProvider _cartProvider;
   late ProductProvider _jeloProvider;
+  late PriloziProvider _priloziProvider;
+
   SearchResult<Korpa>? _korpa;
   bool _isLoading = true;
 
@@ -24,6 +30,7 @@ class _CartScreenState extends State<CartScreen> {
     super.initState();
     _cartProvider = context.read<CartProvider>();
     _jeloProvider = context.read<ProductProvider>();
+    _priloziProvider = context.read<PriloziProvider>();
 
     _loadData();
   }
@@ -31,6 +38,8 @@ class _CartScreenState extends State<CartScreen> {
   Future<void> _loadData() async {
     try {
       await _jeloProvider.fetchAll();
+      await _priloziProvider.fetchAll();
+
       await _fetchInitialData();
     } catch (e) {
       print("Error loading data: $e");
@@ -73,10 +82,19 @@ class _CartScreenState extends State<CartScreen> {
                           itemBuilder: (context, index) {
                             final item = _korpa!.result[index];
 
-                            // Nađi jelo prema jeloId
                             final jelo = _jeloProvider.items.firstWhere(
                               (x) => x.jeloId == item.jeloId,
                             );
+                            final prilog = (item.prilogId != null)
+                                ? _priloziProvider.items.firstWhereOrNull(
+                                    (x) => x.prilogId == item.prilogId)
+                                : null;
+
+                            final nazivPriloga =
+                                prilog?.nazivPriloga ?? "Bez priloga";
+                            print('korpa item prilogId=${item.prilogId}');
+                            print(
+                                'prilozi loaded ids: ${_priloziProvider.items.map((e) => e.prilogId).toList()}');
 
                             return Card(
                               elevation: 3,
@@ -87,8 +105,7 @@ class _CartScreenState extends State<CartScreen> {
                               child: Padding(
                                 padding: EdgeInsets.all(10),
                                 child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     SizedBox(width: 15),
                                     Expanded(
@@ -111,6 +128,13 @@ class _CartScreenState extends State<CartScreen> {
                                               fontSize: 14,
                                               color: Colors.green,
                                             ),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            nazivPriloga, 
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.green),
                                           ),
                                           SizedBox(height: 5),
                                           Text(
@@ -152,8 +176,8 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 15),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           boxShadow: [
@@ -165,8 +189,7 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Total:',
@@ -184,6 +207,74 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                           ],
                         ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                PaypalCheckoutView(
+                              sandboxMode: true,
+                              clientId: "",
+                              secretKey: "",
+                              transactions: const [
+                                {
+                                  "amount": {
+                                    "total": '70',
+                                    "currency": "USD",
+                                    "details": {
+                                      "subtotal": '70',
+                                      "shipping": '0',
+                                      "shipping_discount": 0
+                                    }
+                                  },
+                                  "description":
+                                      "The payment transaction description.",
+                                  "item_list": {
+                                    "items": [
+                                      {
+                                        "name": "Apple",
+                                        "quantity": 4,
+                                        "price": '5',
+                                        "currency": "USD"
+                                      },
+                                      {
+                                        "name": "Pineapple",
+                                        "quantity": 5,
+                                        "price": '10',
+                                        "currency": "USD"
+                                      }
+                                    ],
+
+                                  }
+                                }
+                              ],
+                              note:
+                                  "Contact us for any questions on your order.",
+                              onSuccess: (Map params) async {
+                                print("onSuccess: $params");
+                              },
+                              onError: (error) {
+                                print("onError: $error");
+                                Navigator.pop(context);
+                              },
+                              onCancel: () {
+                                print('cancelled:');
+                              },
+                            ),
+                          ));
+                          try {
+                            final id = await _cartProvider
+                                .checkoutFromCart(Authorization.userId!);
+                            if (!mounted) return;
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text('Narudžba #$id kreirana!')));
+                            await _fetchInitialData();
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Greška: $e')));
+                          }
+                        },
+                        child: const Text('Pošalji narudžbu'),
                       ),
                     ],
                   ),

@@ -288,12 +288,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MasterScreenWidget(
-      child: Column(
+    final isEdit = widget.jelo != null;
+    final screenTitle =
+        isEdit ? '${widget.jelo!.naziv ?? "Jelo"}' : 'Novo jelo';
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          screenTitle,
+          overflow: TextOverflow.ellipsis,
+        ),
+        leading: (ModalRoute.of(context)?.canPop ?? false)
+            ? BackButton(onPressed: () => Navigator.of(context).pop())
+            : null,
+      ),
+      body: Column(
         children: [
-          isLoading
-              ? CircularProgressIndicator()
-              : _buildForm(),
+          isLoading ? CircularProgressIndicator() : _buildForm(),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -301,9 +311,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 padding: EdgeInsets.all(16),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orangeAccent, // Button color
+                    backgroundColor: Colors.orangeAccent, 
                     padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    textStyle:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -318,7 +329,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           await _productProvider.insert(request);
                           _showSnackbar("Jelo je uspješno dodano.");
                         } else {
-                          await _productProvider.update(widget.jelo!.jeloId!, request);
+                          await _productProvider.update(
+                              widget.jelo!.jeloId!, request);
                           _showSnackbar("Jelo je uspješno uređeno.");
                         }
 
@@ -340,7 +352,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
         ],
       ),
-      title: widget.jelo?.naziv ?? "Detalji proizvoda",
     );
   }
 

@@ -11,7 +11,6 @@ class KorisnikProvider extends BaseProvider<Korisnik> {
 
    @override
   Korisnik fromJson(data) {
-    // TODO: implement fromJson
     return Korisnik.fromJson(data);
   }
   Future<Korisnik?> login(String username, String password) async {

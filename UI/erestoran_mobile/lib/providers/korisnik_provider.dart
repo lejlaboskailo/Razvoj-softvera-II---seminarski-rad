@@ -128,4 +128,38 @@ class KorisnikProvider extends BaseProvider<Korisnik> {
       throw Exception('Greška pri registraciji.');
     }
   }
+
+  // KorisnikProvider.dart
+  Future<Korisnik> register({
+    required String username, // -> ovo je KorisnickoIme
+    required String password,
+    required String ime,
+    required String prezime,
+  }) async {
+    // NIKAKAV body, samo query parametri:
+    final uri = Uri.parse('$totalUrl/registration').replace(queryParameters: {
+      'username': username,
+      'password': password,
+      'ime': ime,
+      'prezime': prezime,
+    });
+
+    final res = await http.post(
+      uri,
+      headers: {
+        // ne treba Authorization ako je endpoint AllowAnonymous
+        'Accept': 'application/json',
+      },
+    );
+
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      final user = fromJson(jsonDecode(res.body));
+      // ako ostatak API-ja koristi Basic auth:
+      BaseProvider.setBasic(username, password);
+      return user;
+    }
+
+    throw Exception(
+        'Registracija nije uspjela: ${res.statusCode}\n${res.body}');
+  }
 }

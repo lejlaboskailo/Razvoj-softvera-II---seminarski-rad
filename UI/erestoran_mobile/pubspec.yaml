@@ -45,6 +45,9 @@ dependencies:
   adaptive_scrollbar: ^2.1.2
   image_picker: ^0.8.5+3
   badges: ^2.0.2
+  webview_flutter: ^4.7.0
+  flutter_paypal_payment: ^1.0.7
+  collection: ^1.17.0
 
 dev_dependencies:
   json_serializable: ^6.7.0

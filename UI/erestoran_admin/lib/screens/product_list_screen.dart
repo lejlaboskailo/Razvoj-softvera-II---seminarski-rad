@@ -160,7 +160,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, // kolone, možeš prilagoditi
+        crossAxisCount: 2, 
         mainAxisSpacing: 16,
         crossAxisSpacing: 16,
         childAspectRatio: 3 / 2,

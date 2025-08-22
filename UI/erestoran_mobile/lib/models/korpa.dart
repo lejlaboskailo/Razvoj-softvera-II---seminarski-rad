@@ -16,9 +16,10 @@ double? cijena;
 int? kolicina;
 int? kategorijaId;
 Jelo?jelo;
+int?prilogId;
  
  
-Korpa(this.korpaId, this.jeloId, this.korisnikId, this.cijena, this.kolicina, this.kategorijaId, this.jelo);
+Korpa(this.korpaId, this.jeloId, this.korisnikId, this.cijena, this.kolicina, this.kategorijaId, this.jelo,this.prilogId);
  
 factory Korpa.fromJson(Map<String,dynamic> json)=>_$KorpaFromJson(json);
  

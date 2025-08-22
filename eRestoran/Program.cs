@@ -1,6 +1,5 @@
 using AutoMapper;
 using eRestoran;
-using eRestoran.Model.SearchObjects;
 using eRestoran.Services;
 using eRestoran.Services.Database;
 using eRestoran.Services.NarudzbeStateMachine;
@@ -8,10 +7,9 @@ using eRestoran.Services.RabbitMQ;
 using eRestoran.Services.Reports;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient; // koristi pravi provider
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,13 +28,10 @@ builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IRestoranService, RestoranService>();
 builder.Services.AddScoped<IKorisniciUloga, KorisniciUlogaService>();
 builder.Services.AddScoped<IKorpaService, KorpaService>();
+builder.Services.AddScoped<IPriloziService, PriloziService>();
 
 
 builder.Services.AddSingleton<IMailProducer, MailProducer>();
-
-
-
-
 
 builder.Services.AddScoped<BaseNarudzbaState>();
 builder.Services.AddScoped<InitialNarudzbaState>();
@@ -46,11 +41,14 @@ builder.Services.AddScoped<ActiveNarudzbaState>();
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
     {
-        options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+        options.SerializerSettings.ContractResolver = new DefaultContractResolver
+        {
+            NamingStrategy = new CamelCaseNamingStrategy()
+        };
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
     });
-builder.Services.AddEndpointsApiExplorer();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Basic", new OpenApiSecurityScheme()
@@ -64,9 +62,9 @@ builder.Services.AddSwaggerGen(c =>
         {
             new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference 
-                { 
-                    Type = ReferenceType.SecurityScheme, 
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
                     Id = "Basic"
                 }
             },
@@ -75,22 +73,27 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+var cs =
+    builder.Configuration.GetConnectionString("Default") ??
+    builder.Configuration.GetConnectionString("DefaultConnection") ??
+    Environment.GetEnvironmentVariable("ConnectionStrings__Default") ??
+    Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
 
-var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
-Console.WriteLine("Connection string: " + connectionstring);
-var context = builder.Services.AddDbContext<ERestoranContext>(options => options.UseSqlServer(connectionstring));
+Console.WriteLine("Connection string: " + cs);
+
+builder.Services.AddDbContext<ERestoranContext>(options =>
+    options.UseSqlServer(cs, sql =>
+    {
+        sql.EnableRetryOnFailure();
+        sql.CommandTimeout(30);
+    })
+);
+
 builder.Services.AddAutoMapper(typeof(IKorisniciService));
+
 builder.Services.AddAuthentication("BasicAuthentication")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
-builder.Services.AddControllers().AddNewtonsoftJson(options =>
-{
-    options.SerializerSettings.ContractResolver = new DefaultContractResolver
-    {
-        NamingStrategy = new CamelCaseNamingStrategy()
-    };
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-});
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -107,7 +110,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-
 using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<ERestoranContext>();
@@ -119,9 +121,6 @@ using (var scope = app.Services.CreateScope())
     {
         Console.WriteLine("DB migration failed: " + ex.Message);
     }
-
 }
-
-
 
 app.Run();

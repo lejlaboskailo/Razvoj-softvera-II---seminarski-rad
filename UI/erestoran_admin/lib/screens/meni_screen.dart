@@ -81,6 +81,12 @@ class _MeniScreenState extends State<MeniScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Meni'),
+        leading: (ModalRoute.of(context)?.canPop ?? false)
+            ? BackButton(onPressed: () => Navigator.of(context).pop())
+            : null,
+      ),
       body: Column(
         children: [
           Container(
@@ -135,7 +141,7 @@ class _MeniScreenState extends State<MeniScreen> {
                     setState(() {
                       _odabranaKategorija = newValue;
                     });
-                    _searchJela(); // automatski pokreni pretragu
+                    _searchJela(); 
                   },
                 ),
                 const SizedBox(height: 8),
@@ -151,7 +157,6 @@ class _MeniScreenState extends State<MeniScreen> {
                         if (result == true) {
                           await _fecthJelo();
                         } else {
-                          // Ili jednostavno uvijek pozovi fetch ako ne šalješ true/false
                           await _fecthJelo();
                         }
                       },

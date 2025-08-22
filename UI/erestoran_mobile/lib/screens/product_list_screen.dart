@@ -196,7 +196,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     ),
                   ),
                   onPressed: () {
-                    // Add product to cart
                     context.read<CartProvider>().insert(e);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("${e.naziv} added to cart!")),

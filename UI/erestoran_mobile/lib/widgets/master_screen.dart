@@ -122,8 +122,6 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
 
   final Map<String, Widget> _moreOptions = {
     'Reviews': DojmoviDetailsScreen(),
-    //'Contact': BolnicaScreen(),
-    //'Online paymant': PaymentDetailsScreen(paymentIntentId: "",),
   };
 
   void _onMainItemTapped(int index) {

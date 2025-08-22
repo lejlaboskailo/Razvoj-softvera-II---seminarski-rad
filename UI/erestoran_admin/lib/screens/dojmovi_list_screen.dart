@@ -106,7 +106,6 @@ class _DojmoviListScreenState extends State<DojmoiListScreen> {
                               IconButton(
                                 icon: Icon(Icons.info_outline, color: Colors.orange[700]),
                                 onPressed: () {
-                                  // Implement action for detail view
                                 },
                               ),
                             ],

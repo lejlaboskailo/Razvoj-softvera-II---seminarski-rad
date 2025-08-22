@@ -67,7 +67,7 @@ namespace eRestoran.Services
 
         public override async Task<Model.Korisnik> Insert(KorisnikInsertRequest request)
         {
-            var korisnik = await base.Insert(request); // Čekaj da se insert završi
+            var korisnik = await base.Insert(request); 
 
             var uloga = _context.Uloges.FirstOrDefault(u => u.Naziv == "Korisnik");
             if (uloga == null)
@@ -77,18 +77,18 @@ namespace eRestoran.Services
                     Naziv = "Korisnik"
                 };
                 _context.Uloges.Add(uloga);
-                await _context.SaveChangesAsync(); // async verzija
+                await _context.SaveChangesAsync(); 
             }
 
             var korisnikUloga = new Database.KorisniciUloge
             {
-                KorisnikId = korisnik.Id,  // Sada je ID sigurno generisan
+                KorisnikId = korisnik.Id,  
                 UlogaId = uloga.Id,
                 DatumIzmjene = DateTime.Now
             };
 
             _context.KorisniciUloges.Add(korisnikUloga);
-            await _context.SaveChangesAsync(); // async verzija
+            await _context.SaveChangesAsync(); 
 
             return korisnik;
         }
@@ -152,64 +152,47 @@ namespace eRestoran.Services
 
         public async Task<Model.Korisnik> Register(string username, string password, string ime, string prezime)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(ime) || string.IsNullOrEmpty(prezime))
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) ||
+                string.IsNullOrEmpty(ime) || string.IsNullOrEmpty(prezime))
             {
                 throw new ArgumentException("Svi podaci moraju biti popunjeni.");
             }
 
-            var existingUser = await _context.Korisnicis.FirstOrDefaultAsync(x => x.KorisnickoIme == username);
+            var existingUser = await _context.Korisnicis
+                .FirstOrDefaultAsync(x => x.KorisnickoIme == username);
             if (existingUser != null)
             {
                 throw new Exception("Korisničko ime već postoji.");
             }
 
             var salt = GenerateSalt();
-            if (string.IsNullOrEmpty(salt))
-            {
-                throw new Exception("Greška pri generisanju salt-a.");
-            }
-
             var hash = GenerateHash(salt, password);
-            if (string.IsNullOrEmpty(hash))
-            {
-                throw new Exception("Greška pri generisanju hash-a.");
-            }
-            var defaultRole = await _context.Uloges.FirstOrDefaultAsync(u => u.Naziv == "Korisnik");
-            if (defaultRole == null)
-            {
-                throw new Exception("Podrazumevana uloga nije pronađena.");
-            }
 
-
-            var newUser = new Korisnik
+            var newUserEntity = new Database.Korisnici
             {
                 KorisnickoIme = username,
                 LozinkaSalt = salt,
                 LozinkaHash = hash,
                 Ime = ime,
-                Prezime = prezime,
+                Prezime = prezime
             };
 
-            var newUserEntity = _mapper.Map<Database.Korisnici>(newUser);
             _context.Korisnicis.Add(newUserEntity);
+            await _context.SaveChangesAsync();  
 
-            var korisniciUloga = new Model.KorisniciUloge
+            var korisnikUloga = new Database.KorisniciUloge
             {
-                KorisnikId = newUserEntity.Id,  
-                UlogaId = defaultRole.Id       
+                KorisnikId = newUserEntity.Id,
+                UlogaId = 2,                       
+                DatumIzmjene = DateTime.Now
             };
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Greška prilikom dodavanja korisnika u bazu podataka.", ex);
-            }
+            _context.KorisniciUloges.Add(korisnikUloga);
+            await _context.SaveChangesAsync();
 
-            return _mapper.Map<Model.Korisnik>(newUser);
+            return _mapper.Map<Model.Korisnik>(newUserEntity);
         }
+
 
 
 

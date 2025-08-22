@@ -5,6 +5,10 @@ import 'package:erestoran_mobile/providers/kategorija_provider.dart';
 import 'package:erestoran_mobile/providers/korisnik_provider.dart';
 import 'package:erestoran_mobile/providers/korisnik_uloga_provider.dart';
 import 'package:erestoran_mobile/providers/meni_provider.dart';
+import 'package:erestoran_mobile/providers/narudzba_provider.dart';
+import 'package:erestoran_mobile/providers/payment_provider.dart';
+import 'package:erestoran_mobile/providers/prilozi_provider.dart';
+import 'package:erestoran_mobile/providers/status_provider.dart';
 import 'package:erestoran_mobile/providers/uloga_provider.dart';
 import 'package:erestoran_mobile/screens/home_screen.dart';
 import 'package:erestoran_mobile/screens/registration.dart';
@@ -23,6 +27,14 @@ void main() {
       ChangeNotifierProvider(create: (_) => KorisnikUlogaProvider()),
       ChangeNotifierProvider(create: (_) => CartProvider()),
       ChangeNotifierProvider(create: (_) => ProductProvider()),
+      ChangeNotifierProvider(create: (_) => NarudzbaProvider()),
+      ChangeNotifierProvider(create: (_) => StatusProvider()),
+      ChangeNotifierProvider(create: (_) => PaymentProvider()),
+      ChangeNotifierProvider(create: (_) =>   PriloziProvider()),
+
+
+
+
     ],
     child: const MyApp(),
   ));

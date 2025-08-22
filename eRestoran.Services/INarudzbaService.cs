@@ -16,5 +16,8 @@ namespace eRestoran.Services
         Task<Model.Narudzba> Hide(int id);
 
         Task<List<string>> AllowedActions(int id);
+        Task<Model.Narudzba> Checkout(NarudzbaCheckoutRequest request);
+        Task<int> CheckoutFromCart(int korisnikId, int? statusId = null);
+
     }
 }

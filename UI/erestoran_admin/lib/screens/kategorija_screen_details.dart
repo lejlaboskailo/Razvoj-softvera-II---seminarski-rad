@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors
 
 import 'dart:convert';
 import 'dart:io';
@@ -50,13 +49,11 @@ class _KategorijaDetailScreen extends State<KategorijaDetailScreen> {
   Future initForm() async {
     kategorijaResult = await _kategorijaProvider.get();
   
-    // Provjeri podatke
     if (kategorijaResult == null || kategorijaResult!.result == null) {
       print('Kategorija result je null ili prazan');
       return;
     }
 
-    // Ispisivanje itema
     for (var item in kategorijaResult!.result) {
       print('Dropdown item: ${item.kategorijaId} - ${item.naziv}');
     }
@@ -93,7 +90,7 @@ class _KategorijaDetailScreen extends State<KategorijaDetailScreen> {
                         await _kategorijaProvider.update(widget.kategorija!.kategorijaId!, request);
                       }
                     } on Exception catch (e) {
-                      print('Error occurred: $e'); // Ovdje ispiši grešku za lakše debagiranje
+                      print('Error occurred: $e'); 
                       showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
@@ -152,16 +149,6 @@ class _KategorijaDetailScreen extends State<KategorijaDetailScreen> {
   File? _image;
   String? _base64Image;
 
- /* Future getImage() async {
-    var result = await FilePicker.platform.pickFiles(type: FileType.image);
 
-    if (result != null && result.files.single.path != null) {
-      _image = File(result.files.single.path!);
-      _base64Image = base64Encode(_image!.readAsBytesSync());
-      setState(() {
-        _initialValue['slika'] = _base64Image; // Update the image in the form's initial value
-      });
-    }
-  }*/
 }
 

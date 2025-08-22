@@ -1,5 +1,6 @@
 import 'package:erestoran_mobile/models/jelo.dart';
 import 'package:erestoran_mobile/providers/meni_provider.dart';
+import 'package:erestoran_mobile/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
  
 class RecommendedJeloScreen extends StatefulWidget {
@@ -30,8 +31,8 @@ class _RecommendedJeloScreenState extends State<RecommendedJeloScreen> {
  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _jelo != null
+    return MasterScreenWidget(
+      child: _jelo != null
           ? ListView.builder(
               itemCount: _jelo!.length,
               itemBuilder: (context, index) {

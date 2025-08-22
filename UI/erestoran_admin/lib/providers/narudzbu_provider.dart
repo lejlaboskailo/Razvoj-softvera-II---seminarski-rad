@@ -8,7 +8,6 @@ class NarudzbaProvider extends BaseProvider<Narudzba> {
  
    @override
   Narudzba fromJson(data) {
-    // TODO: implement fromJson
     return Narudzba.fromJson(data);
   }
 }
