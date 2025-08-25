@@ -206,15 +206,13 @@ abstract class BaseProvider<T> with ChangeNotifier {
 
   Future<int> checkoutFromCart(int userId, String? paymentId,
       {int? statusId}) async {
-    // Napravi URL (pazi na dupli slash – _baseUrl već završava sa '/')
     final uri = Uri.parse('${_baseUrl}Narudzba/checkoutFromCart');
 
-    // Uvijek koristi iste headere (Basic + Content-Type)
     final headers = createHeaders();
 
     final bodyMap = <String, dynamic>{
       "korisnikId": userId,
-      "paymentId": paymentId, // PAYID-...
+      "paymentId": paymentId, 
     };
     if (statusId != null) bodyMap["statusId"] = statusId;
 
@@ -224,7 +222,6 @@ abstract class BaseProvider<T> with ChangeNotifier {
       body: jsonEncode(bodyMap),
     );
 
-    // (opcionalno) debug ispisi
     debugPrint('checkoutFromCart ${resp.statusCode}: ${resp.body}');
 
     if (resp.statusCode >= 200 && resp.statusCode < 300) {
