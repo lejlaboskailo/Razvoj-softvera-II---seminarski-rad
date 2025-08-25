@@ -1924,22 +1924,35 @@
         }
       }
     },
-    "/Narudzba/checkoutFromCart/{korisnikId}": {
+    "/Narudzba/checkoutFromCart": {
       "post": {
         "tags": [
           "Narudzba"
         ],
-        "parameters": [
-          {
-            "name": "korisnikId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutFromCartRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutFromCartRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutFromCartRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutFromCartRequest"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Success",
@@ -3515,6 +3528,25 @@
   },
   "components": {
     "schemas": {
+      "CheckoutFromCartRequest": {
+        "type": "object",
+        "properties": {
+          "korisnikId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "statusId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "paymentId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Dojmovi": {
         "type": "object",
         "properties": {
@@ -4115,6 +4147,11 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "prilogId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4177,6 +4214,10 @@
             "nullable": true
           },
           "stateMachine": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentId": {
             "type": "string",
             "nullable": true
           }

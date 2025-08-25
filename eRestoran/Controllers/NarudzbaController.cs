@@ -45,13 +45,17 @@ namespace eRestoran.Controllers
             // return Ok(narudzba);
         }
 
-        [HttpPost("checkoutFromCart/{korisnikId:int}")]
-        public async Task<ActionResult<int>> CheckoutFromCart(int korisnikId)
+        [HttpPost("checkoutFromCart")]
+        //[HttpPost("checkout-from-cart")]
+        public async Task<ActionResult<int>> CheckoutFromCart([FromBody] CheckoutFromCartRequest req)
         {
-            // servis vraća samo ID narudžbe
-            var id = await _service.CheckoutFromCart(korisnikId, 1); // 1 = "Kreirana"
+            if (req == null || req.KorisnikId <= 0)
+                return BadRequest("Neispravan zahtjev.");
+
+            var id = await _service.CheckoutFromCart(req.KorisnikId, req.StatusId, req.PaymentId);
             return Ok(id);
         }
+
 
 
         [HttpPut("{id}/activate")]

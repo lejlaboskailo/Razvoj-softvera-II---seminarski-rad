@@ -7,7 +7,6 @@ class stavkeNarudzbeProvider extends BaseProvider<StavkeNarudzbe> {
 
    @override
   StavkeNarudzbe fromJson(data) {
-    // TODO: implement fromJson
     return StavkeNarudzbe.fromJson(data);
   }
 }

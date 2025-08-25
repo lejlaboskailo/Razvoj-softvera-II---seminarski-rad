@@ -80,7 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Funkcija za navigaciju do stranice menija
   void _navigateToMenuPage(BuildContext context) {
     Navigator.push(
       context,

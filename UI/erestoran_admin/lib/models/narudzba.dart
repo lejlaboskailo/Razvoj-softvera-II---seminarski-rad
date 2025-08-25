@@ -9,8 +9,9 @@ String? datumNarudzbe;
 int? korisnikId;
 int? statusNarudzbeId;
 String? stateMachine;
+String?paymentId;
 Narudzba(this.id,this.datumNarudzbe,this.korisnikId,
-this.statusNarudzbeId,this.stateMachine);
+this.statusNarudzbeId,this.stateMachine, this.paymentId);
 
 factory Narudzba.fromJson(Map<String,dynamic> json)=>_$NarudzbaFromJson(json);
 

@@ -15,5 +15,6 @@ namespace eRestoran.Model
         public int StatusNarudzbeId { get; set; }
         public string StatusNarudzbe { get; set; }
         public string? StateMachine { get; set; }
+        public string? PaymentId { get; set; }
     }
 }

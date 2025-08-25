@@ -1,108 +1,4 @@
-﻿//using eRestoran.Model;
-//using eRestoran.Services.Database;
-//using iTextSharp.text;
-//using Microsoft.EntityFrameworkCore;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-//namespace eRestoran.Services.Reports
-//{
-//    public class ReportService:IReportService
-//    {
-//        private readonly ERestoranContext _context;
-
-//        public ReportService(ERestoranContext context)
-//        {
-//            _context = context;
-//        }
-
-//       /* public async Task<UplatePoKorisniku> ReportUplatePoKorisniku()
-//        {
-//            var narudzbe = await _context.Narudzbas
-//         .Where(n => n.DatumNarudzbe.HasValue && n.DatumNarudzbe.Value.Year == godina)
-//         .Include(n => n.StavkeNarudzbes) 
-//         .Include(n => n.Korisnik) 
-//         .ToListAsync();
-
-//            var izvjestaj = new UplatePoKorisniku
-//            {
-//                UkupniPromet = (int)narudzbe.Sum(n => n.StavkeNarudzbes.Sum(s => s.Cijena * s.Kolicina)),
-//                ProdajaPoKorisniku = narudzbe
-//                    .Where(n => n.KorisnikId.HasValue) 
-//                    .GroupBy(n => n.KorisnikId.Value)
-//                    .Select(g => new ProdajaPoKorisniku
-//                    {
-//                        KorisnikId = g.Key,
-//                        Ime = g.FirstOrDefault().Korisnik?.Ime, 
-//                        Prezime = g.FirstOrDefault().Korisnik?.Prezime,
-//                        UkupniIznos = (int)g.Sum(n => n.StavkeNarudzbes.Sum(s => s.Cijena * s.Kolicina))
-//                    })
-//                    .ToList()
-//            };
-
-//            return izvjestaj;
-//        }*/
-
-//        public List<UplatePoKorisniku> ReportUplatePoKorisniku()
-//        {
-//            var uplate = _context.Uplata
-//        .Include(u => u.Korisnik) // Povezivanje s tabelom Korisnik
-//        .Select(u => new UplatePoKorisniku
-//        {
-//            Iznos = u.Iznos,
-//            DatumTransakcije = u.DatumTransakcije,
-//            BrojTransakcije = u.BrojTransakcije,
-//            ImeKorisnika = u.Korisnik.Ime,
-//            PrezimeKorisnika = u.Korisnik.Prezime,
-//            NacinPlacanja = u.NacinPlacanja
-//        })
-//        .ToList();
-
-//            return uplate;
-//        }
-//        //public List<PrometPoKorisniku> PrometPoKorisniku()
-//        //{
-//        //    //prekoNarudzbe
-//        //    var uplate = _context.Uplata
-//        //.Include(u => u.Korisnik) // Povezivanje s tabelom Korisnik
-//        //.Select(u => new UplatePoKorisniku
-//        //{
-//        //    Iznos = u.Iznos,
-//        //    DatumTransakcije = u.DatumTransakcije,
-//        //    BrojTransakcije = u.BrojTransakcije,
-//        //    ImeKorisnika = u.Korisnik.Ime,
-//        //    PrezimeKorisnika = u.Korisnik.Prezime,
-//        //    NacinPlacanja = u.NacinPlacanja
-//        //})
-//        //.ToList();
-
-//        //    return uplate;
-//        //}
-
-//        public List<PrometPoKorisniku> PrometPoKorisniku()
-//        {
-//            // Dohvaćanje narudžbi s povezanim podacima iz posljednjih godinu dana
-//            var godinaUnazad = DateTime.Now.AddYears(-1);
-
-//            var promet = _context.Narudzbas
-//                .Include(n => n.Korisnik) // Povezivanje s tabelom Korisnik
-//                .Select(n => new PrometPoKorisniku
-//                {
-//                    ImeKorisnika = n.Korisnik.Ime + " " + n.Korisnik.Prezime, // Puno ime korisnika
-//                    //NazivNarudzbe = n.NazivNarudzbe,
-//                    DatumNarudzbe = n.DatumNarudzbe.ToString("yyyy-MM-dd") // Format datuma
-//                })
-//                .Where(p => DateTime.Parse(p.DatumNarudzbe) >= godinaUnazad) // Filtriramo po datumu
-//                .ToList();
-
-//            return promet;
-//        }
-
-//    }
-//}
+﻿
 
 using eRestoran.Model;
 using eRestoran.Services.Database;
@@ -129,21 +25,35 @@ namespace eRestoran.Services.Reports
 
         public List<UplatePoKorisniku> ReportUplatePoKorisniku()
         {
-            var uplate = _context.Uplata
-                .Include(u => u.Korisnik)
-                .Select(u => new UplatePoKorisniku
+            var lista = _context.Narudzbas
+                .AsNoTracking()
+                .Include(n => n.Korisnik)
+                .Include(n => n.StavkeNarudzbes)
+                .Where(n => n.PaymentId != null) // samo plaćene narudžbe
+                .Select(n => new UplatePoKorisniku
                 {
-                    Iznos = u.Iznos,
-                    DatumTransakcije = u.DatumTransakcije,
-                    BrojTransakcije = u.BrojTransakcije,
-                    ImeKorisnika = u.Korisnik.Ime,
-                    PrezimeKorisnika = u.Korisnik.Prezime,
-                    NacinPlacanja = u.NacinPlacanja
+                    ImeKorisnika = n.Korisnik != null ? n.Korisnik.Ime : "N/A",
+                    PrezimeKorisnika = n.Korisnik != null ? n.Korisnik.Prezime : "N/A",
+
+                    // ukupni iznos = suma stavki
+                    Iznos = n.StavkeNarudzbes
+                            .Select(s => (decimal?)((s.Cijena ?? 0) * (s.Kolicina ?? 0)))
+                            .Sum() ?? 0m,
+
+                    DatumTransakcije = n.DatumNarudzbe,
+                    BrojTransakcije = n.PaymentId!, // PaymentId tretiramo kao broj transakcije
+
+                    // Ako PaymentId nije null => kartica
+                    NacinPlacanja = n.PaymentId != null ? "Kartica" : "Nepoznato"
                 })
+                .OrderByDescending(x => x.DatumTransakcije)
                 .ToList();
 
-            return uplate;
+            return lista;
         }
+
+
+
 
         //public List<PrometPoKorisniku> ReportPrometPoKorisniku()
         //{
@@ -168,18 +78,18 @@ namespace eRestoran.Services.Reports
             var godinaUnazad = DateTime.Now.AddYears(-1);
 
             var promet = _context.Narudzbas
-                .Include(n => n.Korisnik) // Povezivanje s tabelom Korisnik
-                .Include(n => n.StavkeNarudzbes) // Povezivanje s tabelom StavkeNarudzbe
-                    .ThenInclude(s => s.Jelo) // Povezivanje StavkeNarudzbe -> Jelo
-                    .ThenInclude(j => j.Kategorija) // Povezivanje Jelo -> Kategorija
+                .Include(n => n.Korisnik) 
+                .Include(n => n.StavkeNarudzbes) 
+                    .ThenInclude(s => s.Jelo)
+                    .ThenInclude(j => j.Kategorija) 
                 .Where(n => n.DatumNarudzbe != null && n.DatumNarudzbe >= godinaUnazad)
                 .Select(n => new PrometPoKorisniku
                 {
                     ImeKorisnika = n.Korisnik.Ime + " " + n.Korisnik.Prezime,
                     DatumNarudzbe = n.DatumNarudzbe.ToString(),
                     NazivKategorije = n.StavkeNarudzbes
-                        .Select(s => s.Jelo.Kategorija.Naziv) // Pretpostavka: Kategorija ima polje Naziv
-                        .FirstOrDefault() ?? "N/A" // Uzimamo prvu kategoriju ili N/A ako nema
+                        .Select(s => s.Jelo.Kategorija.Naziv) 
+                        .FirstOrDefault() ?? "N/A"
                 })
                 .ToList();
 
@@ -194,7 +104,6 @@ namespace eRestoran.Services.Reports
                 PdfWriter.GetInstance(document, stream);
                 document.Open();
 
-                // Dodavanje naslova
                 var titleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
                 var title = new Paragraph("Izvještaj o prometu po korisnicima", titleFont)
                 {
@@ -202,11 +111,9 @@ namespace eRestoran.Services.Reports
                 };
                 document.Add(title);
 
-                // Dodavanje prostora
                 document.Add(new Paragraph("\n"));
 
-                // Kreiranje tabele
-                var table = new PdfPTable(3) { WidthPercentage = 100 }; // 3 kolone: Ime, Datum, Kategorija
+                var table = new PdfPTable(3) { WidthPercentage = 100 };
                 table.AddCell("Ime i Prezime");
                 table.AddCell("Datum Narudžbe");
                 table.AddCell("Kategorija");
@@ -221,7 +128,7 @@ namespace eRestoran.Services.Reports
                 document.Add(table);
                 document.Close();
 
-                return stream.ToArray(); // Vraćamo PDF kao bajt niz
+                return stream.ToArray(); 
             }
         }
     }

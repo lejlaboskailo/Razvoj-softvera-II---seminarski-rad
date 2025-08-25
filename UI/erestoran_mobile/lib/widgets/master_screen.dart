@@ -1,107 +1,22 @@
-import 'package:badges/badges.dart';
-import 'package:erestoran_mobile/main.dart';
-import 'package:erestoran_mobile/models/dojmovi.dart';
-import 'package:erestoran_mobile/models/korisnik.dart';
+import 'package:badges/badges.dart' as custom_badges;
 import 'package:erestoran_mobile/screens/cart_screen.dart';
-import 'package:erestoran_mobile/screens/dojmovi_list_screen.dart';
 import 'package:erestoran_mobile/screens/home_screen.dart';
 import 'package:erestoran_mobile/screens/korisnik_profile_screen.dart';
 import 'package:erestoran_mobile/screens/meni_screen.dart';
 import 'package:erestoran_mobile/screens/preporuceni_screen.dart';
-import 'package:badges/badges.dart' as custom_badges;
-
+import 'package:erestoran_mobile/screens/recenzija_screen.dart';
 import 'package:flutter/material.dart';
 
-/*class MasterScreenWidget extends StatefulWidget {
-  Widget? child;
-  String? title;
-  Widget? title_widget;
-  MasterScreenWidget({this.child, this.title, this.title_widget,super.key});
+import 'package:erestoran_mobile/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:erestoran_mobile/models/korpa.dart';
+import 'package:erestoran_mobile/models/search_result.dart';
 
-  @override
-  State<MasterScreenWidget> createState() => _MasterScreenWidgetState();
-}
-
-class _MasterScreenWidgetState extends State<MasterScreenWidget> {
-
-  /*void _logout() {
-    Authorization.korisnik = null;
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => LoginPage()),
-      (route) => false,
-    );
-  }*/
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: widget.title_widget ?? Text(widget.title ?? ""),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => KorisnikProfileScreen()));
-              print("Login button pressed");
-            },
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              title: const Text("<-"),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              title: const Text("Home screen"),
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
-              },
-            ),
-            ListTile(
-              title: const Text("Meni"),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const MeniScreen()));
-              },
-            ),
-            ListTile(
-              title: const Text("Preporucena jela"),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => RecommendedJeloScreen()));
-              },
-            ),
-             ListTile(
-              title: const Text("Ostavi ocjenu"),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>  DojmoviDetailsScreen()));
-              },
-            ),
-           /* ListTile(
-              title: const Text("Odjavi se"),
-              onTap: () {
-                _logout(); 
-              },
-            )*/
-          ],
-        ),
-      ),
-      body: widget.child,
-    );
-  }
-}*/
 class MasterScreenWidget extends StatefulWidget {
-  Widget? child;
-  String? title;
-  Widget? title_widget;
-  MasterScreenWidget({this.child, this.title, this.title_widget, Key? key})
+  final Widget? child;
+  final String? title;
+  final Widget? title_widget;
+  const MasterScreenWidget({this.child, this.title, this.title_widget, Key? key})
       : super(key: key);
 
   @override
@@ -111,32 +26,56 @@ class MasterScreenWidget extends StatefulWidget {
 class _MasterScreenWidgetState extends State<MasterScreenWidget> {
   int _selectedIndex = 0;
 
-  int _cartItemCount = 3;
+  late CartProvider _cartProvider;
+  Future<int>? _cartCountFuture;
 
-  final List<Widget> _mainScreens = [
+  final List<Widget> _mainScreens =  [
     HomeScreen(),
     MeniScreen(),
     RecommendedJeloScreen(),
     CartScreen(),
   ];
 
-  final Map<String, Widget> _moreOptions = {
-    'Reviews': DojmoviDetailsScreen(),
+  final Map<String, Widget> _moreOptions = const {
+    'Recenzija': RecenzijaScreen(),
   };
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _cartProvider = context.read<CartProvider>();
+    _refreshCartCount();
+  }
+
+  void _refreshCartCount() {
+    _cartCountFuture = _loadCartCount();
+    if (mounted) setState(() {});
+  }
+
+  Future<int> _loadCartCount() async {
+    try {
+      final SearchResult<Korpa> data = await _cartProvider.get();
+      int totalQty = 0;
+      for (final item in data.result) {
+        totalQty += item.kolicina ?? 0;
+      }
+      return totalQty;
+    } catch (_) {
+      return 0;
+    }
+  }
+
   void _onMainItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => _mainScreens[index]),
-      );
-    });
+    setState(() => _selectedIndex = index);
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => _mainScreens[index]),
+    );
   }
 
   void _onMoreOptionSelected(String key) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => _moreOptions[key]!),
-    );
+    ).then((_) => _refreshCartCount());
   }
 
   @override
@@ -144,13 +83,11 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor:const Color.fromARGB(255, 184, 178, 60),
+        backgroundColor: const Color.fromARGB(255, 184, 178, 60),
         title: widget.title_widget ??
             Text(
               widget.title ?? "",
-              style: TextStyle(
-                color: Colors.white,
-              ),
+              style: const TextStyle(color: Colors.white),
             ),
         actions: [
           IconButton(
@@ -158,70 +95,56 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
             color: Colors.white,
             onPressed: () {
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => KorisnikProfileScreen(),
+                MaterialPageRoute(builder: (context) => const KorisnikProfileScreen()),
+              );
+            },
+          ),
+
+          FutureBuilder<int>(
+            future: _cartCountFuture,
+            builder: (context, snapshot) {
+              final count = snapshot.data ?? 0;
+              return custom_badges.Badge(
+                badgeContent: Text('$count', style: const TextStyle(color: Colors.white)),
+                badgeColor: Colors.red,
+                position: custom_badges.BadgePosition.topEnd(top: 0, end: 3),
+                child: IconButton(
+                  icon: const Icon(Icons.shopping_basket),
+                  color: Colors.white,
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacement(MaterialPageRoute(builder: (_) =>  CartScreen()))
+                        .then((_) => _refreshCartCount());
+                  },
                 ),
               );
             },
           ),
-          custom_badges.Badge(
-            badgeContent: Text(
-              '$_cartItemCount', 
-              style: TextStyle(color: Colors.white),
-            ),
-            badgeColor: Colors.red,  
-            position: BadgePosition.topEnd(top: 0, end: 3),
-            child: IconButton(
-              icon: const Icon(Icons.shopping_basket),
-              color: Colors.white,
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => CartScreen(),
-                  ),
-                );
-              },
-            ),
-          ),
         ],
       ),
+
       body: widget.child ?? _mainScreens[_selectedIndex],
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: _onMainItemTapped,
+        onTap: (i) {
+          _onMainItemTapped(i);
+          _refreshCartCount();
+        },
         items: [
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Meni',
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.app_registration),
-            label: 'Recommended Meal',
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket),
-            label: 'Cart',
-          ),
+          const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Početna'),
+          const BottomNavigationBarItem(icon: Icon(Icons.business), label: 'Meni'),
+          const BottomNavigationBarItem(icon: Icon(Icons.app_registration), label: 'Preporučena jela'),
+          const BottomNavigationBarItem(icon: Icon(Icons.shopping_basket), label: 'Korpa'),
           BottomNavigationBarItem(
             icon: PopupMenuButton<String>(
               icon: const Icon(Icons.more_vert),
               onSelected: _onMoreOptionSelected,
-              itemBuilder: (BuildContext context) {
-                return _moreOptions.keys
-                    .map(
-                      (String key) => PopupMenuItem<String>(
-                        value: key,
-                        child: Text(key),
-                      ),
-                    )
-                    .toList();
-              },
+              itemBuilder: (context) => _moreOptions.keys
+                  .map((key) => PopupMenuItem<String>(value: key, child: Text(key)))
+                  .toList(),
             ),
-            label: 'More',
+            label: 'Više',
           ),
         ],
         backgroundColor: Colors.blueGrey[900],

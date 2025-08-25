@@ -2,10 +2,8 @@ import 'package:erestoran_admin/main.dart';
 import 'package:erestoran_admin/models/korisnik.dart';
 import 'package:erestoran_admin/models/search_result.dart';
 import 'package:erestoran_admin/providers/korisnik_provider.dart';
-import 'package:erestoran_admin/screens/home_screen.dart';
 import 'package:erestoran_admin/screens/korisnik_details_screen.dart';
 import 'package:erestoran_admin/utils/util.dart';
-import 'package:erestoran_admin/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,112 +30,99 @@ class _KorisnikScreen extends State<KorisnikScreen> {
   }
 
   Future<void> _fetchKorisnici() async {
-  var data = await _korisnikProvider.get();
-  setState(() {
-    result = SearchResult<Korisnik>(
-      result: data.result.where((korisnik) {
-        return korisnik.korisniciUloges.any((uloga) => uloga.ulogaId == 1);
-      }).toList(),
-      count: data.count,
-    );
-  });
-}
+    var data = await _korisnikProvider.get();
+    setState(() {
+      result = SearchResult<Korisnik>(
+        result: data.result.where((korisnik) {
+          return korisnik.korisniciUloges.any((uloga) => uloga.ulogaId == 1);
+        }).toList(),
+        count: data.count,
+      );
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    final korisnik = result?.result.first;
 
-  
-
-@override
-Widget build(BuildContext context) {
-  final korisnik = result?.result.first;
-
-  return Scaffold(
-  
-    body: korisnik != null
-        ? Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(width: 16),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "${korisnik.ime ?? ''} ${korisnik.prezime ?? ''}",
-                                  style: TextStyle(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold,
+    return Scaffold(
+      body: korisnik != null
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(width: 16),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${korisnik.ime ?? ''} ${korisnik.prezime ?? ''}",
+                                    style: TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 8),
-                                
-                              ],
-                            ),
-                          ],
-                        ),
-                        Divider(),
-                        SizedBox(height: 16),
-                        _buildProfileDetail("Username",
-                            korisnik.korisnickoIme ?? "", Icons.person),
-                        SizedBox(height: 24),
-                         _buildProfileDetail("Telefon",
-                            korisnik.telefon ?? "", Icons.phone),
-                        SizedBox(height: 24),
-                         _buildProfileDetail("Email",
-                            korisnik.email ?? "", Icons.email),
-                        SizedBox(height: 24),
-                        ElevatedButton(
-                          onPressed: _logout,
-                          child: Text("Logout",
-                              style: TextStyle(color: Colors.white)),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.redAccent,
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => KorisniciDetailsScreen(korisnik: korisnik),
+                                  SizedBox(height: 8),
+                                ],
                               ),
-                            );
-                          },
-                          child: Text("Uredi"),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueAccent,
+                            ],
                           ),
-                        ),
-                      ],
+                          Divider(),
+                          SizedBox(height: 16),
+                          _buildProfileDetail("Korisnicko ime",
+                              korisnik.korisnickoIme ?? "", Icons.person),
+                          SizedBox(height: 24),
+                          _buildProfileDetail(
+                              "Telefon", korisnik.telefon ?? "", Icons.phone),
+                          SizedBox(height: 24),
+                          _buildProfileDetail(
+                              "Email", korisnik.email ?? "", Icons.email),
+                          SizedBox(height: 24),
+                          
+                          SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: () async {
+                              final changed =
+                                  await Navigator.of(context).push<bool>(
+                                MaterialPageRoute(
+                                  builder: (_) => KorisniciDetailsScreen(
+                                      korisnik: korisnik),
+                                ),
+                              );
+
+                              if (changed == true) {
+                                await _fetchKorisnici(); 
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color.fromARGB(255, 146, 89, 3)),
+                            child: const Text("Uredi",
+                                style: TextStyle(color: Colors.white)),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          )
-        : Center(child: CircularProgressIndicator()),
-  );
-}
-
-
-  void _logout() {
-    Authorization.korisnik = null;
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => LoginPage()),
-      (route) => false,
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
+
+
 
   Widget _buildProfileDetail(String title, String value, IconData icon) {
     return Padding(
@@ -157,7 +142,7 @@ Widget build(BuildContext context) {
         padding: EdgeInsets.all(12.0),
         child: Row(
           children: [
-            Icon(icon, color: Colors.blueAccent, size: 28),
+            Icon(icon, color: Colors.orange, size: 28),
             SizedBox(width: 16),
             Text(
               "$title:",

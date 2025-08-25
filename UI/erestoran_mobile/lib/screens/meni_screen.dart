@@ -113,7 +113,7 @@ class _MeniScreenState extends State<MeniScreen> {
                     ElevatedButton(
                       onPressed: _searchJela,
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange),
+                          backgroundColor: const Color.fromARGB(255, 184, 178, 60)),
                       child: const Text(
                         "Pretraži",
                         style:

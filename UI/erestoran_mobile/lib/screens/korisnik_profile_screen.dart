@@ -5,6 +5,7 @@ import 'package:erestoran_mobile/models/korisnik.dart';
 import 'package:erestoran_mobile/providers/korisnik_provider.dart';
 import 'package:erestoran_mobile/providers/uloga_provider.dart';
 import 'package:erestoran_mobile/screens/korisnik_details_screen.dart';
+import 'package:erestoran_mobile/utils/util.dart';
 
 import 'package:erestoran_mobile/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,7 @@ class _KorisnikProfileScreen extends State<KorisnikProfileScreen> {
                           Divider(),
                           SizedBox(height: 16),
                           _buildProfileDetail(
-                            "Username",
+                            "Korisnicko ime",
                             korisnik.korisnickoIme ?? '',
                             Icons.person,
                           ),
@@ -150,6 +151,25 @@ class _KorisnikProfileScreen extends State<KorisnikProfileScreen> {
                               });
                             },
                           ),
+                          SizedBox(height: 24),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                              onPressed: _logout,
+                              icon: const Icon(Icons.logout),
+                              label: const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 12),
+                                child: Text('Odjavi se',
+                                    style: TextStyle(fontSize: 16)),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.redAccent,
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -170,13 +190,13 @@ class _KorisnikProfileScreen extends State<KorisnikProfileScreen> {
     );
   }
 
-  /*void _logout() {
+  void _logout() {
     Authorization.korisnik = null;
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => LoginPage()),
       (route) => false,
     );
-  }*/
+  }
 
   Widget _buildProfileDetail(String title, String value, IconData icon) {
     return Padding(

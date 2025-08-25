@@ -7,7 +7,6 @@ class DojmoviProvider extends BaseProvider<Dojmovi> {
 
    @override
   Dojmovi fromJson(data) {
-    // TODO: implement fromJson
     return Dojmovi.fromJson(data);
   }
 }

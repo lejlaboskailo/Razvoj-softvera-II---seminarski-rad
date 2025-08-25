@@ -10,13 +10,13 @@ class NarudzbaProvider extends BaseProvider<dynamic> {
   @override
   fromJson(data) => data; // ili model ako imaš
 
-  Future<int> checkoutFromCart(int korisnikId) async {
-    final uri = Uri.parse('$totalUrl/checkoutFromCart/$korisnikId');
+  /*Future<int> checkoutFromCart(int korisnikId, String? paymentId) async {
+    final uri = Uri.parse('$totalUrl/checkoutFromCart');
     final res = await http.post(uri, headers: createHeaders());
     if (isValidResponse(res)) {
       return int.parse(res.body);
     }
     throw Exception('Checkout nije uspio: ${res.statusCode} ${res.body}');
-  }
+  }*/
 }
 

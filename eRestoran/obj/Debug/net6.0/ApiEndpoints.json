@@ -1393,14 +1393,14 @@
   {
     "ContainingType": "eRestoran.Controllers.NarudzbaController",
     "Method": "CheckoutFromCart",
-    "RelativePath": "Narudzba/checkoutFromCart/{korisnikId}",
+    "RelativePath": "Narudzba/checkoutFromCart",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "korisnikId",
-        "Type": "System.Int32",
+        "Name": "req",
+        "Type": "eRestoran.Model.Requests.CheckoutFromCartRequest",
         "IsRequired": true
       }
     ],

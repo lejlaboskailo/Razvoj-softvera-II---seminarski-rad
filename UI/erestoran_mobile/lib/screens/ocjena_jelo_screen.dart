@@ -12,27 +12,26 @@ import 'package:provider/provider.dart';
 
 class OcjenaJeloScreen extends StatefulWidget {
   final Dojmovi? dojmovi;
-  OcjenaJeloScreen({Key? key, this.dojmovi}) : super(key: key);
+  const OcjenaJeloScreen({Key? key, this.dojmovi}) : super(key: key);
 
   @override
-  State<OcjenaJeloScreen> createState() =>
-      _OcjenaJeloScreen();
+  State<OcjenaJeloScreen> createState() => _OcjenaJeloScreenState();
 }
 
-class _OcjenaJeloScreen extends State<OcjenaJeloScreen> {
+class _OcjenaJeloScreenState extends State<OcjenaJeloScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
+
   late KorisnikProvider _korisnikProvider;
   late DojmoviProvider _dojmoviProvider;
   late ProductProvider _productProvider;
 
-  List<Korisnik>? _korisnik;
-  List<Jelo>? _jelo;
-  List<Dojmovi>? _dojmoviJelo;
+  List<Jelo>? _jela;
 
-  String? _selectedKorisnikId;
   String? _selectedJeloId;
+  int? _selectedOcjena;
 
   late Map<String, dynamic> _initialValue;
+  bool _bootstrapped = false;
 
   @override
   void initState() {
@@ -40,152 +39,112 @@ class _OcjenaJeloScreen extends State<OcjenaJeloScreen> {
     _initialValue = {
       'ocjena': widget.dojmovi?.ocjena,
       'opis': widget.dojmovi?.opis,
-      'korisnikId': widget.dojmovi?.korisnikId,
-      'jeloId': widget.dojmovi?.jeloId,
+      'korisnikId': widget.dojmovi?.korisnikId?.toString(),
+      'jeloId': widget.dojmovi?.jeloId?.toString(),
     };
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (_bootstrapped) return;
+    _bootstrapped = true;
+
     _dojmoviProvider = context.read<DojmoviProvider>();
     _korisnikProvider = context.read<KorisnikProvider>();
     _productProvider = context.read<ProductProvider>();
 
-    var currentUser = _korisnikProvider.currentUser;
-    print(currentUser);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _korisnikProvider.loadCurrentUser().catchError((_) {});
+      try {
+        final jelaRes = await _productProvider.get();
+        setState(() => _jela = jelaRes.result);
+      } catch (e) {
+        debugPrint('Error fetching jelo: $e');
+      }
 
-    if (currentUser != null) {
-      _initialValue['korisnikId'] = currentUser.id.toString();
-    }
-
-    _fetchOcjene();
-    _fetchKorisnici();
-    _fetchJelo();
-  }
-
-  Future<void> _fetchOcjene() async {
-    try {
-      var ocjeneJelaData = await _dojmoviProvider.get();
-      setState(() {
-        _dojmoviJelo = ocjeneJelaData.result;
-      });
-    } catch (e) {
-      print('Error fetching ocjene: $e');
-    }
-  }
-
-  Future<void> _fetchKorisnici() async {
-    try {
-      var korisnikData = await _korisnikProvider.get();
-      setState(() {
-        _korisnik = korisnikData.result;
-      });
-    } catch (e) {
-      print('Error fetching korisnici: $e');
-    }
-  }
-
-  Future<void> _fetchJelo() async {
-    try {
-      var jeloData = await _productProvider.get();
-      setState(() {
-        _jelo = jeloData.result;
-      });
-    } catch (e) {
-      print('Error fetching jelo: $e');
-    }
+      final me = _korisnikProvider.currentUser;
+      if (me != null) {
+        _formKey.currentState?.fields['korisnikId']?.didChange(me.id.toString());
+      }
+      setState(() {}); 
+    });
   }
 
   Future<void> _submitForm() async {
-    if (_formKey.currentState!.saveAndValidate()) {
-      final formData = _formKey.currentState!.value;
-
-      final mutableFormData = Map<String, dynamic>.from(formData);
-
-      if (mutableFormData['ocjena'] != null) {
-        mutableFormData['ocjena'] = mutableFormData['ocjena'] is int
-            ? mutableFormData['ocjena']
-            : int.tryParse(mutableFormData['ocjena'].toString()) ?? 0;
-      }
-
-      mutableFormData['korisnikId'] = _korisnikProvider.currentUser?.id;
-
-
-      if (mutableFormData['jeloId'] != null) {
-        mutableFormData['jeloId'] = mutableFormData['jeloId'] is int
-            ? mutableFormData['jeloId']
-            : int.tryParse(mutableFormData['jeloId'].toString()) ?? 0;
-      }
-
-      try {
-        String successMessage;
-
-        if (widget.dojmovi == null) {
-          await _dojmoviProvider
-              .insert(Dojmovi.fromJson(mutableFormData));
-          successMessage = 'Ocjena uspješno dodana.';
-        } else {
-          if (widget.dojmovi!.ocjena == null) {
-            throw Exception('Ocjena ID is null');
-          }
-          await _dojmoviProvider.update(
-            widget.dojmovi!.ocjena!,
-            Dojmovi.fromJson(mutableFormData),
-          );
-          successMessage = 'Ocjena uspješno uređena.';
-        }
-
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Success'),
-            content: Text(successMessage),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => RecommendedJeloScreen(),
-                    ),
-                  );
-                },
-                child: Text('Recommended jelo'),
-              ),
-            ],
-          ),
-        );
-      } catch (e) {
-        print('Error: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to save the evaluation. Please try again.'),
-          ),
-        );
-      }
-    } else {
+    if (!(_formKey.currentState?.saveAndValidate() ?? false)) {
       final validationErrors = _formKey.currentState?.errors;
-      print('Validation errors: $validationErrors');
+      debugPrint('Validation errors: $validationErrors');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Form validation failed. Please correct the errors and try again.',
-          ),
+        const SnackBar(content: Text('Provjerite formu i pokušajte ponovo.')),
+      );
+      return;
+    }
+
+    final formData = Map<String, dynamic>.from(_formKey.currentState!.value);
+
+    formData['ocjena'] = (formData['ocjena'] is int)
+        ? formData['ocjena']
+        : int.tryParse(formData['ocjena'].toString()) ?? 0;
+
+    formData['jeloId'] = (formData['jeloId'] is int)
+        ? formData['jeloId']
+        : int.tryParse(formData['jeloId'].toString()) ?? 0;
+
+    formData['korisnikId'] = _korisnikProvider.currentUser?.id;
+
+    try {
+      String msg;
+      if (widget.dojmovi == null) {
+        await _dojmoviProvider.insert(Dojmovi.fromJson(formData));
+        msg = 'Ocjena uspješno dodana.';
+      } else {
+        await _dojmoviProvider.update(
+          widget.dojmovi!.id!, 
+          Dojmovi.fromJson(formData),
+        );
+        msg = 'Ocjena uspješno uređena.';
+      }
+
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Uspjeh'),
+          content: Text(msg),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop(); 
+              },
+              child: const Text('OK'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => RecommendedJeloScreen()),
+                );
+              },
+              child: const Text('Preporučeno jelo'),
+            ),
+          ],
         ),
+      );
+    } catch (e) {
+      debugPrint('Error saving rating: $e');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Greška pri spremanju ocjene. Pokušajte ponovo.')),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final me = context.watch<KorisnikProvider>().currentUser;
+
     return MasterScreenWidget(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -196,44 +155,36 @@ class _OcjenaJeloScreen extends State<OcjenaJeloScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Text('Ocijenite jelo', style: TextStyle(color: Colors.black, fontSize: 24)),
+                const SizedBox(height: 4),
                 Text(
-                  'Add jelo ocjena',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                  ),
+                  '${me?.ime ?? "Nepoznat korisnik"}, dobrodošli u sekciju za dodavanje vaše ocjene.',
+                  style: const TextStyle(fontSize: 16, color: Colors.black),
                 ),
-                Text(
-                  '${_korisnikProvider.currentUser?.ime ?? 'Nepoznat korisnik'}, welcome to the section for adding Your rate for jelo.',
-                  style: TextStyle(fontSize: 16, color: Colors.black),
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                
+                const SizedBox(height: 12),
+
                 Offstage(
                   offstage: true,
                   child: FormBuilderTextField(
                     name: 'korisnikId',
-                    initialValue:
-                        _korisnikProvider.currentUser?.id.toString(),
+                    initialValue: me?.id.toString(),
                     readOnly: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Korisnik (ID)',
                       border: OutlineInputBorder(),
-                      hintText: "Nepoznat korisnik",
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16),
+
                 FormBuilderDropdown<int>(
                   name: 'ocjena',
-                  decoration: InputDecoration(
-                    labelText: 'Rating',
+                  decoration: const InputDecoration(
+                    labelText: 'Ocjena',
                     border: OutlineInputBorder(),
                   ),
-                  items: List.generate(5, (index) {
-                    int rating = index + 1;
+                  items: List.generate(5, (i) {
+                    final rating = i + 1;
                     return DropdownMenuItem<int>(
                       value: rating,
                       child: Text(rating.toString()),
@@ -241,63 +192,54 @@ class _OcjenaJeloScreen extends State<OcjenaJeloScreen> {
                   }),
                   initialValue: _initialValue['ocjena'],
                   onChanged: (value) {
-                    setState(() {
-                      _selectedJeloId = value?.toString();
-                    });
-                    print("Odabrana ocjena: $value");
+                    setState(() => _selectedOcjena = value);
+                    debugPrint('Odabrana ocjena: $value');
                   },
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Ovo polje je obavezno!';
-                    }
-                    return null;
-                  },
+                  validator: (value) => value == null ? 'Ovo polje je obavezno!' : null,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
+
                 FormBuilderTextField(
-                  decoration: InputDecoration(
-                    labelText: "Reason",
+                  name: 'opis',
+                  decoration: const InputDecoration(
+                    labelText: 'Opis',
                     border: OutlineInputBorder(),
                   ),
-                  name: "opis",
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Ovo polje je obavezno!';
-                    }
-                    return null;
-                  },
+                  maxLines: 3,
+                  validator: (value) => (value == null || value.isEmpty) ? 'Ovo polje je obavezno!' : null,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
+
                 FormBuilderDropdown<String>(
                   name: 'jeloId',
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Jelo',
+                    border: OutlineInputBorder(),
                   ),
-                  items: _jelo
-                          ?.map((jelo) => DropdownMenuItem<String>(
-                                value: jelo.jeloId.toString(),
-                                child: Text(jelo.naziv ?? ""),
-                              ))
-                          .toList() ??
-                      [],
+                  items: (_jela ?? [])
+                      .map((j) => DropdownMenuItem<String>(
+                            value: j.jeloId.toString(),
+                            child: Text(j.naziv ?? ''),
+                          ))
+                      .toList(),
                   initialValue: _initialValue['jeloId']?.toString(),
                   onChanged: (value) {
-                    setState(() {
-                      _selectedJeloId = value;
-                    });
-                    print("Odabrani jeloId: $_selectedJeloId");
+                    setState(() => _selectedJeloId = value);
+                    debugPrint('Odabrani jeloId: $_selectedJeloId');
                   },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Ovo polje je obavezno!';
-                    }
-                    return null;
-                  },
+                  validator: (value) => (value == null || value.isEmpty) ? 'Ovo polje je obavezno!' : null,
                 ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: _submitForm,
-                  child: Text('Add'),
+                const SizedBox(height: 20),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _submitForm,
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      child: Text('Dodaj', style: TextStyle(fontSize: 16)),
+                    ),
+                  ),
                 ),
               ],
             ),

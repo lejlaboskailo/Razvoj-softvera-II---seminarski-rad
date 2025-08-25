@@ -7,7 +7,6 @@ class uplataProvider extends BaseProvider<Uplata> {
 
    @override
   Uplata fromJson(data) {
-    // TODO: implement fromJson
     return Uplata.fromJson(data);
   }
 }

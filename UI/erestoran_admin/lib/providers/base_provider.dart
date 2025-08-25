@@ -18,8 +18,6 @@ abstract class BaseProvider<T> with ChangeNotifier{
     totalUrl= "$_baseUrl$endpoint";
   }
  
-
- 
  Future<SearchResult<T>> get({dynamic filter}) async {
     var url = "$_baseUrl$_endpoint";
 
@@ -148,6 +146,8 @@ Future<List<UplataPoKorisniku>> fetchUplate() async {
       throw Exception("Failed to load data");
     }
   }
+
+  
 /*
   Future<List<PrometPoKorisniku>> fetchPromet() async {
     final response = await http.get(Uri.parse('$_baseUrl$_endpoint'));

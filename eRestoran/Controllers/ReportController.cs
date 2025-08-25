@@ -42,7 +42,6 @@ namespace eRestoran.Controllers
         [HttpGet("print-promet")]
         public async Task<IActionResult> PrintIzvjestajOPrometu()
         {
-            // Dohvatimo izvještaj o prometu po korisnicima
             var promet = await Task.Run(() => reportService.ReportPrometPoKorisniku());
 
             using (var stream = new MemoryStream())
@@ -51,17 +50,13 @@ namespace eRestoran.Controllers
                 var pdf = new iText.Kernel.Pdf.PdfDocument(writer);
                 var document = new iText.Layout.Document(pdf);
 
-                // Dodaj naslov izvještaja
                 var naslov = new iText.Layout.Element.Paragraph("Izvještaj o prometu po korisnicima")
                     .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
                     .SetFontSize(18)
                     .SetBold();
                 document.Add(naslov);
 
-                // Dodaj razmak
                 document.Add(new iText.Layout.Element.Paragraph("\n"));
-
-                // Dodaj sadržaj izvještaja
                 foreach (var item in promet)
                 {
                     document.Add(new iText.Layout.Element.Paragraph(
@@ -71,7 +66,6 @@ namespace eRestoran.Controllers
 
                 document.Close();
 
-                // Vraćamo PDF kao fajl
                 return File(stream.ToArray(), "application/pdf", "IzvjestajPrometPoKorisnicima.pdf");
             }
         }

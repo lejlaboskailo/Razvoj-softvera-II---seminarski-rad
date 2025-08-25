@@ -11,7 +11,6 @@ import 'package:erestoran_mobile/models/user_role_update.dart';
 import 'package:erestoran_mobile/providers/korisnik_provider.dart';
 import 'package:erestoran_mobile/providers/korisnik_uloga_provider.dart';
 import 'package:erestoran_mobile/providers/uloga_provider.dart';
-import 'package:erestoran_mobile/screens/home_screen.dart';
 import 'package:erestoran_mobile/screens/korisnik_profile_screen.dart';
 import 'package:erestoran_mobile/utils/util.dart';
 import 'package:erestoran_mobile/widgets/master_screen.dart';
@@ -197,8 +196,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return MasterScreenWidget(
-      child: Center(
+    return Scaffold(
+      body: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -220,7 +219,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: const TextStyle(
                             fontSize: 30.0,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(111, 63, 189, 0.612),
+                            color: Colors.black,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -280,7 +279,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
                             errorText: _korisnickoImeColor == Colors.red
-                                ? 'Ime nije ok. Ime može imati min 2 slova i max 50'
+                                ? 'Korisnicko ime nije ok. Ime može imati min 2 slova i max 50'
                                 : null,
                           ),
                           keyboardType: TextInputType.name,
@@ -291,7 +290,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         if (!_isSelfReg) ...[
                           const SizedBox(height: 8),
                           Text(
-                              "Ime je bilo: ${widget.user?.korisnickoIme ?? ''}"),
+                              "Korisnicko ime je bilo: ${widget.user?.korisnickoIme ?? ''}"),
                         ],
 
                         const SizedBox(height: 10),
@@ -303,7 +302,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
                             errorText: _emailColor == Colors.red
-                                ? 'Mail nije ok. Format mora biti: example@email.com'
+                                ? 'Email nije ok. Format mora biti: example@email.com'
                                 : null,
                           ),
                           keyboardType: TextInputType.emailAddress,
@@ -313,7 +312,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         if (!_isSelfReg) ...[
                           const SizedBox(height: 8),
-                          Text("Mail je bio: ${widget.user?.email ?? ''}"),
+                          Text("Email je bio: ${widget.user?.email ?? ''}"),
                         ],
 
                         const SizedBox(height: 10),
@@ -393,14 +392,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ElevatedButton(
                               onPressed: () => Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (_) => HomeScreen()),
+                                MaterialPageRoute(builder: (_) => LoginPage()),
                               ),
                               style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.grey,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0)),
                                 surfaceTintColor:
-                                    const Color.fromARGB(255, 255, 0, 0),
-                                overlayColor: Colors.red,
+                                     Colors.white,
+                                overlayColor: Colors.black,
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20.0, vertical: 15.0),
                               ),
@@ -456,7 +456,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => HomeScreen()),
+                                          builder: (_) => LoginPage()),
                                     );
                                   } catch (e) {
                                     _showError('Greška pri registraciji: $e');
@@ -527,6 +527,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 }
                               },
                               style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color.fromARGB(255, 184, 178, 60),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0)),
                                 overlayColor: Colors.green,

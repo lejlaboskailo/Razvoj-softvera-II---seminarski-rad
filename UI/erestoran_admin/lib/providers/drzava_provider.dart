@@ -7,7 +7,6 @@ class DrzavaProvider extends BaseProvider<Drzava> {
 
    @override
   Drzava fromJson(data) {
-    // TODO: implement fromJson
     return Drzava.fromJson(data);
   }
 }

@@ -148,105 +148,141 @@ namespace eRestoran.Services
             if (req == null || req.KorisnikId <= 0 || req.Stavke == null || req.Stavke.Count == 0)
                 throw new ArgumentException("Prazna ili neispravna narudžba.");
 
-            await using var tx = await _context.Database.BeginTransactionAsync();
+            var strategy = _context.Database.CreateExecutionStrategy();
 
-            var nar = new Database.Narudzba
+            return await strategy.ExecuteAsync<Model.Narudzba>(async () =>
             {
-                DatumNarudzbe = DateTime.Now,
-                KorisnikId = req.KorisnikId,
-                StatusNarudzbeId = req.StatusNarudzbeId ?? 1,
-                StateMachine = "Kreirana"
-            };
-
-            _context.Narudzbas.Add(nar);
-            await _context.SaveChangesAsync(); 
-
-            foreach (var s in req.Stavke)
-            {
-                var jelo = await _context.Jelos
-                    .Where(j => j.JeloId == s.JeloId)     
-                    .Select(j => new { j.JeloId, j.Cijena }) 
-                    .SingleOrDefaultAsync();
-
-                if (jelo == null)
-                    throw new Exception($"Jelo (ID={s.JeloId}) ne postoji.");
-
-                int cijenaInt = Convert.ToInt32(jelo.Cijena ?? 0);
-
-                _context.StavkeNarudzbes.Add(new Database.StavkeNarudzbe
+                await using var tx = await _context.Database.BeginTransactionAsync();
+                try
                 {
-                    NarudzbaId = nar.Id,
-                    JeloId = s.JeloId,
-                    Kolicina = s.Kolicina,
-                    Cijena = cijenaInt
-                });
-            }
+                    var nar = new Database.Narudzba
+                    {
+                        DatumNarudzbe = DateTime.Now,
+                        KorisnikId = req.KorisnikId,
+                        StatusNarudzbeId = req.StatusNarudzbeId ?? 1,
+                        StateMachine = "Kreirana"
+                    };
 
-            await _context.SaveChangesAsync();
-            await tx.CommitAsync();
+                    _context.Narudzbas.Add(nar);
+                    await _context.SaveChangesAsync(); // da dobijemo nar.Id
 
-            await _context.Entry(nar).Collection(n => n.StavkeNarudzbes).LoadAsync();
+                    foreach (var s in req.Stavke)
+                    {
+                        var jelo = await _context.Jelos
+                            .Where(j => j.JeloId == s.JeloId)
+                            .Select(j => new { j.JeloId, j.Cijena })
+                            .SingleOrDefaultAsync();
 
-            return _mapper.Map<Model.Narudzba>(nar);
-        }
-        public async Task<int> CheckoutFromCart(int korisnikId, int? statusId = null)
-        {
-            await using var tx = await _context.Database.BeginTransactionAsync();
+                        if (jelo == null)
+                            throw new Exception($"Jelo (ID={s.JeloId}) ne postoji.");
 
-            Status status;
-            if (statusId.HasValue)
-            {
-                status = await _context.Statuses.FirstOrDefaultAsync(s => s.Id == statusId.Value);
-                if (status == null)
-                    throw new ArgumentException($"Status {statusId.Value} ne postoji.");
-            }
-            else
-            {
-                status = await _context.Statuses.FirstOrDefaultAsync(s => s.Naziv == "Kreirana");
-                if (status == null)
-                {
-                    status = new Status { Naziv = "Kreirana" };
-                    _context.Statuses.Add(status);
+                        // Pretpostavljam da je Cijena decimal? Ako ti je kolona int, zadrži cast.
+                        var cijenaInt = (int)Math.Round((double)(jelo.Cijena ?? 0m));
+
+                        _context.StavkeNarudzbes.Add(new Database.StavkeNarudzbe
+                        {
+                            NarudzbaId = nar.Id,
+                            JeloId = s.JeloId,
+                            Kolicina = s.Kolicina,
+                            Cijena = cijenaInt
+                        });
+                    }
+
                     await _context.SaveChangesAsync();
+                    await tx.CommitAsync();
+
+                    await _context.Entry(nar).Collection(n => n.StavkeNarudzbes).LoadAsync();
+
+                    return _mapper.Map<Model.Narudzba>(nar);
                 }
-            }
-
-            var stavkeKorpe = await _context.Korpas.Where(k => k.KorisnikId == korisnikId).ToListAsync();
-            if (!stavkeKorpe.Any())
-                throw new InvalidOperationException("Korpa je prazna.");
-
-            var narudzba = new Narudzba
-            {
-                KorisnikId = korisnikId,
-                DatumNarudzbe = DateTime.UtcNow,
-                StatusNarudzbeId = status.Id,
-                StavkeNarudzbes = stavkeKorpe.Select(k => new StavkeNarudzbe
+                catch
                 {
-                    JeloId = k.JeloId,
-                    Kolicina = k.Kolicina ?? 1,
-                    Cijena = (int?)Math.Round((double)(k.Cijena ?? 0m))
-                }).ToList()
-            };
+                    await tx.RollbackAsync();
+                    throw;
+                }
+            });
+        }
 
-            _context.Narudzbas.Add(narudzba);
-            await _context.SaveChangesAsync();
+        public async Task<int> CheckoutFromCart(int korisnikId, int? statusId = null, string? paymentId=null)
+        {
+            var strategy = _context.Database.CreateExecutionStrategy();
 
-            _context.Korpas.RemoveRange(stavkeKorpe);
-            await _context.SaveChangesAsync();
+            return await strategy.ExecuteAsync<int>(async () =>
+            {
+                await using var tx = await _context.Database.BeginTransactionAsync();
+                try
+                {
+                    // 1) Status
+                    Status status;
+                    if (statusId.HasValue)
+                    {
+                        status = await _context.Statuses.FirstOrDefaultAsync(s => s.Id == statusId.Value)
+                                 ?? throw new ArgumentException($"Status {statusId.Value} ne postoji.");
+                    }
+                    else
+                    {
+                        status = await _context.Statuses.FirstOrDefaultAsync(s => s.Naziv == "Kreirana");
+                        if (status == null)
+                        {
+                            status = new Status { Naziv = "Kreirana" };
+                            _context.Statuses.Add(status);
+                            await _context.SaveChangesAsync();
+                        }
+                    }
 
-            await tx.CommitAsync();
-            return narudzba.Id;
+                    // 2) Stavke iz korpe
+                    var stavkeKorpe = await _context.Korpas
+                        .Where(k => k.KorisnikId == korisnikId)
+                        .ToListAsync();
+
+                    if (!stavkeKorpe.Any())
+                        throw new InvalidOperationException("Korpa je prazna.");
+
+                    // 3) Kreiraj narudžbu + stavke
+                    var narudzba = new Narudzba
+                    {
+                        KorisnikId = korisnikId,
+                        DatumNarudzbe = DateTime.UtcNow,
+                        StatusNarudzbeId = status.Id,
+                        StateMachine = "Kreirana",
+                        StavkeNarudzbes = stavkeKorpe.Select(k => new StavkeNarudzbe
+                        {
+                            JeloId = k.JeloId,
+                            Kolicina = k.Kolicina ?? 1,
+                            Cijena = (int)Math.Round((double)(k.Cijena ?? 0m))
+                        }).ToList(),
+                        PaymentId=paymentId
+                        
+                    };
+
+                    _context.Narudzbas.Add(narudzba);
+                    await _context.SaveChangesAsync();
+
+                    // 4) Očisti korpu
+                    _context.Korpas.RemoveRange(stavkeKorpe);
+                    await _context.SaveChangesAsync();
+
+                    await tx.CommitAsync();
+                    return narudzba.Id;
+                }
+                catch
+                {
+                    await tx.RollbackAsync();
+                    throw;
+                }
+            });
         }
 
 
 
-       /* public override Task<Model.Narudzba> Insert(NarudzbaInsertRequest insert)
-        {
-            var state = _baseState.CreateState("initial");
 
-            return state.Insert(insert);
+        /* public override Task<Model.Narudzba> Insert(NarudzbaInsertRequest insert)
+         {
+             var state = _baseState.CreateState("initial");
 
-        }*/
+             return state.Insert(insert);
+
+         }*/
 
         public override async Task<Model.Narudzba> Update(int id, NarudzbaUpdateRequest update)
         {

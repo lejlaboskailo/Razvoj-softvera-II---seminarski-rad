@@ -11,6 +11,6 @@ namespace eRestoran.Services.Reports
         public int Id { get; set; }
         public decimal Iznos { get; set; }
         public DateTime DatumTransakcije { get; set; }
-        public string BrojTransakcije { get; set; }
+        public string? BrojTransakcije { get; set; }
     }
 }

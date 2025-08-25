@@ -164,7 +164,6 @@ namespace eRestoran.Services
 
         public List<Model.Jelo> GetPreporucenaJela(int trenutniKorisnikId)
         {
-            // Pronađi samo ocjene za trenutnog korisnika
             var korisnici = _context.Korisnicis.ToList();
             Dictionary<Database.Korisnici, List<Database.Dojmovi>> dojmovi = new Dictionary<Database.Korisnici, List<Database.Dojmovi>>();
 
@@ -180,17 +179,14 @@ namespace eRestoran.Services
             var zajednickeOcjeneKorisnik2 = new List<Database.Dojmovi>();
             var preporucenaJelaIds = new HashSet<int>();
 
-            // Pretražuj samo sve korisnike osim trenutnog korisnika
             foreach (var korisnik1 in dojmovi)
             {
-                // Skip korisnik1 ako je trenutni korisnik
                 if (korisnik1.Key.Id == trenutniKorisnikId) continue;
 
                 foreach (var korisnik2 in dojmovi)
                 {
                     if (korisnik1.Key.Id == korisnik2.Key.Id) continue;
 
-                    // Nađite zajedničke ocene između korisnika
                     foreach (var ocjena1 in korisnik1.Value)
                     {
                         if (korisnik2.Value.Any(x => x.JeloId == ocjena1.JeloId))

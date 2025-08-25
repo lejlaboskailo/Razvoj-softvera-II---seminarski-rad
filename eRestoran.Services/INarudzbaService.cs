@@ -17,7 +17,7 @@ namespace eRestoran.Services
 
         Task<List<string>> AllowedActions(int id);
         Task<Model.Narudzba> Checkout(NarudzbaCheckoutRequest request);
-        Task<int> CheckoutFromCart(int korisnikId, int? statusId = null);
+        Task<int> CheckoutFromCart(int korisnikId, int? statusId = null, string?paymentId=null);
 
     }
 }

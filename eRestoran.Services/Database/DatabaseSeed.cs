@@ -535,6 +535,9 @@ namespace eRestoran.Services.Database
             #endregion
 
 
+
+
+
             modelBuilder.Entity<Korpa>().HasData(
                  new Korpa()
                  {

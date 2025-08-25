@@ -72,6 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showEditDialog(Restoran restoranData) {
+    final rootContext = context;
+
     _nazivController.text = restoranData.nazivRestorana ?? '';
     _adresaController.text = restoranData.adresa ?? '';
     _emailController.text = restoranData.email ?? '';
@@ -79,65 +81,103 @@ class _HomeScreenState extends State<HomeScreen> {
     _selectedGradId = restoranData.gradId;
 
     showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Uredi podatke o restoranu'),
+      context: rootContext,
+      builder: (dialogCtx) => AlertDialog(
+        title: const Text('Uredi podatke o restoranu'),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _nazivController,
-                decoration: InputDecoration(labelText: 'Naziv restorana'),
+                decoration: const InputDecoration(labelText: 'Naziv restorana'),
               ),
               TextField(
                 controller: _adresaController,
-                decoration: InputDecoration(labelText: 'Adresa'),
+                decoration: const InputDecoration(labelText: 'Adresa'),
               ),
               TextField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Email'),
               ),
               TextField(
                 controller: _telefonController,
-                decoration: InputDecoration(labelText: 'Telefon'),
+                decoration: const InputDecoration(labelText: 'Telefon'),
               ),
               DropdownButtonFormField<int>(
                 value: _selectedGradId,
                 items: grad?.result
-                    .map((g) => DropdownMenuItem<int>(
-                          value: g.id,
-                          child: Text(g.naziv ?? ''),
-                        ))
-                    .toList(),
+                        .map((g) => DropdownMenuItem<int>(
+                              value: g.id,
+                              child: Text(g.naziv ?? ''),
+                            ))
+                        .toList() ??
+                    const [],
                 onChanged: (val) {
                   setState(() {
                     _selectedGradId = val;
                   });
                 },
-                decoration: InputDecoration(labelText: 'Grad'),
+                decoration: const InputDecoration(labelText: 'Grad'),
               ),
             ],
           ),
         ),
         actions: [
           TextButton(
-            child: Text('Otkaži'),
-            onPressed: () => Navigator.pop(context),
+            child: const Text('Otkaži'),
+            onPressed: () => Navigator.pop(dialogCtx),
           ),
           ElevatedButton(
-            child: Text('Spasi'),
+            child: const Text('Spasi'),
             onPressed: () async {
-              restoranData.nazivRestorana = _nazivController.text;
-              restoranData.adresa = _adresaController.text;
-              restoranData.email = _emailController.text;
-              restoranData.telefon = _telefonController.text;
-              restoranData.gradId = _selectedGradId;
+              try {
+                restoranData.nazivRestorana = _nazivController.text;
+                restoranData.adresa = _adresaController.text;
+                restoranData.email = _emailController.text;
+                restoranData.telefon = _telefonController.text;
+                restoranData.gradId = _selectedGradId;
 
-              await _restoranProvider.update(
-                  restoranData.restoranId!, restoranData);
-              await _loadData();
-              Navigator.pop(context);
+                await _restoranProvider.update(
+                    restoranData.restoranId!, restoranData);
+
+                if (Navigator.of(dialogCtx).canPop()) {
+                  Navigator.of(dialogCtx).pop();
+                }
+
+                await _loadData();
+
+                if (!mounted) return;
+                showDialog(
+                  context: rootContext,
+                  barrierDismissible: false,
+                  builder: (ctx) => AlertDialog(
+                    title: const Text('Uspjeh'),
+                    content: const Text('Podaci su uspješno spašeni.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
+              } catch (e) {
+                if (!mounted) return;
+                showDialog(
+                  context: rootContext,
+                  builder: (_) => AlertDialog(
+                    title: const Text('Greška'),
+                    content: Text('Spremanje nije uspjelo.\n$e'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(rootContext).pop(),
+                        child: const Text('Zatvori'),
+                      ),
+                    ],
+                  ),
+                );
+              }
             },
           ),
         ],
@@ -148,18 +188,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color:
+          const Color.fromARGB(255, 232, 198, 148),
+
       child: Stack(
         children: [
-          Positioned.fill(
-            child: Image.asset(
-              "assets/images/home.jpg",
-              fit: BoxFit.cover,
-            ),
-          ),
-
           Padding(
-            padding: const EdgeInsets.only(
-                right: 300),
+            padding: const EdgeInsets.only(right: 300),
             child: Column(
               children: [
                 Expanded(
@@ -168,9 +203,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         _buildMeniCard(),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         _buildIzvjestajCards(),
                       ],
                     ),
@@ -179,7 +214,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-
           Positioned(
             top: 30,
             right: 20,
@@ -238,8 +272,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
               ),
-              icon: Icon(Icons.edit, size: 18, color: Colors.white,),
-              label: Text('Uredi', style: TextStyle(color: Colors.white), ),
+              icon: Icon(
+                Icons.edit,
+                size: 18,
+                color: Colors.white,
+              ),
+              label: Text(
+                'Uredi',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
                 _showEditDialog(restoran!.result.first);
               },

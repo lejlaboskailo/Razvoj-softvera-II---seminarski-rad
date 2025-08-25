@@ -62,11 +62,11 @@ abstract class BaseProvider<T> with ChangeNotifier {
   }
 
   T? firstWhereOrNull<T>(Iterable<T> items, bool Function(T) test) {
-  for (final i in items) {
-    if (test(i)) return i;
+    for (final i in items) {
+      if (test(i)) return i;
+    }
+    return null;
   }
-  return null;
-}
 
   T fromJson(data) {
     throw Exception("Method not implemented");
@@ -204,16 +204,34 @@ abstract class BaseProvider<T> with ChangeNotifier {
     }
   }
 
-  Future<int> checkoutFromCart(int korisnikId) async {
-    // KORISTI BASE URL, NE totalUrl (koje dodaje endpoint trenutnog providera, npr. "Korpa")
-    final uri = Uri.parse('${_baseUrl}Narudzba/checkoutFromCart/$korisnikId');
-    final headers = createHeaders();
-    final res = await http.post(uri, headers: headers);
+  Future<int> checkoutFromCart(int userId, String? paymentId,
+      {int? statusId}) async {
+    // Napravi URL (pazi na dupli slash – _baseUrl već završava sa '/')
+    final uri = Uri.parse('${_baseUrl}Narudzba/checkoutFromCart');
 
-    if (isValidResponse(res)) {
-      return int.parse(res.body); // ili jsonDecode(res.body) ako vraćaš objekat
+    // Uvijek koristi iste headere (Basic + Content-Type)
+    final headers = createHeaders();
+
+    final bodyMap = <String, dynamic>{
+      "korisnikId": userId,
+      "paymentId": paymentId, // PAYID-...
+    };
+    if (statusId != null) bodyMap["statusId"] = statusId;
+
+    final resp = await http.post(
+      uri,
+      headers: headers,
+      body: jsonEncode(bodyMap),
+    );
+
+    // (opcionalno) debug ispisi
+    debugPrint('checkoutFromCart ${resp.statusCode}: ${resp.body}');
+
+    if (resp.statusCode >= 200 && resp.statusCode < 300) {
+      final data = jsonDecode(resp.body);
+      return data is int ? data : int.parse(data.toString());
     } else {
-      throw Exception('Checkout nije uspio: ${res.statusCode} ${res.body}');
+      throw Exception('Checkout failed: ${resp.statusCode} ${resp.body}');
     }
   }
 

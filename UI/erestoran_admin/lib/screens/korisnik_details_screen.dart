@@ -1,5 +1,4 @@
 import 'package:erestoran_admin/providers/korisnik_provider.dart';
-import 'package:erestoran_admin/screens/korisnik_profile_screen.dart';
 import 'package:erestoran_admin/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -51,18 +50,15 @@ class _KorisniciDetailsScreenState extends State<KorisniciDetailsScreen> {
         }
 
         if (widget.korisnik == null) {
-          // If it's a new user, insert it.
           await _korisnikProvider.insert(Korisnik.fromJson(formData));
-          _showSuccessDialog('User added successfully');
+          _showSuccessDialog('Korisnik uspjesno dodan.');
         } else {
-          // Update the existing user.
           await _korisnikProvider.update(
               widget.korisnik!.id!, Korisnik.fromJson(formData));
-          _showSuccessDialog('User updated successfully');
+          _showSuccessDialog('Podaci korisnika uspjesno uredjeni.');
 
-          // After updating, go back to the previous screen (KorisnikScreen).
-          Navigator.of(context)
-              .pop(); // This pops the details screen and goes back to the previous screen.
+          if (!mounted) return;
+          Navigator.of(context).pop(true);
         }
       } catch (e) {
         print('Error: $e');
@@ -84,28 +80,28 @@ class _KorisniciDetailsScreenState extends State<KorisniciDetailsScreen> {
     }
   }
 
-  void _showSuccessDialog(String message) {
+  void _showSuccessDialog(String message, {bool popParent = false}) {
+    final rootContext = context; 
+
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Success'),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        KorisnikScreen(), // This ensures the screen reloads after the update.
-                  ),
-                );
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
+      context: rootContext,
+      barrierDismissible: false,
+      builder: (dialogCtx) => AlertDialog(
+        title: const Text('Uspjesno'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogCtx).pop(); 
+              if (popParent) {
+                Navigator.of(rootContext)
+                    .pop(true); 
+              }
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -123,8 +119,8 @@ class _KorisniciDetailsScreenState extends State<KorisniciDetailsScreen> {
               children: [
                 Text(
                   widget.korisnik != null
-                      ? 'Edit User Details'
-                      : 'Add New User',
+                      ? 'Uredi profil korisnika'
+                      : 'Dodaj novi korisnik',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 28,
@@ -132,12 +128,13 @@ class _KorisniciDetailsScreenState extends State<KorisniciDetailsScreen> {
                   ),
                 ),
                 SizedBox(height: 24),
-                _buildFormField("First name", "ime", Icons.person),
-                SizedBox(height: 16),
-                _buildFormField("Last name", "prezime", Icons.person_outline),
+                _buildFormField("Ime korisnika", "ime", Icons.person),
                 SizedBox(height: 16),
                 _buildFormField(
-                    "Username", "korisnickoIme", Icons.account_circle),
+                    "Prezime korisnika", "prezime", Icons.person_outline),
+                SizedBox(height: 16),
+                _buildFormField(
+                    "Korisnicko ime", "korisnickoIme", Icons.account_circle),
                 SizedBox(height: 16),
                 _buildFormField("Telefon", "telefon", Icons.phone),
                 SizedBox(height: 16),
@@ -147,7 +144,7 @@ class _KorisniciDetailsScreenState extends State<KorisniciDetailsScreen> {
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: const Color.fromARGB(255, 63, 125, 137),
+                    backgroundColor: const Color.fromARGB(255, 146, 89, 3),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -158,7 +155,7 @@ class _KorisniciDetailsScreenState extends State<KorisniciDetailsScreen> {
                     minimumSize: Size(double.infinity, 50),
                   ),
                   child: Text(
-                    widget.korisnik == null ? 'Add User' : 'Update User',
+                    widget.korisnik == null ? 'Dodaj' : 'Spasi',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -168,8 +165,8 @@ class _KorisniciDetailsScreenState extends State<KorisniciDetailsScreen> {
         ),
       ),
       title: widget.korisnik != null
-          ? "User: ${widget.korisnik?.ime}"
-          : "User Details",
+          ? "Korisnik: ${widget.korisnik?.ime}"
+          : "Detalji korisnika",
     );
   }
 
@@ -182,7 +179,7 @@ class _KorisniciDetailsScreenState extends State<KorisniciDetailsScreen> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        prefixIcon: Icon(icon, color: const Color.fromARGB(255, 63, 125, 137)),
+        prefixIcon: Icon(icon, color: Colors.orange),
       ),
       name: name,
       obscureText: obscureText,
@@ -201,7 +198,7 @@ class _KorisniciDetailsScreenState extends State<KorisniciDetailsScreen> {
       inputType: InputType.date,
       format: DateFormat('yyyy-MM-dd'),
       decoration: InputDecoration(
-        labelText: "Date of Birth",
+        labelText: "Datum rodjenja",
         labelStyle: TextStyle(color: Colors.blueGrey),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -222,7 +219,7 @@ class _KorisniciDetailsScreenState extends State<KorisniciDetailsScreen> {
     return FormBuilderDropdown(
       name: 'spol',
       decoration: InputDecoration(
-        labelText: "Gender",
+        labelText: "Spol",
         labelStyle: TextStyle(color: Colors.blueGrey),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),

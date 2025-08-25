@@ -42,7 +42,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       });
     } catch (e) {
       setState(() => _loadingPrilozi = false);
-      // nije fatalno — može se dodati bez priloga
     }
   }
 
@@ -58,7 +57,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Slika
               jelo.slika != null && jelo.slika!.isNotEmpty
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(12),
@@ -76,49 +74,56 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         color: Colors.orange[100],
                       ),
                       child: const Center(
-                        child: Icon(Icons.fastfood, size: 60, color: Colors.orange),
+                        child: Icon(Icons.fastfood,
+                            size: 60, color: Colors.orange),
                       ),
                     ),
               const SizedBox(height: 16),
 
-              // Naziv
               Text(
                 jelo.naziv ?? "Nepoznato jelo",
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.orange),
+                style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
               const SizedBox(height: 8),
 
-              // Opis
-              Text(jelo.opis ?? "Nema opisa za ovo jelo.", style: const TextStyle(fontSize: 16)),
+              Text(jelo.opis ?? "Nema opisa za ovo jelo.",
+                  style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 16),
 
-              // Cijena
               if (jelo.cijena != null)
                 Text(
                   "Cijena: ${jelo.cijena!.toStringAsFixed(2)} KM",
-                  style: const TextStyle(fontSize: 18, color: Colors.black87, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.bold),
                 ),
               const SizedBox(height: 16),
 
-              // Količina +/- 
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.remove, color: Colors.orange),
+                    icon: const Icon(Icons.remove,
+                        color: const Color.fromARGB(255, 184, 178, 60)),
                     onPressed: () => setState(() {
                       if (_kolicina > 1) _kolicina--;
                     }),
                   ),
-                  Text('$_kolicina', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text('$_kolicina',
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold)),
                   IconButton(
-                    icon: const Icon(Icons.add, color: Colors.orange),
+                    icon: const Icon(Icons.add,
+                        color: const Color.fromARGB(255, 184, 178, 60)),
                     onPressed: () => setState(() => _kolicina++),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
 
-              // DROPDOWN: Odaberi prilog (opcionalno)
               _loadingPrilozi
                   ? const Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -129,8 +134,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       isExpanded: true,
                       decoration: InputDecoration(
                         labelText: 'Odaberi prilog (opcionalno)',
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 10),
                       ),
                       items: _prilozi
                           .map((p) => DropdownMenuItem<Prilozi>(
@@ -142,26 +149,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
               const SizedBox(height: 24),
 
-              // Dugmad: Dodaj u korpu / Otkaži
               Row(
                 children: [
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
+                        backgroundColor:
+                            const Color.fromARGB(255, 184, 178, 60),
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
                       ),
                       onPressed: () {
                         if (Authorization.uloga == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Greška: korisnik nije prijavljen.")),
+                            const SnackBar(
+                                content:
+                                    Text("Greška: korisnik nije prijavljen.")),
                           );
                           return;
                         }
                         if (Authorization.uloga!.ulogaId != 2) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Nemate dozvolu za ovu akciju.")),
+                            const SnackBar(
+                                content: Text("Nemate dozvolu za ovu akciju.")),
                           );
                           return;
                         }
@@ -172,53 +183,67 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           "kolicina": _kolicina,
                           "kategorijaId": jelo.kategorijaId,
                           "cijena": jelo.cijena,
-                          "prilogId": _selectedPrilog?.prilogId, 
+                          "prilogId": _selectedPrilog?.prilogId,
                         };
 
                         context.read<CartProvider>().insert(payload).then((_) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("${jelo.naziv} je dodano u korpu.")),
+                            SnackBar(
+                                content:
+                                    Text("${jelo.naziv} je dodano u korpu.")),
                           );
                         }).catchError((error) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Greška prilikom dodavanja u korpu: $error")),
+                            SnackBar(
+                                content: Text(
+                                    "Greška prilikom dodavanja u korpu: $error")),
                           );
                         });
                       },
-                      child: const Text("Dodaj u korpu", style: TextStyle(color: Colors.black, fontSize: 16)),
+                      child: const Text("Dodaj u korpu",
+                          style: TextStyle(color: Colors.black, fontSize: 16)),
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey[300],
+                        backgroundColor: Colors.red,
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
                       ),
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text("Otkaži", style: TextStyle(color: Colors.black, fontSize: 16)),
+                      child: const Text("Otkaži",
+                          style: TextStyle(color: Colors.black, fontSize: 16)),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 106),
 
-              // Ocijeni jelo
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orangeAccent,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => OcjenaJeloScreen()),
+                    );
+                  },
+                  child: const Text(
+                    "Ocijeni jelo",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
                 ),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => OcjenaJeloScreen()));
-                },
-                child: const Text("Ocijeni jelo", style: TextStyle(color: Colors.black, fontSize: 16)),
-              ),
+              )
 
-              // NEMA više Expanded unutar scrolla!
-              const SizedBox(height: 8),
             ],
           ),
         ),

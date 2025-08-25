@@ -105,10 +105,8 @@ class _LoginPageState extends State<LoginPage> {
       Authorization.korisnik = await _korisnikProvider.Authenticate();
 
       if (Authorization.korisnik != null) {
-        // Upisi userId
         Authorization.userId = Authorization.korisnik!.id;
 
-        // Ako korisnik ima makar jednu ulogu
         if (Authorization.korisnik!.korisniciUloges != null &&
             Authorization.korisnik!.korisniciUloges!.isNotEmpty) {
           Authorization.uloga =
@@ -170,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login korisnika!"),
+        title: Text("Prijava korisnika!"),
       ),
       body: Stack(children: [
         Positioned.fill(
@@ -203,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       child: TextField(
                         decoration: InputDecoration(
-                          labelText: "Username",
+                          labelText: "Korisnicko ime",
                           labelStyle: TextStyle(color: Colors.black),
                           prefixIcon:
                               Icon(Icons.account_circle, color: Colors.black),
@@ -224,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       child: TextField(
                         decoration: InputDecoration(
-                          labelText: "Password",
+                          labelText: "Lozinka",
                           labelStyle: TextStyle(color: Colors.black),
                           prefixIcon: Icon(Icons.password, color: Colors.black),
                           border: InputBorder.none,
@@ -247,7 +245,7 @@ class _LoginPageState extends State<LoginPage> {
                                   Colors.white),
                             ),
                             child: Text(
-                              "Login",
+                              "Prijavi se",
                               style:
                                   TextStyle(fontSize: 18, color: Colors.black),
                             ),

@@ -57,42 +57,27 @@ class DashboardScreen extends StatelessWidget {
   }
 
   void _navigateToEmployees(BuildContext context) {
-    // Dodajte navigaciju na ekran za Uposlenike
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => EmployeesScreen()));
   }
 
   void _navigateToMenu(BuildContext context) {
-    // Dodajte navigaciju na ekran za Meni
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => MenuScreen()));
   }
 
   void _navigateToOrders(BuildContext context) {
-    // Dodajte navigaciju na ekran za Narudžbe
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => OrdersScreen()));
   }
 
   void _navigateToReports(BuildContext context) {
-    // Dodajte navigaciju na ekran za Izvještaje
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => ReportsScreen()));
   }
 
   void _navigateToNotifications(BuildContext context) {
-    // Dodajte navigaciju na ekran za Obavijesti
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsScreen()));
   }
 
   void _navigateToFeedback(BuildContext context) {
-    // Dodajte navigaciju na ekran za Dojmove
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackScreen()));
   }
 
   void _navigateToData(BuildContext context) {
-    // Dodajte navigaciju na ekran za Podatke
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => DataScreen()));
   }
 
   void _logout(BuildContext context) {
-    // Dodajte kod za odjavu
   }
 }
 

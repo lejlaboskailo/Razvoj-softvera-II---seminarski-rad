@@ -1,18 +1,12 @@
 import 'package:erestoran_admin/main.dart';
 import 'package:erestoran_admin/screens/dojmovi_list_screen.dart';
+import 'package:erestoran_admin/screens/evidencija_obavjestenja.dart';
 import 'package:erestoran_admin/screens/home_screen.dart';
-import 'package:erestoran_admin/screens/izvjestaj_o_prometu_po_korisniku.dart';
-import 'package:erestoran_admin/screens/izvjestaj_o_prometu_screen.dart';
-import 'package:erestoran_admin/screens/kategorija_screen.dart';
 import 'package:erestoran_admin/screens/korisnik_profile_screen.dart';
 import 'package:erestoran_admin/screens/meni_screen.dart';
-import 'package:erestoran_admin/screens/narudzbe_list_screen.dart';
-import 'package:erestoran_admin/screens/product_detail_screen.dart';
 import 'package:erestoran_admin/screens/status_narudzba_screen.dart';
+import 'package:erestoran_admin/utils/util.dart';
 import 'package:flutter/material.dart';
-import 'package:erestoran_admin/screens/product_list_screen.dart';
-import 'package:erestoran_admin/screens/grad_detail_screen.dart';
-import 'package:erestoran_admin/screens/grad_list_screen.dart';
 
 class MasterScreenWidget extends StatefulWidget {
   Widget? child;
@@ -32,20 +26,20 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
   @override
   void initState() {
     super.initState();
-    _activeItem = widget.activeItem ?? "Home";
+    _activeItem = widget.activeItem ?? "Početna";
   }
 
   Widget _buildNavBarItems(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNavText(context, "Home", HomeScreen()),
+        _buildNavText(context, "Početna", HomeScreen()),
         _buildNavText(context, "Meni", MeniScreen()),
         _buildNavText(context, "Status narudzbe", StatusNarudzbaScreen()),
         _buildNavText(
-            context, "Evidencija obavjestenja", StatusNarudzbaScreen()),
+            context, "Evidencija obavještenja", StatusNarudzbaScreen()),
         _buildNavText(context, "Dojmovi", DojmoiListScreen()),
-        _buildNavText(context, "Users", KorisnikScreen()),
+        _buildNavText(context, "Korisnici", KorisnikScreen()),
       ],
     );
   }
@@ -83,7 +77,14 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
     );
   }
 
-  @override
+  void _logout() {
+    Authorization.korisnik = null;
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => LoginPage()),
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,17 +115,22 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 20),
-                _buildSidebarItem(context, "Home", HomeScreen(), Icons.home),
+                _buildSidebarItem(context, "Početna", HomeScreen(), Icons.home),
                 _buildSidebarItem(
                     context, "Meni", MeniScreen(), Icons.restaurant_menu),
                 _buildSidebarItem(context, "Evidencija narudžbe",
                     StatusNarudzbaScreen(), Icons.assignment),
                 _buildSidebarItem(context, "Evidencija obavjestenja",
-                    StatusNarudzbaScreen(), Icons.notifications),
+                    EvidencijaObavjestenja(), Icons.notifications),
                 _buildSidebarItem(
                     context, "Dojmovi", DojmoiListScreen(), Icons.comment),
                 _buildSidebarItem(
-                    context, "Users", KorisnikScreen(), Icons.people),
+                    context, "Administrator", KorisnikScreen(), Icons.people),
+
+                Spacer(),
+
+                _buildSidebarItem(
+                    context, "Odjavi se", Container(), Icons.logout),
               ],
             ),
           ),
@@ -136,44 +142,49 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
     );
   }
 
-  Widget _buildSidebarItem(
-      BuildContext context, String title, Widget screen, IconData icon) {
-    final bool isActive = _activeItem == title;
+Widget _buildSidebarItem(
+    BuildContext context, String title, Widget screen, IconData icon) {
+  final bool isActive = _activeItem == title;
 
-    return InkWell(
-      onTap: () {
+  return InkWell(
+    onTap: () {
+      if (title == "Odjavi se") {
+        _logout();
+      } else {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => MasterScreenWidget(
               child: screen,
               title: title,
-              activeItem: title, 
+              activeItem: title,
             ),
           ),
         );
-      },
-      child: Container(
-        color: isActive ? Colors.orange : Colors.transparent,
-        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-        child: Row(
-          children: [
-            Icon(
-              icon,
+      }
+    },
+    child: Container(
+      color: isActive ? Colors.orange : Colors.transparent,
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: isActive ? Colors.black : Colors.orange,
+            size: 20,
+          ),
+          const SizedBox(width: 10),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
               color: isActive ? Colors.black : Colors.orange,
-              size: 20,
             ),
-            const SizedBox(width: 10),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: isActive ? Colors.black : Colors.orange,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
+
 }

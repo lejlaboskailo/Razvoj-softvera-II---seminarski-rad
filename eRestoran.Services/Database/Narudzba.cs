@@ -19,4 +19,5 @@ public partial class Narudzba
 
     public virtual ICollection<StavkeNarudzbe> StavkeNarudzbes { get; set; } = new List<StavkeNarudzbe>();
     public string? StateMachine { get; set; }
+    public string? PaymentId { get; set; }
 }

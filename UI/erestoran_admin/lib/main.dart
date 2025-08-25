@@ -39,27 +39,12 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
+       
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -175,8 +160,8 @@ class _LoginPageState extends State<LoginPage> {
           MaterialPageRoute(
             builder: (context) => MasterScreenWidget(
               child: HomeScreen(),
-              title: "Home",
-              activeItem: "Home",
+              title: "Početna",
+              activeItem: "Početna",
             ),
           ),
         );
@@ -218,96 +203,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     _korisnikProvider = context.read<KorisnikProvider>();
-/*
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Login Admin!"),
-        ),
-        body: 
-          Center(
-            child: Container(
-              constraints: BoxConstraints(maxWidth: 400, maxHeight: 500),
-              child: Container(
-                color:
-                    const Color.fromARGB(255, 202, 202, 202).withOpacity(0.7),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                       "assets/images/slika1.jpg",
-                        height: 200,
-                        width: 300,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Color(0x298031CC),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: "Username",
-                            labelStyle: TextStyle(color: Colors.black),
-                            prefixIcon:
-                                Icon(Icons.account_circle, color: Colors.black),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 12),
-                          ),
-                          controller: _usernameController,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Color(0x298031CC),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: "Password",
-                            labelStyle: TextStyle(color: Colors.black),
-                            prefixIcon:
-                                Icon(Icons.password, color: Colors.black),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 12),
-                          ),
-                          controller: _passwordController,
-                          obscureText: true,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      _isLoading
-                          ? CircularProgressIndicator()
-                          : ElevatedButton(
-                              onPressed: _login,
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.white),
-                              ),
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.black),
-                              ),
-                            )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );*/
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: Text("Prijavi se"),
         backgroundColor: Colors.orange,
         elevation: 0,
       ),
@@ -328,7 +227,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "Welcome Back!",
+                    "Dobrodošli!",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -358,7 +257,7 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Login to your account",
+                    "Prijavi se na svoj račun!",
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -368,7 +267,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 24),
                   TextField(
                     decoration: InputDecoration(
-                      labelText: "Username",
+                      labelText: "Korisničko ime",
                       labelStyle: TextStyle(color: Colors.black54),
                       prefixIcon:
                           Icon(Icons.account_circle, color: Colors.orange),
@@ -383,7 +282,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 24),
                   TextField(
                     decoration: InputDecoration(
-                      labelText: "Password",
+                      labelText: "Lozinka",
                       labelStyle: TextStyle(color: Colors.black54),
                       prefixIcon: Icon(Icons.lock, color: Colors.orange),
                       border: OutlineInputBorder(
@@ -410,7 +309,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           child: Center(
                             child: Text(
-                              "Login",
+                              "Prijavi se",
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.white,

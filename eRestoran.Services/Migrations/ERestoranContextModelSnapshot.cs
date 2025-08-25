@@ -537,8 +537,8 @@ namespace eRestoran.Services.Migrations
                             Email = "medzida@gmail.com",
                             Ime = "Medzida",
                             KorisnickoIme = "admin",
-                            LozinkaHash = "VIF6Ogc7dsnbA+VwY2Z9P4LvWBo=",
-                            LozinkaSalt = "hwt0Oo+hTwEdxKYwi3ZSRQ==",
+                            LozinkaHash = "NJLrqfQ6OBzw4Inl0c2Xi0arZMQ=",
+                            LozinkaSalt = "jgd8z1YnjXwOKxGncyjBHw==",
                             Prezime = "Bojcic",
                             Telefon = "066455778"
                         },
@@ -548,8 +548,8 @@ namespace eRestoran.Services.Migrations
                             Email = "ena@gmail.com",
                             Ime = "Ena",
                             KorisnickoIme = "mobile",
-                            LozinkaHash = "SsWiVjJg7rkF67RSrQm596KOYUA=",
-                            LozinkaSalt = "qi7ZjnG0GrkzAROoCLOzKw==",
+                            LozinkaHash = "TltPwYeBZdW1BCcbif86uHuX4SY=",
+                            LozinkaSalt = "8V7bddpDWlHawp5R2y7u4Q==",
                             Prezime = "Bojcic",
                             Telefon = "066455778"
                         },
@@ -559,8 +559,8 @@ namespace eRestoran.Services.Migrations
                             Email = "lejla@gmail.com",
                             Ime = "Lejla",
                             KorisnickoIme = "korisnik",
-                            LozinkaHash = "K5y4NHl4ZJZXSSrNM5VGzLiu5sk=",
-                            LozinkaSalt = "DZ0pLZ1w8wMogxDGe3x56g==",
+                            LozinkaHash = "2ltVhW1vNJKTgi8tpgFG8aBLRtg=",
+                            LozinkaSalt = "P5nPWODoWS8R3fEEp5uDSQ==",
                             Prezime = "Boskailo",
                             Telefon = "066455778"
                         });
@@ -596,14 +596,14 @@ namespace eRestoran.Services.Migrations
                         new
                         {
                             KorisnikUlogaId = 1,
-                            DatumIzmjene = new DateTime(2025, 8, 22, 21, 22, 18, 889, DateTimeKind.Local).AddTicks(7003),
+                            DatumIzmjene = new DateTime(2025, 8, 25, 19, 19, 46, 592, DateTimeKind.Local).AddTicks(8667),
                             KorisnikId = 1001,
                             UlogaId = 1
                         },
                         new
                         {
                             KorisnikUlogaId = 2,
-                            DatumIzmjene = new DateTime(2025, 8, 22, 21, 22, 18, 889, DateTimeKind.Local).AddTicks(7139),
+                            DatumIzmjene = new DateTime(2025, 8, 25, 19, 19, 46, 592, DateTimeKind.Local).AddTicks(8712),
                             KorisnikId = 1002,
                             UlogaId = 2
                         });
@@ -677,6 +677,9 @@ namespace eRestoran.Services.Migrations
                     b.Property<int?>("KorisnikId")
                         .HasColumnType("int");
 
+                    b.Property<string>("PaymentId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StateMachine")
                         .HasColumnType("nvarchar(max)");
 
@@ -696,7 +699,7 @@ namespace eRestoran.Services.Migrations
                         new
                         {
                             Id = 6000,
-                            DatumNarudzbe = new DateTime(2025, 8, 22, 21, 22, 18, 889, DateTimeKind.Local).AddTicks(7881),
+                            DatumNarudzbe = new DateTime(2025, 8, 25, 19, 19, 46, 592, DateTimeKind.Local).AddTicks(9338),
                             KorisnikId = 1001,
                             StateMachine = "poslano",
                             StatusNarudzbeId = 8010

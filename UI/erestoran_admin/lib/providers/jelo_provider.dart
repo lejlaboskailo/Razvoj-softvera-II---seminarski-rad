@@ -7,7 +7,6 @@ class ProductProvider extends BaseProvider<Jelo> {
  
    @override
   Jelo fromJson(data) {
-    // TODO: implement fromJson
     return Jelo.fromJson(data);
   }
 }
