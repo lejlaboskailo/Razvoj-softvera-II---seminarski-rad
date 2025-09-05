@@ -46,6 +46,18 @@ class _KorisnikScreen extends State<KorisnikScreen> {
     final korisnik = result?.result.first;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.orange,
+        title: Text("Profil korisnika"),
+        automaticallyImplyLeading: false,
+        leading: Navigator.canPop(context)
+            ? BackButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            : null,
+      ),
       body: korisnik != null
           ? Center(
               child: Padding(
@@ -90,7 +102,6 @@ class _KorisnikScreen extends State<KorisnikScreen> {
                           _buildProfileDetail(
                               "Email", korisnik.email ?? "", Icons.email),
                           SizedBox(height: 24),
-                          
                           SizedBox(height: 16),
                           ElevatedButton(
                             onPressed: () async {
@@ -103,11 +114,12 @@ class _KorisnikScreen extends State<KorisnikScreen> {
                               );
 
                               if (changed == true) {
-                                await _fetchKorisnici(); 
+                                await _fetchKorisnici();
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color.fromARGB(255, 146, 89, 3)),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 146, 89, 3)),
                             child: const Text("Uredi",
                                 style: TextStyle(color: Colors.white)),
                           )
@@ -121,8 +133,6 @@ class _KorisnikScreen extends State<KorisnikScreen> {
           : Center(child: CircularProgressIndicator()),
     );
   }
-
-
 
   Widget _buildProfileDetail(String title, String value, IconData icon) {
     return Padding(

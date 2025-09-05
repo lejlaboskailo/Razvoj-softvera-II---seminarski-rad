@@ -17,7 +17,8 @@ abstract class BaseProvider<T> with ChangeNotifier{
     _baseUrl = const String.fromEnvironment("baseUrl", defaultValue: "http://localhost:7003/");
     totalUrl= "$_baseUrl$endpoint";
   }
- 
+ //http://localhost:7002/swagger/index.html
+ //http://localhost:7003/
  Future<SearchResult<T>> get({dynamic filter}) async {
     var url = "$_baseUrl$_endpoint";
 

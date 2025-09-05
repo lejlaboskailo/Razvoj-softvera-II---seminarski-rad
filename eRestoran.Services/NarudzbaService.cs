@@ -116,7 +116,7 @@ namespace eRestoran.Services
                 statusId = await _context.Statuses
                                          .Where(s => s.Naziv == naziv)
                                          .Select(s => s.Id)
-                                         .FirstOrDefaultAsync();          // <— FirstOrDefault
+                                         .FirstOrDefaultAsync();         
 
                 if (statusId == 0)
                 {
@@ -164,7 +164,7 @@ namespace eRestoran.Services
                     };
 
                     _context.Narudzbas.Add(nar);
-                    await _context.SaveChangesAsync(); // da dobijemo nar.Id
+                    await _context.SaveChangesAsync(); 
 
                     foreach (var s in req.Stavke)
                     {
@@ -176,7 +176,6 @@ namespace eRestoran.Services
                         if (jelo == null)
                             throw new Exception($"Jelo (ID={s.JeloId}) ne postoji.");
 
-                        // Pretpostavljam da je Cijena decimal? Ako ti je kolona int, zadrži cast.
                         var cijenaInt = (int)Math.Round((double)(jelo.Cijena ?? 0m));
 
                         _context.StavkeNarudzbes.Add(new Database.StavkeNarudzbe
@@ -212,7 +211,6 @@ namespace eRestoran.Services
                 await using var tx = await _context.Database.BeginTransactionAsync();
                 try
                 {
-                    // 1) Status
                     Status status;
                     if (statusId.HasValue)
                     {
@@ -230,7 +228,6 @@ namespace eRestoran.Services
                         }
                     }
 
-                    // 2) Stavke iz korpe
                     var stavkeKorpe = await _context.Korpas
                         .Where(k => k.KorisnikId == korisnikId)
                         .ToListAsync();
@@ -238,7 +235,6 @@ namespace eRestoran.Services
                     if (!stavkeKorpe.Any())
                         throw new InvalidOperationException("Korpa je prazna.");
 
-                    // 3) Kreiraj narudžbu + stavke
                     var narudzba = new Narudzba
                     {
                         KorisnikId = korisnikId,
@@ -258,7 +254,6 @@ namespace eRestoran.Services
                     _context.Narudzbas.Add(narudzba);
                     await _context.SaveChangesAsync();
 
-                    // 4) Očisti korpu
                     _context.Korpas.RemoveRange(stavkeKorpe);
                     await _context.SaveChangesAsync();
 

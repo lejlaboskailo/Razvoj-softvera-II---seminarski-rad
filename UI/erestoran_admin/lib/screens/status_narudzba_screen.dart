@@ -8,6 +8,7 @@ import 'package:erestoran_admin/providers/narudzbu_provider.dart';
 import 'package:erestoran_admin/providers/statusNarudzbe_provider.dart';
 import 'package:erestoran_admin/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class StatusNarudzbaScreen extends StatefulWidget {
@@ -53,13 +54,13 @@ class _StatusNarudzbaScreen extends State<StatusNarudzbaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: Container(
         padding: const EdgeInsets.all(16.0),
         color: Colors.white,
-        child: result == null || narudzbaResult == null || korisnikResult == null
-            ? Center(child: CircularProgressIndicator())
-            : _buildStatusList(),
+        child:
+            result == null || narudzbaResult == null || korisnikResult == null
+                ? Center(child: CircularProgressIndicator())
+                : _buildStatusList(),
       ),
     );
   }
@@ -78,7 +79,8 @@ class _StatusNarudzbaScreen extends State<StatusNarudzbaScreen> {
     );
   }
 
-  Widget _buildStatusCard(StatusNarudzbe status, List<Narudzba>? filteredNarudzbe) {
+  Widget _buildStatusCard(
+      StatusNarudzbe status, List<Narudzba>? filteredNarudzbe) {
     return Card(
       elevation: 4,
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -134,13 +136,24 @@ class _StatusNarudzbaScreen extends State<StatusNarudzbaScreen> {
 
     return Column(
       children: filteredNarudzbe.map((narudzba) {
+        String datumText = "Nepoznato";
+        if (narudzba.datumNarudzbe != null &&
+            narudzba.datumNarudzbe!.isNotEmpty) {
+          try {
+            DateTime dt = DateTime.parse(narudzba.datumNarudzbe!);
+            datumText = DateFormat('dd.MM.yyyy').format(dt); 
+          } catch (_) {
+            datumText =
+                narudzba.datumNarudzbe!; 
+          }
+        }
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: Row(
             children: [
               Expanded(
                 child: Text(
-                  "Datum: ${narudzba.datumNarudzbe ?? "Nepoznato"}",
+                  "Datum: $datumText",
                   style: TextStyle(color: Colors.black87),
                 ),
               ),

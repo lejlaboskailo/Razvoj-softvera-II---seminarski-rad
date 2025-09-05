@@ -7,6 +7,7 @@ class Dojmovi{
 int? id;
 int? ocjena;
 String? opis;
+DateTime?datumRecenzije;
 int? jeloId;
 int? korisnikId;
 Dojmovi(this.id,this.ocjena, this.opis, this.jeloId,this.korisnikId);

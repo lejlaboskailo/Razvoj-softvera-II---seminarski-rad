@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:erestoran_mobile/models/jelo.dart';
+import 'package:erestoran_mobile/models/preporucenojelo.dart';
 import 'package:erestoran_mobile/models/search_result.dart';
 import 'package:erestoran_mobile/utils/util.dart';
 import 'package:flutter/material.dart';
@@ -244,4 +245,19 @@ abstract class BaseProvider<T> with ChangeNotifier {
     throw Exception('Failed to load recommended dishes');
   }
 }*/
+
+Future<List<PreporucenoJeloDto>> fetchRecommendedJeloDetaljno() async {
+    final resp = await http.get(Uri.parse('$_baseUrl/jelo/preporuke/me'), headers: {
+      'Authorization': 'Bearer YOUR_TOKEN',
+      'Content-Type': 'application/json',
+    });
+
+    if (resp.statusCode != 200) {
+      throw Exception('Greška: ${resp.statusCode} ${resp.body}');
+    }
+    final list = (jsonDecode(resp.body) as List)
+        .map((e) => PreporucenoJeloDto.fromJson(e))
+        .toList();
+    return list;
+    }
 }

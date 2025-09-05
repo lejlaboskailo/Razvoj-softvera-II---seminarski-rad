@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:erestoran_mobile/models/jelo.dart';
 import 'package:erestoran_mobile/models/search_result.dart';
 import 'package:erestoran_mobile/providers/jelo_provider.dart';
@@ -113,7 +115,8 @@ class _MeniScreenState extends State<MeniScreen> {
                     ElevatedButton(
                       onPressed: _searchJela,
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 184, 178, 60)),
+                          backgroundColor:
+                              const Color.fromARGB(255, 184, 178, 60)),
                       child: const Text(
                         "Pretraži",
                         style:
@@ -168,9 +171,8 @@ class _MeniScreenState extends State<MeniScreen> {
                 final query = _nazivController.text.toLowerCase();
 
                 final filteredList = jeloResult?.result
-                        .where((jelo) => (jelo.naziv ?? "")
-                            .toLowerCase()
-                            .startsWith(query))
+                        .where((jelo) =>
+                            (jelo.naziv ?? "").toLowerCase().startsWith(query))
                         .toList() ??
                     [];
 
@@ -179,8 +181,7 @@ class _MeniScreenState extends State<MeniScreen> {
                 }
 
                 return GridView.builder(
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 1,
                     mainAxisSpacing: 50,
                     crossAxisSpacing: 100,
@@ -210,15 +211,27 @@ class _MeniScreenState extends State<MeniScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.orange[100],
-                                  ),
-                                  child: const Center(
-                                    child: Icon(Icons.fastfood,
-                                        size: 50, color: Colors.orange),
-                                  ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: (jelo.slika != null &&
+                                          jelo.slika!.isNotEmpty)
+                                      ? Image.memory(
+                                          base64Decode(jelo.slika!),
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Container(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[300],
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: const Center(
+                                              child: Text('Nema slike')),
+                                        ),
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -244,12 +257,10 @@ class _MeniScreenState extends State<MeniScreen> {
                                     icon: const Icon(Icons.delete,
                                         color: Colors.red),
                                     onPressed: () async {
-                                      final confirmed =
-                                          await showDialog<bool>(
+                                      final confirmed = await showDialog<bool>(
                                         context: context,
                                         builder: (context) => AlertDialog(
-                                          title: const Text(
-                                              "Potvrda brisanja"),
+                                          title: const Text("Potvrda brisanja"),
                                           content: Text(
                                               "Da li ste sigurni da želite obrisati jelo \"${jelo.naziv}\"?"),
                                           actions: [
@@ -257,19 +268,15 @@ class _MeniScreenState extends State<MeniScreen> {
                                               onPressed: () =>
                                                   Navigator.of(context)
                                                       .pop(false),
-                                              child:
-                                                  const Text("Otkaži"),
+                                              child: const Text("Otkaži"),
                                             ),
                                             ElevatedButton(
                                               onPressed: () =>
                                                   Navigator.of(context)
                                                       .pop(true),
-                                              style:
-                                                  ElevatedButton.styleFrom(
-                                                      backgroundColor:
-                                                          Colors.red),
-                                              child:
-                                                  const Text("Obriši"),
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.red),
+                                              child: const Text("Obriši"),
                                             ),
                                           ],
                                         ),
@@ -288,15 +295,13 @@ class _MeniScreenState extends State<MeniScreen> {
                                             ),
                                           );
                                         } catch (e) {
-                                          print(
-                                              "Greška prilikom brisanja: $e");
+                                          print("Greška prilikom brisanja: $e");
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
                                                   "Greška prilikom brisanja jela."),
-                                              backgroundColor:
-                                                  Colors.red,
+                                              backgroundColor: Colors.red,
                                             ),
                                           );
                                         }

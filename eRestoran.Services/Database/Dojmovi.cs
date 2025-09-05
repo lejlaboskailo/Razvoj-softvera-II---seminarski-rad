@@ -10,6 +10,7 @@ public partial class Dojmovi
     public int? Ocjena { get; set; }
 
     public string? Opis { get; set; }
+   // public DateTime? DatumRecenzije { get; set; }
 
     public int? JeloId { get; set; }
 

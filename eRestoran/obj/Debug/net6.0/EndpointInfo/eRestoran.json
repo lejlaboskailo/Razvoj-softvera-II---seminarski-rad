@@ -3562,6 +3562,11 @@
             "type": "string",
             "nullable": true
           },
+          "datumRecenzije": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "jeloId": {
             "type": "integer",
             "format": "int32"
@@ -3583,6 +3588,11 @@
           },
           "opis": {
             "type": "string",
+            "nullable": true
+          },
+          "datumRecenzije": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           },
           "jeloId": {
@@ -3631,6 +3641,11 @@
           },
           "opis": {
             "type": "string",
+            "nullable": true
+          },
+          "datumRecenzije": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           },
           "jeloId": {
@@ -3775,21 +3790,18 @@
           "cijena": {
             "minimum": 0,
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "nullable": true
           },
           "slika": {
             "type": "string",
             "format": "byte",
             "nullable": true
           },
-          "slikaThumb": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
-          },
           "kategorijaId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false

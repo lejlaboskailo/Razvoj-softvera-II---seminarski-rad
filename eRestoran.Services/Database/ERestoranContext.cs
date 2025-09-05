@@ -64,6 +64,7 @@ public partial class ERestoranContext : DbContext
             entity.ToTable("Dojmovi");
 
             entity.Property(e => e.Opis).HasMaxLength(100);
+           // entity.Property(e => e.DatumRecenzije).HasColumnType("datetime");
 
             entity.HasOne(d => d.Jelo).WithMany(p => p.Dojmovis)
                 .HasForeignKey(d => d.JeloId)

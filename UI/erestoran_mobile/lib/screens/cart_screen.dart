@@ -1,14 +1,18 @@
 import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:collection/collection.dart';
 import 'package:erestoran_mobile/models/jelo.dart';
 import 'package:erestoran_mobile/models/search_result.dart';
 import 'package:erestoran_mobile/providers/jelo_provider.dart';
 import 'package:erestoran_mobile/providers/prilozi_provider.dart';
+import 'package:erestoran_mobile/screens/preporuceni_screen.dart';
 import 'package:erestoran_mobile/utils/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import 'package:provider/provider.dart';
 import 'package:erestoran_mobile/providers/cart_provider.dart';
+
 import '../models/korpa.dart';
 import '../widgets/master_screen.dart';
 
@@ -225,8 +229,8 @@ class _CartScreenState extends State<CartScreen> {
     if (confirm != true) return;
 
     try {
-      final id = await _cartProvider.checkoutFromCart(
-          Authorization.userId!, null );
+      final id =
+          await _cartProvider.checkoutFromCart(Authorization.userId!, null);
       if (!mounted) return;
       _toast('Narudžba #$id kreirana (gotovina).');
       await _fetchInitialData();
@@ -247,18 +251,74 @@ class _CartScreenState extends State<CartScreen> {
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())
             : (_korpa == null || _korpa!.result.isEmpty)
-                ? const Center(child: Text("Vasa korpa je prazna"))
+                ? const Center(child: Text("Vaša korpa je prazna"))
                 : Column(
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                        child: _DateChip(
+                          label: "Tapnite za izbor datuma",
+                          onTap: () {
+                            // TODO: otvori date picker ako želiš stvarnu funkcionalnost
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+                        child: _DetailsCard(
+                          rows: [
+                            _DetailRowData(
+                              icon: Icons.timelapse_rounded,
+                              title: "Artikala",
+                              subtitle: "${_korpa!.result.length}",
+                            ),
+                            _DetailRowData(
+                              icon: Icons.shopping_bag_rounded,
+                              title: "Ukupno (KM)",
+                              subtitle: subtotalBAM.toStringAsFixed(2),
+                            ),
+                            _DetailRowData(
+                              icon: Icons.payments_rounded,
+                              title: "≈ u EUR (PayPal)",
+                              subtitle: subtotalEUR,
+                            ),
+                          ],
+                          leftButton: OutlinedButton.icon(
+                            onPressed: () => Navigator.of(context).maybePop(),
+                            icon:
+                                const Icon(Icons.arrow_back_rounded, size: 18),
+                            label: const Text("Nazad"),
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                            ),
+                          ),
+                          rightButton: ElevatedButton.icon(
+                            onPressed: _startPaypalCheckout,
+                            icon: const Icon(Icons.send_rounded, size: 18),
+                            label: const Text("Pošalji zahtjev"),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       Expanded(
-                        child: ListView.builder(
+                        child: ListView.separated(
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                           itemCount: _korpa!.result.length,
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(height: 8),
                           itemBuilder: (context, index) {
                             final item = _korpa!.result[index];
 
-                            final jelo = _jeloProvider.items.firstWhere(
-                              (x) => x.jeloId == item.jeloId,
-                            );
+                            final jelo = _jeloProvider.items
+                                .firstWhere((x) => x.jeloId == item.jeloId);
 
                             final prilog = (item.prilogId != null)
                                 ? _priloziProvider.items.firstWhereOrNull(
@@ -267,157 +327,56 @@ class _CartScreenState extends State<CartScreen> {
 
                             final nazivPriloga =
                                 prilog?.nazivPriloga ?? "Bez priloga";
-
-                            final qty = (item.kolicina ?? 0);
-                            final unitBAM = (item.cijena ?? 0);
+                            final qty = item.kolicina ?? 0;
+                            final unitBAM = item.cijena ?? 0;
                             final lineTotalBAM = unitBAM * qty;
 
-                            return Card(
-                              elevation: 3,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const SizedBox(width: 15),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            jelo.naziv ?? "Nepoznato jelo",
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          const SizedBox(height: 5),
-                                          Text(
-                                            'Cijena: ${unitBAM.toStringAsFixed(2)} KM',
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 5),
-                                          Text(
-                                            'Količina: $qty',
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 5),
-                                          Text(
-                                            nazivPriloga,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 5),
-                                          Text(
-                                            'Ukupno za stavku: ${lineTotalBAM.toStringAsFixed(2)} KM',
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        TextButton(
-                                          onPressed: () async {
-                                            await _cartProvider
-                                                .delete(item.korpaId);
-                                            await _fetchInitialData();
-                                          },
-                                          style: TextButton.styleFrom(
-                                            foregroundColor: Colors.red,
-                                          ),
-                                          child: const Text(
-                                            "Izbriši iz korpe",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                            return _CartLine(
+                              title: jelo.naziv ?? "Nepoznato jelo",
+                              subtitle:
+                                  "$nazivPriloga · $qty x ${unitBAM.toStringAsFixed(2)} KM",
+                              trailing: "${lineTotalBAM.toStringAsFixed(2)} KM",
+                              imageBytes:
+                                  (jelo.slika != null && jelo.slika!.isNotEmpty)
+                                      ? base64Decode(jelo.slika!)
+                                      : null,
+                              onDelete: () async {
+                                await _cartProvider.delete(item.korpaId);
+                                await _fetchInitialData();
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                        child: _RecommendationBanner(
+                          text: "Drugi trenutno gledaju ove artikle",
+                          actionText: "Vidi preporuke",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RecommendedJeloScreen(),
                               ),
                             );
                           },
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 15),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(color: Colors.black12, blurRadius: 5)
-                          ],
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Ukupno:',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  '${subtotalBAM.toStringAsFixed(2)} KM',
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 6),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  '≈ u EUR (za PayPal):',
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.black54),
-                                ),
-                                Text(
-                                  '$subtotalEUR EUR',
-                                  style: const TextStyle(
-                                      fontSize: 12, color: Colors.black54),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                         child: Row(
                           children: [
                             Expanded(
                               child: OutlinedButton(
                                 onPressed: _startCashCheckout,
+                                style: OutlinedButton.styleFrom(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 14),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                ),
                                 child: const Text('Plati gotovinom'),
                               ),
                             ),
@@ -425,6 +384,13 @@ class _CartScreenState extends State<CartScreen> {
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: _startPaypalCheckout,
+                                style: ElevatedButton.styleFrom(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 14),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                ),
                                 child: const Text('Plati sa PayPal'),
                               ),
                             ),
@@ -433,6 +399,223 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ],
                   ),
+      ),
+    );
+  }
+}
+
+class _DateChip extends StatelessWidget {
+  final String label;
+  final VoidCallback? onTap;
+  const _DateChip({required this.label, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFF3CD),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: const Color(0xFFFFE69C)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(Icons.date_range_rounded, size: 18),
+            SizedBox(width: 8),
+            Text("Tapnite za izbor datuma",
+                style: TextStyle(fontWeight: FontWeight.w600)),
+            SizedBox(width: 6),
+            Icon(Icons.chevron_right_rounded, size: 18),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DetailRowData {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  _DetailRowData({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+  });
+}
+
+class _DetailsCard extends StatelessWidget {
+  final List<_DetailRowData> rows;
+  final Widget leftButton;
+  final Widget rightButton;
+
+  const _DetailsCard({
+    required this.rows,
+    required this.leftButton,
+    required this.rightButton,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF7E6),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+        child: Column(
+          children: [
+            for (int i = 0; i < rows.length; i++) ...[
+              ListTile(
+                leading: Icon(rows[i].icon, size: 22),
+                title: Text(
+                  rows[i].title,
+                  style: const TextStyle(fontSize: 13, color: Colors.black54),
+                ),
+                subtitle: Text(
+                  rows[i].subtitle,
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w600),
+                ),
+                dense: true,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+              ),
+              if (i != rows.length - 1) const Divider(height: 0, thickness: .6),
+            ],
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(child: leftButton),
+                const SizedBox(width: 10),
+                Expanded(child: rightButton),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CartLine extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final String trailing;
+  final Uint8List? imageBytes;
+  final VoidCallback onDelete;
+
+  const _CartLine({
+    required this.title,
+    required this.subtitle,
+    required this.trailing,
+    required this.onDelete,
+    this.imageBytes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
+      ),
+      child: ListTile(
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: imageBytes != null
+              ? Image.memory(
+                  imageBytes!,
+                  width: 56,
+                  height: 56,
+                  fit: BoxFit.cover,
+                )
+              : Container(
+                  width: 56,
+                  height: 56,
+                  color: Colors.grey[300],
+                  child: const Icon(Icons.image_not_supported_rounded),
+                ),
+        ),
+        title: Text(
+          title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontWeight: FontWeight.w600),
+        ),
+        subtitle: Text(subtitle),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              trailing,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            ),
+            const SizedBox(height: 6),
+            GestureDetector(
+              onTap: onDelete,
+              child:
+                  const Icon(Icons.delete_outline_rounded, color: Colors.red),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RecommendationBanner extends StatelessWidget {
+  final String text;
+  final String actionText;
+  final VoidCallback onPressed;
+
+  const _RecommendationBanner({
+    required this.text,
+    required this.actionText,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFEDE0),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFFFD7BF)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(children: [
+            const Icon(Icons.local_fire_department_rounded, size: 18),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                text,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ),
+          ]),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: onPressed,
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14)),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+              child: Text(actionText),
+            ),
+          )
+        ],
       ),
     );
   }

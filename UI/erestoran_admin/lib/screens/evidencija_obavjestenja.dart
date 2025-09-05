@@ -1,6 +1,7 @@
 import 'package:erestoran_admin/models/search_result.dart';
 import 'package:erestoran_admin/providers/narudzbu_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../models/jelo.dart';
@@ -102,20 +103,24 @@ class _EvidencijaObavjestenjaState extends State<EvidencijaObavjestenja> {
 
   Widget _buildTable() {
     final rows = (_stavkeResult?.result ?? []).map((e) {
+       
       final nazivJela = _jeloMap[e.jeloId?.toString() ?? ''] ?? 'Nepoznato';
 
       final info = _narudzbaInfoMap[e.narudzbaId?.toString() ?? ''];
-      final datumNarudzbe = info?['datum'] ?? 'Nepoznato';
+      final datumNarudzbe = DateTime.parse(info?['datum'] ?? 'Nepoznato') ;
+      String datumText = "Nepoznato";
+      datumText = DateFormat('dd.MM.yyyy').format(datumNarudzbe);
       final paymentId = info?['paymentId'];
 
       final nacinPlacanja = _resolvePaymentLabel(paymentId);
+
 
       return DataRow(
         cells: [
           DataCell(Text(e.kolicina?.toString() ?? '')),
           DataCell(Text(e.cijena != null ? e.cijena!.toStringAsFixed(2) : '')),
           DataCell(Text(nazivJela)),
-          DataCell(Text(datumNarudzbe)),
+          DataCell(Text(datumText)),
           DataCell(
             Column(
               mainAxisAlignment: MainAxisAlignment.center,

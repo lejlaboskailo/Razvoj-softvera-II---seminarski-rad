@@ -257,6 +257,16 @@ class _MeniScreenState extends State<MeniScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
+                              jelo.cijena != null ? "${jelo.cijena} KM" : "Nepoznato cijena",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
                               jelo.opis ?? "",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,

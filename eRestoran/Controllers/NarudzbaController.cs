@@ -20,7 +20,6 @@ namespace eRestoran.Controllers
          : base(logger, service)
          {
             _service = service ?? throw new ArgumentNullException(nameof(service));
-            //_service = service;
             _mailProducer = mailProducer;
         }
 
@@ -38,11 +37,8 @@ namespace eRestoran.Controllers
         public async Task<ActionResult<int>> Checkout([FromBody] NarudzbaCheckoutRequest request)
         {
             var narudzba = await _service.Checkout(request);
-            // Ako želiš da Flutter dobije samo ID:
             return Ok(narudzba.Id);
 
-            // ili vrati cijeli objekat:
-            // return Ok(narudzba);
         }
 
         [HttpPost("checkoutFromCart")]

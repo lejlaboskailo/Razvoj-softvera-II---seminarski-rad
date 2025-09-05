@@ -29,21 +29,19 @@ namespace eRestoran.Services.Reports
                 .AsNoTracking()
                 .Include(n => n.Korisnik)
                 .Include(n => n.StavkeNarudzbes)
-                .Where(n => n.PaymentId != null) // samo plaćene narudžbe
+                .Where(n => n.PaymentId != null) 
                 .Select(n => new UplatePoKorisniku
                 {
                     ImeKorisnika = n.Korisnik != null ? n.Korisnik.Ime : "N/A",
                     PrezimeKorisnika = n.Korisnik != null ? n.Korisnik.Prezime : "N/A",
 
-                    // ukupni iznos = suma stavki
                     Iznos = n.StavkeNarudzbes
                             .Select(s => (decimal?)((s.Cijena ?? 0) * (s.Kolicina ?? 0)))
                             .Sum() ?? 0m,
 
                     DatumTransakcije = n.DatumNarudzbe,
-                    BrojTransakcije = n.PaymentId!, // PaymentId tretiramo kao broj transakcije
+                    BrojTransakcije = n.PaymentId!,
 
-                    // Ako PaymentId nije null => kartica
                     NacinPlacanja = n.PaymentId != null ? "Kartica" : "Nepoznato"
                 })
                 .OrderByDescending(x => x.DatumTransakcije)

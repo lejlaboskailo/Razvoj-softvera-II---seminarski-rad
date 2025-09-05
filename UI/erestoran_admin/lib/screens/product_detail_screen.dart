@@ -253,70 +253,97 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             const BorderSide(color: Colors.orangeAccent),
                       ),
                     ),
-                    maxLines: 3,
+                    maxLines: 2,
                   ),
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: FormBuilderDropdown<String>(
-                    name: 'kategorijaId',
-                    decoration: InputDecoration(
-                      labelText: 'Kategorija *',
-                      labelStyle: const TextStyle(color: Colors.orangeAccent),
-                      border: OutlineInputBorder(
+          const SizedBox(height:12,),
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: FormBuilderDropdown<String>(
+                  name: 'kategorijaId',
+                  decoration: InputDecoration(
+                    labelText: 'Kategorija *',
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 12),
+                    filled: true,
+                    fillColor: Colors.orange[50],
+                    border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            const BorderSide(color: Colors.orangeAccent),
-                      ),
-                    ),
-                    items: _kategorijaResult?.result
-                            .map((item) => DropdownMenuItem<String>(
-                                  value: item.kategorijaId?.toString(),
-                                  child: Text(item.naziv ?? ""),
-                                ))
-                            .toList() ??
-                        const [],
-                    initialValue: widget.jelo?.kategorijaId?.toString(),
-                    validator: (v) => (v == null || v.isEmpty)
-                        ? 'Odaberite kategoriju.'
-                        : null,
+                        borderSide: BorderSide.none),
+                    prefixIcon:
+                        const Icon(Icons.category, color: Colors.orangeAccent),
                   ),
+                  items: _kategorijaResult?.result
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item.kategorijaId?.toString(),
+                                child: Text(item.naziv ?? ""),
+                              ))
+                          .toList() ??
+                      const [],
+                  validator: (v) =>
+                      (v == null || v.isEmpty) ? 'Odaberite kategoriju.' : null,
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: FormBuilderTextField(
-                    name: "cijena",
-                    decoration: InputDecoration(
-                      labelText: "Cijena *",
-                      labelStyle: const TextStyle(color: Colors.orangeAccent),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            const BorderSide(color: Colors.orangeAccent),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                flex: 1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FormBuilderTextField(
+                      name: 'cijena',
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      decoration: InputDecoration(
+                        labelText: 'Cijena *',
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 12),
+                        filled: true,
+                        fillColor: Colors.orange[50],
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none),
+                        prefixIcon:
+                            const Icon(Icons.euro, color: Colors.orangeAccent),
                       ),
-                      helperText: 'Primjer: 12.50 ili 12,50',
+                      validator: (v) {
+                        final raw = (v ?? '').trim().replaceAll(',', '.');
+                        final d = double.tryParse(raw);
+                        if (raw.isEmpty) return 'Cijena je obavezna.';
+                        if (d == null) return 'Unesite ispravan broj.';
+                        if (d <= 0) return 'Cijena mora biti veća od 0.';
+                        return null;
+                      },
                     ),
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    validator: (v) {
-                      final raw = (v ?? '').trim().replaceAll(',', '.');
-                      final d = double.tryParse(raw);
-                      if (raw.isEmpty) return 'Cijena je obavezna.';
-                      if (d == null) return 'Unesite ispravan broj.';
-                      if (d <= 0) return 'Cijena mora biti veća od 0.';
-                      return null;
-                    },
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Container(),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                flex: 1,
+                child: const Text(
+                  'Primjer: 12.50 ili 12,50',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 26),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
