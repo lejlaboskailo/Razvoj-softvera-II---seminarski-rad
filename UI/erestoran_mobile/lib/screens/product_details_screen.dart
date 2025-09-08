@@ -234,7 +234,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                          builder: (context) => OcjenaJeloScreen()),
+                          builder: (context) => OcjenaJeloScreen(jelo: jelo,)),
                     );
                   },
                   child: const Text(

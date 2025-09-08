@@ -12,7 +12,9 @@ import 'package:provider/provider.dart';
 
 class OcjenaJeloScreen extends StatefulWidget {
   final Dojmovi? dojmovi;
-  const OcjenaJeloScreen({Key? key, this.dojmovi}) : super(key: key);
+  final Jelo? jelo; 
+
+  const OcjenaJeloScreen({Key? key, this.dojmovi, this.jelo}) : super(key: key);
 
   @override
   State<OcjenaJeloScreen> createState() => _OcjenaJeloScreenState();
@@ -40,7 +42,7 @@ class _OcjenaJeloScreenState extends State<OcjenaJeloScreen> {
       'ocjena': widget.dojmovi?.ocjena,
       'opis': widget.dojmovi?.opis,
       'korisnikId': widget.dojmovi?.korisnikId?.toString(),
-      'jeloId': widget.dojmovi?.jeloId?.toString(),
+      'jeloId': widget.dojmovi?.jeloId?.toString() ?? widget.jelo?.jeloId?.toString(),
     };
   }
 
@@ -67,7 +69,7 @@ class _OcjenaJeloScreenState extends State<OcjenaJeloScreen> {
       if (me != null) {
         _formKey.currentState?.fields['korisnikId']?.didChange(me.id.toString());
       }
-      setState(() {}); 
+      setState(() {});
     });
   }
 
@@ -100,7 +102,7 @@ class _OcjenaJeloScreenState extends State<OcjenaJeloScreen> {
         msg = 'Ocjena uspješno dodana.';
       } else {
         await _dojmoviProvider.update(
-          widget.dojmovi!.id!, 
+          widget.dojmovi!.id!,
           Dojmovi.fromJson(formData),
         );
         msg = 'Ocjena uspješno uređena.';
@@ -116,7 +118,7 @@ class _OcjenaJeloScreenState extends State<OcjenaJeloScreen> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pop(); 
+                Navigator.of(context).pop();
               },
               child: const Text('OK'),
             ),
@@ -144,6 +146,8 @@ class _OcjenaJeloScreenState extends State<OcjenaJeloScreen> {
   @override
   Widget build(BuildContext context) {
     final me = context.watch<KorisnikProvider>().currentUser;
+
+    final String? prefilledJeloId = _initialValue['jeloId']?.toString();
 
     return MasterScreenWidget(
       child: Padding(
@@ -177,6 +181,52 @@ class _OcjenaJeloScreenState extends State<OcjenaJeloScreen> {
                 ),
                 const SizedBox(height: 16),
 
+                if (prefilledJeloId != null && prefilledJeloId.isNotEmpty) ...[
+                  Offstage(
+                    offstage: true,
+                    child: FormBuilderTextField(
+                      name: 'jeloId',
+                      initialValue: prefilledJeloId,
+                      readOnly: true,
+                      decoration: const InputDecoration(border: OutlineInputBorder()),
+                    ),
+                  ),
+                  InputDecorator(
+                    decoration: const InputDecoration(
+                      labelText: 'Jelo',
+                      border: OutlineInputBorder(),
+                    ),
+                    child: Text(
+                      widget.jelo?.naziv ??
+                          (_jela?.firstWhere(
+                            (x) => (x.jeloId?.toString() == prefilledJeloId),
+                          ).naziv ?? 'Jelo #$prefilledJeloId'),
+                    ),
+                  ),
+                ] else ...[
+                  FormBuilderDropdown<String>(
+                    name: 'jeloId',
+                    decoration: const InputDecoration(
+                      labelText: 'Jelo',
+                      border: OutlineInputBorder(),
+                    ),
+                    items: (_jela ?? [])
+                        .map((j) => DropdownMenuItem<String>(
+                              value: j.jeloId.toString(),
+                              child: Text(j.naziv ?? ''),
+                            ))
+                        .toList(),
+                    initialValue: _initialValue['jeloId']?.toString(),
+                    onChanged: (value) {
+                      setState(() => _selectedJeloId = value);
+                      debugPrint('Odabrani jeloId: $_selectedJeloId');
+                    },
+                    validator: (value) => (value == null || value.isEmpty)
+                        ? 'Ovo polje je obavezno!' : null,
+                  ),
+                ],
+                const SizedBox(height: 16),
+
                 FormBuilderDropdown<int>(
                   name: 'ocjena',
                   decoration: const InputDecoration(
@@ -206,27 +256,6 @@ class _OcjenaJeloScreenState extends State<OcjenaJeloScreen> {
                     border: OutlineInputBorder(),
                   ),
                   maxLines: 3,
-                  validator: (value) => (value == null || value.isEmpty) ? 'Ovo polje je obavezno!' : null,
-                ),
-                const SizedBox(height: 16),
-
-                FormBuilderDropdown<String>(
-                  name: 'jeloId',
-                  decoration: const InputDecoration(
-                    labelText: 'Jelo',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: (_jela ?? [])
-                      .map((j) => DropdownMenuItem<String>(
-                            value: j.jeloId.toString(),
-                            child: Text(j.naziv ?? ''),
-                          ))
-                      .toList(),
-                  initialValue: _initialValue['jeloId']?.toString(),
-                  onChanged: (value) {
-                    setState(() => _selectedJeloId = value);
-                    debugPrint('Odabrani jeloId: $_selectedJeloId');
-                  },
                   validator: (value) => (value == null || value.isEmpty) ? 'Ovo polje je obavezno!' : null,
                 ),
                 const SizedBox(height: 20),

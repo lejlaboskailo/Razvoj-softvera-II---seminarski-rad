@@ -1,12 +1,117 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|c:\\users\\home\\desktop\\razvoj-softvera-ii---seminarski-rad\\erestoran\\controllers\\narudzbacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E040C23-ED9D-45E5-9B41-4894F57C505B}|eRestoran.csproj|solutionrelative:controllers\\narudzbacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\desktop\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\requests\\checkoutfromcartrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\desktop\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\narudzbaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0C8EB16-4421-40D6-9D36-D78467731A74}|..\\eRestoran.Model\\eRestoran.Model.csproj|c:\\users\\home\\desktop\\razvoj-softvera-ii---seminarski-rad\\erestoran.model\\requests\\narudzbacheckoutrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\desktop\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\inarudzbaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35D32FAD-4090-4A5B-8E84-9B04628BB050}|..\\eRestoran.Services\\eRestoran.Services.csproj|c:\\users\\home\\desktop\\razvoj-softvera-ii---seminarski-rad\\erestoran.services\\stavkenarudzbeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "StavkeNarudzbeService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\StavkeNarudzbeService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\StavkeNarudzbeService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\StavkeNarudzbeService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\StavkeNarudzbeService.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwDEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T18:22:18.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "INarudzbaService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\INarudzbaService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\INarudzbaService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\INarudzbaService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\INarudzbaService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAB7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T18:21:36.924Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NarudzbaCheckoutRequest.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\NarudzbaCheckoutRequest.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Requests\\NarudzbaCheckoutRequest.cs",
+              "ToolTip": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\NarudzbaCheckoutRequest.cs",
+              "RelativeToolTip": "..\\eRestoran.Model\\Requests\\NarudzbaCheckoutRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T18:21:21.388Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NarudzbaService.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbaService.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Services\\NarudzbaService.cs",
+              "ToolTip": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Services\\NarudzbaService.cs",
+              "RelativeToolTip": "..\\eRestoran.Services\\NarudzbaService.cs",
+              "ViewState": "AgIAAHsBAAAAAAAAAAAUwJEAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T18:20:21.006Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CheckoutFromCartRequest.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\CheckoutFromCartRequest.cs",
+              "RelativeDocumentMoniker": "..\\eRestoran.Model\\Requests\\CheckoutFromCartRequest.cs",
+              "ToolTip": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Model\\Requests\\CheckoutFromCartRequest.cs",
+              "RelativeToolTip": "..\\eRestoran.Model\\Requests\\CheckoutFromCartRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T18:17:48.486Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NarudzbaController.cs",
+              "DocumentMoniker": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\NarudzbaController.cs",
+              "RelativeDocumentMoniker": "Controllers\\NarudzbaController.cs",
+              "ToolTip": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran\\Controllers\\NarudzbaController.cs",
+              "RelativeToolTip": "Controllers\\NarudzbaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T18:17:35.318Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

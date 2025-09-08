@@ -6,6 +6,7 @@ import 'package:erestoran_mobile/models/jelo.dart';
 import 'package:erestoran_mobile/models/search_result.dart';
 import 'package:erestoran_mobile/providers/jelo_provider.dart';
 import 'package:erestoran_mobile/providers/prilozi_provider.dart';
+import 'package:erestoran_mobile/screens/historija_narudzbi_screen.dart';
 import 'package:erestoran_mobile/screens/preporuceni_screen.dart';
 import 'package:erestoran_mobile/utils/util.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,8 @@ class _CartScreenState extends State<CartScreen> {
 
   SearchResult<Korpa>? _korpa;
   bool _isLoading = true;
+
+  DateTime? _selectedDate;
 
   static const String PAYPAL_CLIENT_ID =
       "AQN5aMhuwAxbyotTYqQDTYNBtW3W2loVRijMYLQwEjWAiacQ0qRECCkssxAPZjuHQOpBrCwYIHZP2tk9";
@@ -80,6 +83,65 @@ class _CartScreenState extends State<CartScreen> {
         .showSnackBar(SnackBar(content: Text(message)));
   }
 
+
+  String _formatDatum(DateTime? dt) {
+    if (dt == null) return "Odaberite datum i vrijeme dostave";
+    final d = dt.day.toString().padLeft(2, '0');
+    final m = dt.month.toString().padLeft(2, '0');
+    final y = dt.year.toString();
+    final hh = dt.hour.toString().padLeft(2, '0');
+    final mm = dt.minute.toString().padLeft(2, '0');
+    return "$d.$m.$y $hh:$mm";
+  }
+
+  Future<void> _pickDate() async {
+    final now = DateTime.now();
+    final initial = _selectedDate ?? now.add(const Duration(hours: 1));
+
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: initial,
+      firstDate: now,
+      lastDate: now.add(const Duration(days: 60)),
+      helpText: 'Izaberite datum isporuke',
+      cancelText: 'Otkaži',
+      confirmText: 'Dalje',
+      builder: (ctx, child) {
+        return Theme(
+          data: Theme.of(ctx).copyWith(
+            colorScheme: Theme.of(ctx).colorScheme.copyWith(
+                  primary: Theme.of(ctx).colorScheme.primary,
+                ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (pickedDate == null) return;
+
+    final pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(initial),
+      helpText: 'Izaberite vrijeme',
+      cancelText: 'Otkaži',
+      confirmText: 'Potvrdi',
+    );
+
+    final withTime = pickedTime != null
+        ? DateTime(
+            pickedDate.year,
+            pickedDate.month,
+            pickedDate.day,
+            pickedTime.hour,
+            pickedTime.minute,
+          )
+        : DateTime(pickedDate.year, pickedDate.month, pickedDate.day, 12, 0);
+
+    setState(() => _selectedDate = withTime);
+  }
+
+
   double _calcSubtotalBAM() {
     if (_korpa == null) return 0;
     double sum = 0;
@@ -93,7 +155,6 @@ class _CartScreenState extends State<CartScreen> {
 
   String _to2(double v) => v.toStringAsFixed(2);
   String _bamToEurStr(double bam) => _to2(bam * EUR_PER_BAM);
-
   int _eurCentsFromBAM(double bam) => ((bam * EUR_PER_BAM) * 100).round();
   String _eurStrFromCents(int cents) => _to2(cents / 100.0);
 
@@ -151,11 +212,31 @@ class _CartScreenState extends State<CartScreen> {
     ];
   }
 
+
+  Future<bool> _guardDateSelected() async {
+    if (_selectedDate != null) return true;
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Nedostaje datum'),
+        content: const Text('Molimo odaberite datum isporuke prije plaćanja.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('U redu'),
+          ),
+        ],
+      ),
+    );
+    return false;
+  }
+
   Future<void> _startPaypalCheckout() async {
     if (_korpa == null || _korpa!.result.isEmpty) {
       _toast('Korpa je prazna.');
       return;
     }
+    if (!await _guardDateSelected()) return;
 
     final subtotalBAM = _calcSubtotalBAM();
     if (subtotalBAM <= 0) {
@@ -182,12 +263,19 @@ class _CartScreenState extends State<CartScreen> {
           final paymentId =
               (params['data']?['id'] ?? params['id'] ?? params['paymentId'])
                   ?.toString();
+
           final id = await _cartProvider.checkoutFromCart(
-              Authorization.userId!, paymentId);
+            Authorization.userId!,
+            paymentId,
+            datumNarudzbe: _selectedDate,
+          );
+
           if (!mounted) return;
           _toast('Narudžba #$id kreirana!');
-          await _fetchInitialData();
-          Navigator.pop(context);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => OrdersScreen()),
+          );
         },
         onError: (error) {
           debugPrint("PayPal onError: $error");
@@ -208,6 +296,7 @@ class _CartScreenState extends State<CartScreen> {
       _toast('Korpa je prazna.');
       return;
     }
+    if (!await _guardDateSelected()) return;
 
     final confirm = await showDialog<bool>(
       context: context,
@@ -229,20 +318,30 @@ class _CartScreenState extends State<CartScreen> {
     if (confirm != true) return;
 
     try {
-      final id =
-          await _cartProvider.checkoutFromCart(Authorization.userId!, null);
+      final id = await _cartProvider.checkoutFromCart(
+        Authorization.userId!,
+        null,
+        datumNarudzbe: _selectedDate, 
+      );
       if (!mounted) return;
       _toast('Narudžba #$id kreirana (gotovina).');
-      await _fetchInitialData();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => OrdersScreen()),
+      );
     } catch (e) {
       _toast('Greška pri kreiranju narudžbe: $e');
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     final subtotalBAM = _calcSubtotalBAM();
     final subtotalEUR = _bamToEurStr(subtotalBAM);
+
+    final canCheckout =
+        !_isLoading && _korpa != null && _korpa!.result.isNotEmpty;
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -257,10 +356,8 @@ class _CartScreenState extends State<CartScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
                         child: _DateChip(
-                          label: "Tapnite za izbor datuma",
-                          onTap: () {
-                            // TODO: otvori date picker ako želiš stvarnu funkcionalnost
-                          },
+                          label: _formatDatum(_selectedDate),
+                          onTap: _pickDate, 
                         ),
                       ),
                       Padding(
@@ -296,7 +393,8 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                           ),
                           rightButton: ElevatedButton.icon(
-                            onPressed: _startPaypalCheckout,
+                            onPressed:
+                                canCheckout ? _startPaypalCheckout : null,
                             icon: const Icon(Icons.send_rounded, size: 18),
                             label: const Text("Pošalji zahtjev"),
                             style: ElevatedButton.styleFrom(
@@ -369,7 +467,8 @@ class _CartScreenState extends State<CartScreen> {
                           children: [
                             Expanded(
                               child: OutlinedButton(
-                                onPressed: _startCashCheckout,
+                                onPressed:
+                                    canCheckout ? _startCashCheckout : null,
                                 style: OutlinedButton.styleFrom(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 14),
@@ -383,7 +482,8 @@ class _CartScreenState extends State<CartScreen> {
                             const SizedBox(width: 12),
                             Expanded(
                               child: ElevatedButton(
-                                onPressed: _startPaypalCheckout,
+                                onPressed:
+                                    canCheckout ? _startPaypalCheckout : null,
                                 style: ElevatedButton.styleFrom(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 14),
@@ -422,13 +522,20 @@ class _DateChip extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(Icons.date_range_rounded, size: 18),
-            SizedBox(width: 8),
-            Text("Tapnite za izbor datuma",
-                style: TextStyle(fontWeight: FontWeight.w600)),
-            SizedBox(width: 6),
-            Icon(Icons.chevron_right_rounded, size: 18),
+          children: [
+            const Icon(Icons.date_range_rounded, size: 18),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(width: 6),
+            const Icon(Icons.chevron_right_rounded, size: 18),
           ],
         ),
       ),

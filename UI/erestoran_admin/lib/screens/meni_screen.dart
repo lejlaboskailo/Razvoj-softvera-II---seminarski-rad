@@ -257,11 +257,11 @@ class _MeniScreenState extends State<MeniScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              jelo.cijena != null ? "${jelo.cijena} KM" : "Nepoznato cijena",
+                              jelo.cijena != null
+                                  ? '${jelo.cijena!.toStringAsFixed(2)} KM'
+                                  : 'Nepoznata cijena',
                               style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -348,7 +348,7 @@ class _MeniScreenState extends State<MeniScreen> {
             ),
           ),
           SizedBox(
-            width: double.infinity, 
+            width: double.infinity,
             child: ElevatedButton(
               onPressed: () async {
                 final changed = await Navigator.of(context).push(
@@ -359,7 +359,7 @@ class _MeniScreenState extends State<MeniScreen> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
-                minimumSize: const Size.fromHeight(48), 
+                minimumSize: const Size.fromHeight(48),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),

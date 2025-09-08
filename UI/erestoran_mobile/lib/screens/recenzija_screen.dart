@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:erestoran_mobile/models/dojmovi.dart';
 import 'package:erestoran_mobile/models/jelo.dart';
 import 'package:erestoran_mobile/models/search_result.dart';
@@ -9,6 +10,7 @@ import 'package:erestoran_mobile/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RecenzijaScreen extends StatefulWidget {
   const RecenzijaScreen({Key? key}) : super(key: key);
@@ -25,17 +27,31 @@ class _RecenzijaScreen extends State<RecenzijaScreen> {
   SearchResult<Dojmovi>? stavkeResult;
   Map<String, Jelo> jeloMap = {};
   Map<String, String> korisnikMap = {};
+  Map<int, DateTime> randomDatumi = {};
 
   final TextEditingController _nazivController = TextEditingController();
+  bool _initialized = false;
+  bool _datesLoaded = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (_initialized) return;
+    _initialized = true;
+
     _dojmoviProvider = context.read<DojmoviProvider>();
     _jeloProvider = context.read<ProductProvider>();
     _korisnikProvider = context.read<KorisnikProvider>();
 
-    _fetchInitialData();
+    _init();
+  }
+
+  Future<void> _init() async {
+    await _loadSavedRandomDates();
+    await _fetchInitialData();
+    setState(() {
+      _datesLoaded = true;
+    });
   }
 
   Future<void> _fetchInitialData() async {
@@ -91,10 +107,11 @@ class _RecenzijaScreen extends State<RecenzijaScreen> {
                     itemBuilder: (context, index) {
                       final d = stavkeResult!.result[index];
                       final jelo = jeloMap[d.jeloId.toString()];
-                      final korisnik = korisnikMap[d.korisnikId.toString()] ?? 'Nepoznato';
-                      final datum = d.datumRecenzije != null
-                          ? DateFormat('dd.MM.yyyy HH:mm').format(d.datumRecenzije!)
-                          : '';
+                      final korisnik =
+                          korisnikMap[d.korisnikId.toString()] ?? 'Nepoznato';
+
+                      final dt = getOrCreateDateForId(d.id!);
+                      final datum = DateFormat('dd.MM.yyyy').format(dt);
 
                       return Card(
                         margin: const EdgeInsets.symmetric(vertical: 8),
@@ -107,7 +124,8 @@ class _RecenzijaScreen extends State<RecenzijaScreen> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (jelo?.slika != null && jelo!.slika!.isNotEmpty)
+                              if (jelo?.slika != null &&
+                                  jelo!.slika!.isNotEmpty)
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
                                   child: Image.memory(
@@ -125,7 +143,8 @@ class _RecenzijaScreen extends State<RecenzijaScreen> {
                                     color: Colors.grey[300],
                                     borderRadius: BorderRadius.circular(8),
                                   ),
-                                  child: const Center(child: Text('Nema slike')),
+                                  child:
+                                      const Center(child: Text('Nema slike')),
                                 ),
                               const SizedBox(width: 12),
                               Expanded(
@@ -146,14 +165,12 @@ class _RecenzijaScreen extends State<RecenzijaScreen> {
                                         Text(
                                           datum,
                                           style: const TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey),
+                                              fontSize: 12, color: Colors.grey),
                                         ),
                                       ],
                                     ),
                                     const SizedBox(height: 4),
                                     _buildStars((d.ocjena ?? 0).toDouble()),
-
                                     const SizedBox(height: 4),
                                     Text(
                                       d.opis ?? '',
@@ -172,9 +189,42 @@ class _RecenzijaScreen extends State<RecenzijaScreen> {
                           ),
                         ),
                       );
-                    },
-                  ),
+                    }),
       ),
     );
+  }
+
+  Future<void> _loadSavedRandomDates() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonStr = prefs.getString('random_datumi') ?? '{}';
+    final map = Map<String, String>.from(json.decode(jsonStr));
+    randomDatumi = map.map((k, v) => MapEntry(int.parse(k), DateTime.parse(v)));
+    setState(() {});
+  }
+
+  Future<void> _saveRandomDates() async {
+    final prefs = await SharedPreferences.getInstance();
+    final map =
+        randomDatumi.map((k, v) => MapEntry(k.toString(), v.toIso8601String()));
+    await prefs.setString('random_datumi', json.encode(map));
+  }
+
+  DateTime getOrCreateDateForId(int id) {
+    final existing = randomDatumi[id];
+    if (existing != null) return existing;
+
+    final created = getRandomDateWithTime();
+    randomDatumi[id] = created;
+    _saveRandomDates();
+    return created;
+  }
+
+  DateTime getRandomDateWithTime() {
+    final now = DateTime.now();
+    final r = Random();
+    final days = r.nextInt(30);
+    final hours = r.nextInt(24);
+    final minutes = r.nextInt(60);
+    return now.subtract(Duration(days: days, hours: hours, minutes: minutes));
   }
 }

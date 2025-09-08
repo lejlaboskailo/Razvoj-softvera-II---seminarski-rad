@@ -242,6 +242,13 @@ class _MeniScreenState extends State<MeniScreen> {
                                   fontSize: 16,
                                 ),
                               ),
+                              Text(
+                                '${jelo.cijena!.toStringAsFixed(2)} KM',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
                               const SizedBox(height: 4),
                               Text(
                                 jelo.opis ?? "",

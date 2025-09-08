@@ -17,16 +17,16 @@ using System.Threading.Tasks;
 
 namespace eRestoran.Services
 {
-    public class NarudzbaService:BaseCRUDService<Model.Narudzba,Narudzba,NarudzbaSearchObject,NarudzbaInsertRequest,NarudzbaUpdateRequest>, INarudzbaService
+    public class NarudzbaService : BaseCRUDService<Model.Narudzba, Narudzba, NarudzbaSearchObject, NarudzbaInsertRequest, NarudzbaUpdateRequest>, INarudzbaService
     {
         public BaseNarudzbaState _baseState { get; set; }
 
         private readonly IMailProducer _mailProducer;
-        public NarudzbaService(BaseNarudzbaState baseState, IMailProducer mailProducer, ERestoranContext context, IMapper mapper):base(context,mapper)
+        public NarudzbaService(BaseNarudzbaState baseState, IMailProducer mailProducer, ERestoranContext context, IMapper mapper) : base(context, mapper)
         {
             _context = context;
             _mapper = mapper;
-            _baseState= baseState;
+            _baseState = baseState;
             _mailProducer = mailProducer;
         }
 
@@ -69,7 +69,7 @@ namespace eRestoran.Services
                     throw new InvalidOperationException("Narudzba request not found");
                 }
 
-                if (serviceRequest.DatumNarudzbe == null )
+                if (serviceRequest.DatumNarudzbe == null)
                 {
                     throw new InvalidOperationException("Service request does not have valid date or time information");
                 }
@@ -105,7 +105,7 @@ namespace eRestoran.Services
             if (insert.StatusNarudzbeId.HasValue)
             {
                 statusId = insert.StatusNarudzbeId.Value;
-               
+
             }
             else
             {
@@ -116,7 +116,7 @@ namespace eRestoran.Services
                 statusId = await _context.Statuses
                                          .Where(s => s.Naziv == naziv)
                                          .Select(s => s.Id)
-                                         .FirstOrDefaultAsync();         
+                                         .FirstOrDefaultAsync();
 
                 if (statusId == 0)
                 {
@@ -126,13 +126,13 @@ namespace eRestoran.Services
                     statusId = s.Id;
                 }
 
-                insert.StatusNarudzbeId = statusId; 
+                insert.StatusNarudzbeId = statusId;
             }
 
             var entity = _mapper.Map<Narudzba>(insert);
             entity.DatumNarudzbe ??= DateTime.Now;
             entity.StateMachine ??= "initial";
-            entity.StatusNarudzbeId = statusId;    
+            entity.StatusNarudzbeId = statusId;
 
             _context.Narudzbas.Add(entity);
             await _context.SaveChangesAsync();
@@ -157,14 +157,14 @@ namespace eRestoran.Services
                 {
                     var nar = new Database.Narudzba
                     {
-                        DatumNarudzbe = DateTime.Now,
+                        DatumNarudzbe = req.DatumNarudzbe ?? DateTime.Now,
                         KorisnikId = req.KorisnikId,
                         StatusNarudzbeId = req.StatusNarudzbeId ?? 1,
                         StateMachine = "Kreirana"
                     };
 
                     _context.Narudzbas.Add(nar);
-                    await _context.SaveChangesAsync(); 
+                    await _context.SaveChangesAsync();
 
                     foreach (var s in req.Stavke)
                     {
@@ -202,7 +202,7 @@ namespace eRestoran.Services
             });
         }
 
-        public async Task<int> CheckoutFromCart(int korisnikId, int? statusId = null, string? paymentId=null)
+        public async Task<int> CheckoutFromCart(int korisnikId, int? statusId = null, string? paymentId = null, DateTime? datumNarudzbe = null)
         {
             var strategy = _context.Database.CreateExecutionStrategy();
 
@@ -238,7 +238,7 @@ namespace eRestoran.Services
                     var narudzba = new Narudzba
                     {
                         KorisnikId = korisnikId,
-                        DatumNarudzbe = DateTime.UtcNow,
+                        DatumNarudzbe = datumNarudzbe ?? DateTime.Now,
                         StatusNarudzbeId = status.Id,
                         StateMachine = "Kreirana",
                         StavkeNarudzbes = stavkeKorpe.Select(k => new StavkeNarudzbe
@@ -247,8 +247,8 @@ namespace eRestoran.Services
                             Kolicina = k.Kolicina ?? 1,
                             Cijena = (int)Math.Round((double)(k.Cijena ?? 0m))
                         }).ToList(),
-                        PaymentId=paymentId
-                        
+                        PaymentId = paymentId
+
                     };
 
                     _context.Narudzbas.Add(narudzba);

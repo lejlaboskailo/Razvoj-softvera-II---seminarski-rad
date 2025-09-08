@@ -389,11 +389,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Subscriber\\eRestoran.Subscriber.csproj",
+      "projectUniqueName": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Subscriber\\eRestoran.Subscriber.csproj",
       "projectName": "eRestoran.Subscriber",
-      "projectPath": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Subscriber\\eRestoran.Subscriber.csproj",
+      "projectPath": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Subscriber\\eRestoran.Subscriber.csproj",
       "packagesPath": "C:\\Users\\HOME\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HOME\\Documents\\GitHub\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Subscriber\\obj\\",
+      "outputPath": "C:\\Users\\HOME\\Desktop\\Razvoj-softvera-II---seminarski-rad\\eRestoran.Subscriber\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

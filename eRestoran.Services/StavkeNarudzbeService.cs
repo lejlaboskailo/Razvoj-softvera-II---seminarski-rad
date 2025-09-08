@@ -19,20 +19,34 @@ namespace eRestoran.Services
             _mapper = mapper;
         }
 
-       /* [HttpPost]
-        public async Task<List<Model.StavkeNarudzbe>> InsertAsync(List<StavkeNarudzbeUpsertRequest> request)
+        /* [HttpPost]
+         public async Task<List<Model.StavkeNarudzbe>> InsertAsync(List<StavkeNarudzbeUpsertRequest> request)
+         {
+             var entities = request.Select(i => _mapper.Map<StavkeNarudzbe>(i)).ToList();
+
+
+
+             await _context.StavkeNarudzbes.AddRangeAsync(entities);
+             await _context.SaveChangesAsync();
+
+
+
+             var model = entities.Select(i => _mapper.Map<Model.StavkeNarudzbe>(i)).ToList();
+             return model;
+         }*/
+        public override IQueryable<StavkeNarudzbe> AddFilter(IQueryable<StavkeNarudzbe> query, StavkeNarudzbeSearchObject? search = null)
         {
-            var entities = request.Select(i => _mapper.Map<StavkeNarudzbe>(i)).ToList();
+            var filter = base.AddFilter(query, search);
 
-
-
-            await _context.StavkeNarudzbes.AddRangeAsync(entities);
-            await _context.SaveChangesAsync();
-
-
-
-            var model = entities.Select(i => _mapper.Map<Model.StavkeNarudzbe>(i)).ToList();
-            return model;
-        }*/
+            if (search?.JeloId != null && search.JeloId > 0)
+            {
+                filter = filter.Where(x => x.JeloId == search.JeloId);
+            }
+            if (search?.NarudzbaId != null && search.NarudzbaId > 0)
+            {
+                filter = filter.Where(x => x.NarudzbaId == search.NarudzbaId);
+            }
+            return filter;
+        }
     }
 }

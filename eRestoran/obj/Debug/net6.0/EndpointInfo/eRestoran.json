@@ -3543,6 +3543,11 @@
           "paymentId": {
             "type": "string",
             "nullable": true
+          },
+          "datumNarudzbe": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3560,11 +3565,6 @@
           },
           "opis": {
             "type": "string",
-            "nullable": true
-          },
-          "datumRecenzije": {
-            "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "jeloId": {
@@ -4250,6 +4250,11 @@
           },
           "adresa": {
             "type": "string",
+            "nullable": true
+          },
+          "datumNarudzbe": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           },
           "napomena": {

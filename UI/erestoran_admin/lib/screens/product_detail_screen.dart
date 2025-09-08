@@ -259,7 +259,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ],
             ),
           ),
-          const SizedBox(height:12,),
+          const SizedBox(
+            height: 12,
+          ),
           Row(
             children: [
               Expanded(
@@ -271,11 +273,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     isDense: true,
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 16, horizontal: 12),
-                    filled: true,
-                    fillColor: Colors.orange[50],
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide:
+                          const BorderSide(color: Colors.orange, width: 1.5),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.red, width: 1),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide:
+                          const BorderSide(color: Colors.red, width: 1.5),
+                    ),
                     prefixIcon:
                         const Icon(Icons.category, color: Colors.orangeAccent),
                   ),
@@ -305,11 +319,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         isDense: true,
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 12),
-                        filled: true,
-                        fillColor: Colors.orange[50],
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                              color: Colors.orange, width: 1.5),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide:
+                              const BorderSide(color: Colors.red, width: 1),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide:
+                              const BorderSide(color: Colors.red, width: 1.5),
+                        ),
                         prefixIcon:
                             const Icon(Icons.euro, color: Colors.orangeAccent),
                       ),

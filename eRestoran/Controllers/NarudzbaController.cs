@@ -48,7 +48,7 @@ namespace eRestoran.Controllers
             if (req == null || req.KorisnikId <= 0)
                 return BadRequest("Neispravan zahtjev.");
 
-            var id = await _service.CheckoutFromCart(req.KorisnikId, req.StatusId, req.PaymentId);
+            var id = await _service.CheckoutFromCart(req.KorisnikId, req.StatusId, req.PaymentId, req.DatumNarudzbe);
             return Ok(id);
         }
 

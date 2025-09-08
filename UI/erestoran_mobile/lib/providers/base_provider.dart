@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:erestoran_mobile/models/jelo.dart';
 import 'package:erestoran_mobile/models/preporucenojelo.dart';
 import 'package:erestoran_mobile/models/search_result.dart';
+import 'package:erestoran_mobile/models/stavkeNarudzbe.dart';
 import 'package:erestoran_mobile/utils/util.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -61,6 +62,20 @@ abstract class BaseProvider<T> with ChangeNotifier {
       throw Exception("Unknown error");
     }
   }
+
+Future<Jelo> getById(int id) async {
+  var url = "$_baseUrl$_endpoint/$id";
+  var uri = Uri.parse(url);
+  var headers = createHeaders();
+
+  Response response = await http.get(uri, headers: headers);
+  if (isValidResponse(response)) {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+    return Jelo.fromJson(data);
+  } else {
+    throw Exception("Unknown error");
+  }
+}
 
   T? firstWhereOrNull<T>(Iterable<T> items, bool Function(T) test) {
     for (final i in items) {
@@ -205,33 +220,39 @@ abstract class BaseProvider<T> with ChangeNotifier {
     }
   }
 
-  Future<int> checkoutFromCart(int userId, String? paymentId,
-      {int? statusId}) async {
-    final uri = Uri.parse('${_baseUrl}Narudzba/checkoutFromCart');
+  Future<int> checkoutFromCart(
+  int userId,
+  String? paymentId, {
+  int? statusId,
+  DateTime? datumNarudzbe,
+}) async {
+  final uri = Uri.parse('${_baseUrl}Narudzba/checkoutFromCart');
+  final headers = createHeaders();
 
-    final headers = createHeaders();
+  final bodyMap = <String, dynamic>{
+    "korisnikId": userId,
+    "paymentId": paymentId,
+    if (statusId != null) "statusId": statusId,
+    if (datumNarudzbe != null)
+      "datumNarudzbe": datumNarudzbe.toIso8601String(),
+  };
 
-    final bodyMap = <String, dynamic>{
-      "korisnikId": userId,
-      "paymentId": paymentId, 
-    };
-    if (statusId != null) bodyMap["statusId"] = statusId;
+  final resp = await http.post(
+    uri,
+    headers: headers,
+    body: jsonEncode(bodyMap),
+  );
 
-    final resp = await http.post(
-      uri,
-      headers: headers,
-      body: jsonEncode(bodyMap),
-    );
+  debugPrint('checkoutFromCart ${resp.statusCode}: ${resp.body}');
 
-    debugPrint('checkoutFromCart ${resp.statusCode}: ${resp.body}');
-
-    if (resp.statusCode >= 200 && resp.statusCode < 300) {
-      final data = jsonDecode(resp.body);
-      return data is int ? data : int.parse(data.toString());
-    } else {
-      throw Exception('Checkout failed: ${resp.statusCode} ${resp.body}');
-    }
+  if (resp.statusCode >= 200 && resp.statusCode < 300) {
+    final data = jsonDecode(resp.body);
+    return data is int ? data : int.parse(data.toString());
+  } else {
+    throw Exception('Checkout failed: ${resp.statusCode} ${resp.body}');
   }
+}
+
 
   /* Future<List<Jelo>> getPreporucenaJela(int? korisnikId) async {
   final url = Uri.parse('$totalUrl/preporuceno/$korisnikId');

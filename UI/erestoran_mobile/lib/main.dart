@@ -10,6 +10,7 @@ import 'package:erestoran_mobile/providers/payment_provider.dart';
 import 'package:erestoran_mobile/providers/prilozi_provider.dart';
 import 'package:erestoran_mobile/providers/status_provider.dart';
 import 'package:erestoran_mobile/providers/uloga_provider.dart';
+import 'package:erestoran_mobile/providers/stavkeNarudzbe_provider.dart';
 import 'package:erestoran_mobile/screens/home_screen.dart';
 import 'package:erestoran_mobile/screens/registration.dart';
 import 'package:erestoran_mobile/utils/util.dart';
@@ -30,10 +31,8 @@ void main() {
       ChangeNotifierProvider(create: (_) => NarudzbaProvider()),
       ChangeNotifierProvider(create: (_) => StatusProvider()),
       ChangeNotifierProvider(create: (_) => PaymentProvider()),
-      ChangeNotifierProvider(create: (_) =>   PriloziProvider()),
-
-
-
+      ChangeNotifierProvider(create: (_) => PriloziProvider()),
+      ChangeNotifierProvider(create: (_) => StavkeNarudzbeProvider()),
 
     ],
     child: const MyApp(),

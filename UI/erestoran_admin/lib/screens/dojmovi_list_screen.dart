@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:erestoran_admin/models/jelo.dart';
 import 'package:erestoran_admin/models/narudzba.dart';
@@ -16,6 +17,7 @@ import '../models/dojmovi.dart';
 import '../models/search_result.dart';
 import '../providers/dojmovi_provider.dart';
 import '../widgets/master_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DojmoiListScreen extends StatefulWidget {
   const DojmoiListScreen({Key? key}) : super(key: key);
@@ -42,9 +44,15 @@ class _DojmoviListScreenState extends State<DojmoiListScreen> {
   List<StatusNarudzbe> statusList = [];
   Map<int, String> jeloSlikaMap = {};
 
+  Map<int, DateTime> randomDatumi = {};
+  bool _initialized = false;
+  bool _datesLoaded = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (_initialized) return;
+    _initialized = true;
     _dojmoviProvider = context.read<DojmoviProvider>();
     _jeloProvider = context.read<ProductProvider>();
     _korisnikProvider = context.read<KorisnikProvider>();
@@ -52,8 +60,14 @@ class _DojmoviListScreenState extends State<DojmoiListScreen> {
     _stavkeProvider = context.read<stavkeNarudzbeProvider>();
     _statusProvider = context.read<StatusNarudzbeProvider>();
 
-    _loadData();
-    _fetchInitialData();
+    _init();
+  }
+
+  Future<void> _init() async {
+    await _loadSavedRandomDates();
+    await _fetchInitialData(); 
+    await _loadData();
+    setState(() => _datesLoaded = true);
   }
 
   Future<void> _fetchInitialData() async {
@@ -69,7 +83,7 @@ class _DojmoviListScreenState extends State<DojmoiListScreen> {
         jeloSlikaMap = {
           for (var jelo in jeloResult.result) jelo.jeloId!: jelo.slika ?? ''
         };
-        jelaList = jeloResult.result; 
+        jelaList = jeloResult.result;
       }
 
       var korisnikResult = await _korisnikProvider.get();
@@ -240,7 +254,7 @@ class _DojmoviListScreenState extends State<DojmoiListScreen> {
       }
     }
 
-    final scaffoldContext = context; 
+    final scaffoldContext = context;
 
     return Expanded(
       child: SingleChildScrollView(
@@ -256,6 +270,8 @@ class _DojmoviListScreenState extends State<DojmoiListScreen> {
                   Icon statusIcon = getStatusIcon(statusNaziv);
                   String datumNarudzbe = getNarudzbaDatum(e);
                   ImageProvider? imgProvider = _imageForJeloId(e.jeloId!);
+                  final dt = getOrCreateDateForId(e.id!);
+                  final datum = DateFormat('dd.MM.yyyy').format(dt);
 
                   return Card(
                     elevation: 4,
@@ -315,7 +331,7 @@ class _DojmoviListScreenState extends State<DojmoiListScreen> {
                                 Text('Korisnik: $imeKorisnika',
                                     style: TextStyle(color: Colors.black54)),
                                 const SizedBox(height: 4),
-                                Text('Datum narudžbe: $datumNarudzbe',
+                                Text('Datum: $datum',
                                     style: TextStyle(
                                         color: Colors.black54, fontSize: 12)),
                               ],
@@ -334,7 +350,6 @@ class _DojmoviListScreenState extends State<DojmoiListScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-
                               IconButton(
                                 icon: Icon(Icons.delete_outline,
                                     color: Colors.red),
@@ -402,5 +417,43 @@ class _DojmoviListScreenState extends State<DojmoiListScreen> {
         ),
       ),
     );
+  }
+
+  final _prefsKey = 'random_datumi_admin';
+
+  Future<void> _loadSavedRandomDates() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonStr = prefs.getString(_prefsKey) ?? '{}';
+    final map = Map<String, String>.from(json.decode(jsonStr));
+    setState(() {
+      randomDatumi =
+          map.map((k, v) => MapEntry(int.parse(k), DateTime.parse(v)));
+    });
+  }
+
+  Future<void> _saveRandomDates() async {
+    final prefs = await SharedPreferences.getInstance();
+    final map =
+        randomDatumi.map((k, v) => MapEntry(k.toString(), v.toIso8601String()));
+    await prefs.setString(_prefsKey, json.encode(map));
+  }
+
+  DateTime getOrCreateDateForId(int id) {
+    final existing = randomDatumi[id];
+    if (existing != null) return existing;
+
+    final created = getRandomDateWithTime();
+    randomDatumi[id] = created;
+    _saveRandomDates();
+    return created;
+  }
+
+  DateTime getRandomDateWithTime() {
+    final now = DateTime.now();
+    final r = Random();
+    final days = r.nextInt(30);
+    final hours = r.nextInt(24);
+    final minutes = r.nextInt(60);
+    return now.subtract(Duration(days: days, hours: hours, minutes: minutes));
   }
 }
